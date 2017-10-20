@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour {
 
         transform.Translate(strafe, 0, translation);
 
-        if (Input.GetKeyUp(KeyCode.Space) && onGround) //if space isn't being pressed, allows the player to jump
+        if (Input.GetKeyDown(KeyCode.Space) && onGround) //if space isn't being pressed, allows the player to jump
         {
             canJump = true;
         }
