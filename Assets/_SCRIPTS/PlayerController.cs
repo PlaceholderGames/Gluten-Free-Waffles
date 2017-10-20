@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    public float speed = 10.0F;
+    public float speed = 10F;
+    public float sprintSpeed = 20F;
+    private bool canSprint;
+    
 
-    public int forceConst = 50; //Force which is applied to the rigidbody when jumping
+    public int forceConst = 100; //Force which is applied to the rigidbody when jumping
     
     private bool canJump;
+    private bool onGround = true;
     private Rigidbody selfRigidBody;
+    
 
 	// Use this for initialization
 	void Start () {
@@ -24,11 +29,22 @@ public class PlayerController : MonoBehaviour {
             canJump = false;
             selfRigidBody.AddForce(0, forceConst, 0, ForceMode.Impulse);
         }
+        if (canSprint)
+        {
+            speed = sprintSpeed;
+        }
+        else
+        {
+            speed = 10F;
+        }
     }
 	
 	// Update is called once per frame
 	void Update () {
-        float jumpSpeed = 100;
+
+         float jumpSpeed = 300;
+
+
         float translation = Input.GetAxis("Vertical") * speed;
         float strafe = Input.GetAxis("Horizontal") * speed;
         translation *= Time.deltaTime;
@@ -36,9 +52,17 @@ public class PlayerController : MonoBehaviour {
 
         transform.Translate(strafe, 0, translation);
 
-        if (Input.GetKeyUp(KeyCode.Space)) //if space isn't being pressed, allows the player to jump
+        if (Input.GetKeyUp(KeyCode.Space) && onGround) //if space isn't being pressed, allows the player to jump
         {
             canJump = true;
+        }
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            canSprint = true;
+        }
+        else
+        {
+            canSprint = false;
         }
 
         if (Input.GetKeyDown("escape"))
@@ -53,4 +77,16 @@ public class PlayerController : MonoBehaviour {
             }    
         }		
 	}
+    void OnCollisionStay(Collision coll)
+    {
+        onGround = true;
+    }
+
+    void OnCollisionExit(Collision coll)
+    {
+        if (onGround)
+        {
+            onGround = false;
+        }
+    }
 }
