@@ -27,6 +27,11 @@ public class CamMouseLook : MonoBehaviour {
 
         mouseLook.y = Mathf.Clamp(mouseLook.y, -90f, 90f);
 
+        
+    }
+
+    void FixedUpdate()
+    {
         transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
         character.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, character.transform.up);
     }

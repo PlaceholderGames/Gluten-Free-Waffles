@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    public float speed = 10F;
-    public float sprintSpeed = 20F;
+    private float speed;
+    public float normalSpeed;
+    public float sprintSpeed;
+    private float translation;
+    private float strafe;
     private bool canSprint;
     
 
@@ -24,6 +27,9 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
+        transform.Translate(strafe, 0, translation);
+
+        //selfRigidBody.AddForce(0, -10, 0, ForceMode.Force);
         if (canJump)
         {
             canJump = false;
@@ -35,22 +41,18 @@ public class PlayerController : MonoBehaviour {
         }
         else
         {
-            speed = 10F;
+            speed = normalSpeed;
         }
     }
 	
 	// Update is called once per frame
 	void Update () {
-
-         float jumpSpeed = 300;
-
-
-        float translation = Input.GetAxis("Vertical") * speed;
-        float strafe = Input.GetAxis("Horizontal") * speed;
+        translation = Input.GetAxis("Vertical") * speed;
+        strafe = Input.GetAxis("Horizontal") * speed;
         translation *= Time.deltaTime;
         strafe *= Time.deltaTime;
 
-        transform.Translate(strafe, 0, translation);
+        //transform.Translate(strafe, 0, translation);
 
         if (Input.GetKeyDown(KeyCode.Space) && onGround) //if space isn't being pressed, allows the player to jump
         {
