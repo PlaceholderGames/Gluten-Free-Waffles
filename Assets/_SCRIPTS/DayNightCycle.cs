@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class DayNightCycle : MonoBehaviour 
 {
-    public float dayLengthInMins;
-    public float nightLengthInMins;
+    public float dayLengthInMins, nightLengthInMins;
     public float startTimeInHours;
 
     private const int SECS_IN_DAY = 86400; //total seconds in 1 day
-    private int day = 1; //the number of days that have passed
+    private bool isDay = true; //day is 06:00 till 18:00
+    private byte day = 1; //the number of days that have passed
+
     private float enteredSecs = 0; //the total time the player entered, converted to seconds
     private float currentSecs = 0; //the current time of day in the game, in seconds
+
+    private Light sun;
+    private GameObject[] streetLights;
 
     void updateClock()
     {
@@ -28,17 +32,78 @@ public class DayNightCycle : MonoBehaviour
         Debug.Log("Day:" + day + " H:" + hours + " M:" + mins + " S:" + secs);
     }
 
-    //private Light[] lights;
+    void updateWorldLights()
+    {
+        if (!isDay) //if night
+        {
+            //sun.shadows = LightShadows.None;
+            //sun.intensity = 0;
+
+            foreach (GameObject streetLight in streetLights)
+            {
+                streetLight.SetActive(true);
+            }
+        }
+        else //if day
+        {
+            //sun.shadows = LightShadows.Hard;
+            //sun.intensity = 1;
+
+            foreach (GameObject streetLight in streetLights)
+            {
+                streetLight.SetActive(false);
+            }
+        }
+    }
+
+    void updateSunRise() {
+        //stores 05:00 and 07:00 as seconds
+        const int START_RISE = 18000, END_RISE = 25200;
+
+        if (currentSecs >= START_RISE && currentSecs <= END_RISE)
+        {
+            if (sun.intensity < 1)
+            {
+                sun.intensity += 0.4f * Time.deltaTime;
+            }
+        }
+    }
+
+    void updateSunSet()
+    {
+        //stores 17:00 and 19:00 as seconds
+        const int START_SET = 61200, END_SET = 68400;
+
+        if (currentSecs >= START_SET && currentSecs <= END_SET)
+        {
+            if (sun.intensity > 0)
+            {
+                sun.intensity -= 0.4f * Time.deltaTime;
+            }
+        }
+    }
+
+    void checkIfDay()
+    {
+        //stores 06:00 and 19:00 as seconds
+        const int START_DAY = 18000, END_DAY = 68400;
+
+        //Sets isDay to true or false depending on the time
+        if (currentSecs >= START_DAY && currentSecs < END_DAY && !isDay) {
+            isDay = true;
+            updateWorldLights();
+        }
+        else if (currentSecs >= END_DAY && isDay)
+        {
+            isDay = false;
+            updateWorldLights();
+        }
+    }
 
     // Use this for initialization
     void Start () {
-        /*lights = FindObjectsOfType(typeof(Light)) as Light[];
-        foreach (Light light in lights) {
-            light.intensity = 100;
-            Debug.Log(light);
-        }*/
-        //Light light = GetComponent<Light>();
-        //Debug.Log(light);
+        //self reference the sun component
+        sun = GetComponent<Light>();
 
         //convert the minuites entered into seconds
         enteredSecs = dayLengthInMins * 60;
@@ -46,6 +111,10 @@ public class DayNightCycle : MonoBehaviour
         //Sets the current time to the entered time and moves the sun to the correct starting position
         currentSecs = startTimeInHours * 3600;
         transform.RotateAround(Vector3.zero, Vector3.left, 15 * startTimeInHours);
+
+        //Gets all the street lights from the scene
+        streetLights = GameObject.FindGameObjectsWithTag("StreetLight");
+        updateWorldLights();
     }
 
     // Update is called once per frame
@@ -58,9 +127,6 @@ public class DayNightCycle : MonoBehaviour
 
             //Stores the current game time in seconds
             currentSecs += (SECS_IN_DAY / enteredSecs) * Time.deltaTime;
-
-            //updates the game clock
-            updateClock();
         } 
         else
         {
@@ -68,5 +134,14 @@ public class DayNightCycle : MonoBehaviour
             day++;
             currentSecs = 0;
         }
+
+        updateSunRise();
+        updateSunSet();
+
+        //checks if it's day or night
+        checkIfDay();
+
+        //updates the game clock
+        updateClock();
     }
 }
