@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    private float speed;
-    public float normalSpeed;
-    public float sprintSpeed;
-    private float translation;
-    private float strafe;
-    private bool canSprint;
+    private float speed; //speed variable
+    public float normalSpeed; //normal speed
+    public float sprintSpeed; //sprint speed
+    private float translation; // forwards and backwards
+    private float strafe; //left and right
+    
     
 
     public int forceConst = 100; //Force which is applied to the rigidbody when jumping
     
-    private bool canJump;
-    private bool onGround = true;
+    private bool canJump; //will be true when the player can jump
+    private bool onGround = true; //if the player is on the ground this will be true
+    private bool canSprint; //variable changed when the player does to sprint
+
     private Rigidbody selfRigidBody;
     
 
@@ -72,10 +74,12 @@ public class PlayerController : MonoBehaviour {
             if (Cursor.lockState == CursorLockMode.Locked)
             {
                 Cursor.lockState = CursorLockMode.None;
+                Time.timeScale = 0;
             }                
             else if (Cursor.lockState == CursorLockMode.None)
             {
                 Cursor.lockState = CursorLockMode.Locked;
+                Time.timeScale = 1;
             }    
         }		
 	}
