@@ -12,7 +12,7 @@ public class DayNightCycle : MonoBehaviour
     private byte day = 1; //the number of days that have passed
 
     private float enteredSecs = 0; //the total time the player entered, converted to seconds
-    private float currentSecs = 0; //the current time of day in the game, in seconds
+    public float currentSecs = 0; //the current time of day in the game, in seconds
 
     private Light sun;
     private GameObject[] streetLights;
