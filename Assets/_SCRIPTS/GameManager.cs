@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
     //The game states
-    public enum GameState {MAIN_MENU, GAME, PAUSE};
+    public enum GameState {MAIN_MENU, GAME, INVENTORY, PAUSE};
 
     void Awake()
     {
