@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+    private ItemDatabase database;
+
     public GUISkin skin;
 
     public List<Item> inventory = new List<Item>();
@@ -15,7 +17,6 @@ public class Inventory : MonoBehaviour
     public List<Item> BOTTOM = new List<Item>();
     public List<Item> SHOES = new List<Item>();
 
-    private ItemDatabase database;
     private bool showInventory;
     private bool showStats;
     private string stats;
