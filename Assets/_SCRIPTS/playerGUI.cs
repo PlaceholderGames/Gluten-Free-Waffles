@@ -10,7 +10,7 @@ public class playerGUI : MonoBehaviour {
     void OnGUI()
     {
         GUI.Label(new Rect(10, 10, 100, 20), formatTime(dayNightCycle.getTime()));
-        GUI.Label(new Rect(10, 30, 100, 20), dayNightCycle.getDay().ToString());
+        GUI.Label(new Rect(10, 30, 100, 20), "Day " + dayNightCycle.getDay().ToString());
     }
 
     // Use this for initialization
