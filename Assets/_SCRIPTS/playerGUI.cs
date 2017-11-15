@@ -9,8 +9,8 @@ public class playerGUI : MonoBehaviour {
 
     void OnGUI()
     {
-        GUI.Label(new Rect(10, 10, 100, 20), dayNightCycle.getTime().ToString());
-        GUI.Label(new Rect(10, 30, 100, 20), dayNightCycle.getDay().ToString());
+        GUI.Label(new Rect(10, 10, 100, 20), formatTime(dayNightCycle.getTime()));
+        GUI.Label(new Rect(10, 30, 100, 20), "Day " + dayNightCycle.getDay().ToString());
     }
 
     // Use this for initialization
@@ -20,5 +20,20 @@ public class playerGUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+    }
+
+    private string formatTime(int currentTime)
+    {
+        string newTime;
+        int hours, mins, secs;
+        hours = currentTime / 3600;
+        currentTime %= 3600;
+        mins = currentTime / 60;
+        currentTime %= 60;
+        secs = currentTime;
+
+        newTime = hours.ToString() + "h " + mins.ToString() + "m " + secs.ToString() + "s";
+
+        return newTime;
     }
 }
