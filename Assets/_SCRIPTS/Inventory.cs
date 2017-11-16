@@ -22,6 +22,7 @@ public class Inventory : MonoBehaviour
     private string stats;
     private int selectedPage = 0;
 
+
     void Start()
     {
         int maxSnacks = 10;
@@ -136,9 +137,20 @@ public class Inventory : MonoBehaviour
     {
         stats = "";               //Clears tooltip data.
         GUI.skin = skin;            //Sets the GUI skin to the skin configurated in the inspector.
-
         if (showInventory)
+        {
             DrawInventory();
+            Time.timeScale = 0;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+            
+        if (!showInventory)
+        {
+            Time.timeScale = 1;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
         
         if (showStats)        //Draws the tooltip if the mouse is hovering over it.
             GUI.Box(new Rect(Event.current.mousePosition.x, Event.current.mousePosition.y, 150, 100), stats, skin.GetStyle("Stats"));
@@ -175,7 +187,9 @@ public class Inventory : MonoBehaviour
             case 0: //Home
                 {
                     Rect background = new Rect(boxWidth, boxHeight, w, h);          //Draws the main inventory screen.
+                    Rect moneyDisplay = new Rect(boxWidth*2 + 22, boxHeight + 15, 100, 60);
                     GUI.Box(background, "", skin.GetStyle("Main"));
+                    GUI.Box(moneyDisplay, "$67", skin.GetStyle("money"));        //Add current money getter here.
                     break;
                 }
             case 1: //Consumables
@@ -313,7 +327,7 @@ public class Inventory : MonoBehaviour
 
                     for (int y = 0; y < 4; y++)
                     {
-                        for (int x = 0; x < 3; x++)
+                        for (int x = 0; x < 5; x++)
                         {
                             int xspacing = 95;
                             int yspacing = 95;
