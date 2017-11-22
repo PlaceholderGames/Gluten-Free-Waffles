@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/PlaceholderCity.unity
+- path: Assets/pause menu.unity
   isLoaded: 1
   isActive: 1
