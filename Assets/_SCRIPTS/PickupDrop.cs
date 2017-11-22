@@ -8,9 +8,7 @@ public class PickupDrop : MonoBehaviour
     public float itemRange;
     public Transform player;
     //used to reference which item if any should be activated on the camera
-    bool holdingItem = false; //0=no item, 1=stick, 2-rock, etc 
-    //used to store name of which item is currently being held
-    int currentItem;
+    bool holdingItem = false;
     //distance dropped objects drop from player
     public float spawnDistance;
     // Use this for initialization
@@ -39,13 +37,12 @@ public class PickupDrop : MonoBehaviour
                     rb.isKinematic = false;
                     rb.detectCollisions = false;
                     rb.useGravity = false;
+
                     //setting object as a child and giving new position
                     hit.transform.SetParent(player);
-                    hit.transform.position = new Vector3(1f, 0.5f, 1f) + hit.transform.parent.position;
-                    currentItem = hit.transform.GetComponent<ItemID>().itemID;
-                    holdingItem = true;
-                    Debug.Log(GameObject.Find("ItemDatabase").GetComponent<ItemDatabase>().items[currentItem].itemName);
-                    
+                    hit.transform.position = new Vector3(2.0f, 0.0f, 1f) + hit.transform.parent.position;
+                    GetComponent<Inventory>().itemHolding = hit.transform.GetComponent<ItemID>().itemID;
+                    holdingItem = true;        
                 }
                 else if(holdingItem)
                 {

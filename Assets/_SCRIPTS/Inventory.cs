@@ -17,6 +17,8 @@ public class Inventory : MonoBehaviour
     public List<Item> BOTTOM = new List<Item>();
     public List<Item> SHOES = new List<Item>();
 
+    public int itemHolding;
+
     private bool showInventory;
     private bool showStats;
     private string stats;
@@ -311,9 +313,9 @@ public class Inventory : MonoBehaviour
                     boxHeight += 65;        //Pushes the boxes down
                     int idx = 0;
 
-                    for (int y = 0; y < 4; y++)
+                    for (int y = 0; y < 5; y++)
                     {
-                        for (int x = 0; x < 3; x++)
+                        for (int x = 0; x < 5; x++)
                         {
                             int xspacing = 95;
                             int yspacing = 95;
@@ -598,9 +600,8 @@ public class Inventory : MonoBehaviour
                     print("Ate dat slush");
                     break;
                 }
-                
-
         }
+
         if (deleteItem)
         {
             for(int i = 0; i < inventory.Count; i++)
