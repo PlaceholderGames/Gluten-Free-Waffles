@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour {
     public float sprintSpeed; //sprint speed
     private float translation; // forwards and backwards
     private float strafe; //left and right
+    
+    
 
     public int forceConst = 100; //Force which is applied to the rigidbody when jumping
     
@@ -18,6 +20,7 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody selfRigidBody;
     
+
 	// Use this for initialization
 	void Start () {
         Cursor.lockState = CursorLockMode.Locked;
@@ -43,9 +46,7 @@ public class PlayerController : MonoBehaviour {
             speed = normalSpeed;
         }
     }
-
-
-    bool paused = false;
+	
 	// Update is called once per frame
 	void Update () {
         translation = Input.GetAxis("Vertical") * speed;
@@ -67,8 +68,21 @@ public class PlayerController : MonoBehaviour {
         {
             canSprint = false;
         }
-    }
 
+        if (Input.GetKeyDown("escape"))
+        {
+            if (Cursor.lockState == CursorLockMode.Locked)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Time.timeScale = 0;
+            }                
+            else if (Cursor.lockState == CursorLockMode.None)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Time.timeScale = 1;
+            }    
+        }		
+	}
     void OnCollisionStay(Collision coll)
     {
         onGround = true;
