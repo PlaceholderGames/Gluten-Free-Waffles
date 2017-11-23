@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PickupDrop : MonoBehaviour
 {
+    public GUISkin Messages;
     //setting max distance player can pick up items from
     public float itemRange;
     public Transform player;
@@ -11,6 +12,7 @@ public class PickupDrop : MonoBehaviour
     bool holdingItem = false;
     //distance dropped objects drop from player
     public float spawnDistance;
+    public GameObject daInventoryMan;
     // Use this for initialization
     void Start()
     {
@@ -41,7 +43,7 @@ public class PickupDrop : MonoBehaviour
                     //setting object as a child and giving new position
                     hit.transform.SetParent(player);
                     hit.transform.position = new Vector3(2.0f, 0.0f, 1f) + hit.transform.parent.position;
-                    GetComponent<Inventory>().itemHolding = hit.transform.GetComponent<ItemID>().itemID;
+                    daInventoryMan.GetComponent<Inventory>().setItemHolding(hit.transform.GetComponent<ItemID>().itemID);
                     holdingItem = true;        
                 }
                 else if(holdingItem)

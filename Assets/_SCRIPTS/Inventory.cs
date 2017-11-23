@@ -17,15 +17,21 @@ public class Inventory : MonoBehaviour
     public List<Item> BOTTOM = new List<Item>();
     public List<Item> SHOES = new List<Item>();
 
-    public int itemHolding;
+    private int itemHolding = -1;        //IDs start at 0. -1 indicated no item present.
 
     private bool showInventory;
     private bool showStats;
     private string stats;
     private int selectedPage = 0;
 
+    public void setItemHolding(int i)
+    {
+        itemHolding = i;
+    }
+
     void Start()
     {
+        
         int maxSnacks = 10;
         int maxBevs = 10;
         int maxKey = 20;
@@ -36,10 +42,9 @@ public class Inventory : MonoBehaviour
 
         int totalInv = maxSnacks + maxBevs + maxKey + maxHold + maxTop + maxBottom + maxShoes;
 
-
         Populate(inventory, totalInv);             //This number is the max number of items across the whole inventory that the player can hold.
 
-        Populate(SNACKS, maxSnacks);                //Initialises lists for slot creation
+        Populate(SNACKS, maxSnacks);              //Initialises lists for slot creation
         Populate(BEVERAGES, maxBevs);
         Populate(KEY, maxKey);
         Populate(HOLD, maxHold);
@@ -48,13 +53,14 @@ public class Inventory : MonoBehaviour
         Populate(SHOES, maxShoes);
 
         database = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>();
-
+        /*
         //Pass the ID of the item that is picked up.
         addItem(0);
         addItem(1);
         addItem(2);
 
         updateSections();
+        */
     }
 
     void Populate(List<Item> section, int amount)
@@ -131,6 +137,16 @@ public class Inventory : MonoBehaviour
             showInventory = !showInventory;
 
         showStats = false;            //Fixes issue where tooltip remains on screen if inventory is closed while tt is open.
+        
+        if (itemHolding != -1)
+        {
+            if (Input.GetButtonDown("Store"))
+            {
+                addItem(itemHolding);
+                updateSections();
+                itemHolding = -1;
+            }
+        }
     }
 
 
@@ -140,7 +156,18 @@ public class Inventory : MonoBehaviour
         GUI.skin = skin;            //Sets the GUI skin to the skin configurated in the inspector.
 
         if (showInventory)
+        {
             DrawInventory();
+            Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Time.timeScale = 1;
+        }
         
         if (showStats)        //Draws the tooltip if the mouse is hovering over it.
             GUI.Box(new Rect(Event.current.mousePosition.x, Event.current.mousePosition.y, 150, 100), stats, skin.GetStyle("Stats"));
@@ -254,7 +281,6 @@ public class Inventory : MonoBehaviour
                                 bevIDX++;
                             }
 
-
                             if (stats == "")
                                 showStats = false;
 
@@ -313,7 +339,7 @@ public class Inventory : MonoBehaviour
                     boxHeight += 65;        //Pushes the boxes down
                     int idx = 0;
 
-                    for (int y = 0; y < 5; y++)
+                    for (int y = 0; y < 3; y++)
                     {
                         for (int x = 0; x < 5; x++)
                         {
