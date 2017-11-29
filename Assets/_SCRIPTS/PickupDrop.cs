@@ -34,17 +34,20 @@ public class PickupDrop : MonoBehaviour
                 //checking that item trying to be picked up is tagged to be held
                 if (!holdingItem)
                 {
-                    //setting the objects rigid body and turning off collisions
-                    rb = hit.transform.GetComponent<Rigidbody>();
-                    rb.isKinematic = false;
-                    rb.detectCollisions = false;
-                    rb.useGravity = false;
-
                     //setting object as a child and giving new position
                     hit.transform.SetParent(player);
-                    hit.transform.position = new Vector3(2.0f, 0.0f, 1f) + hit.transform.parent.position;
+                    hit.transform.position = new Vector3(2.0f, 0.0f, 0.8f) + hit.transform.parent.position;
                     daInventoryMan.GetComponent<Inventory>().setItemHolding(hit.transform.GetComponent<ItemID>().itemID);
-                    holdingItem = true;        
+                    holdingItem = true;
+                    
+                    //setting the objects rigid body and turning off collisions
+                    rb = hit.transform.GetComponent<Rigidbody>();
+                    rb.isKinematic = true;
+                    rb.detectCollisions = false;
+                    rb.useGravity = false;
+                    rb.constraints = RigidbodyConstraints.FreezeAll;
+                    
+      
                 }
                 else if(holdingItem)
                 {
