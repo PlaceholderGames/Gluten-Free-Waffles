@@ -145,6 +145,11 @@ public class Inventory : MonoBehaviour
                 addItem(itemHolding);
                 updateSections();
                 itemHolding = -1;
+                Destroy(GameObject.Find("FPPCamera").GetComponent<PickupDrop>().itemInHand.gameObject);
+            }
+            if (Input.GetButtonDown("Fire2"))
+            {
+                useConsumable(GameObject.Find("ItemDatabase").GetComponent<ItemDatabase>().items[itemHolding],true);
             }
         }
     }
@@ -249,11 +254,10 @@ public class Inventory : MonoBehaviour
                                     {
                                         loadStats(item);
                                         showStats = true;
-
-                                        if (currentEvent.isMouse && currentEvent.type == EventType.mouseDown && currentEvent.button == 0)
+                                        if (Input.GetKeyDown(KeyCode.E))
                                         {
                                             if (item.itemType == Item.ItemType.Consumable)
-                                                useConsumable(item, snackIDX, true);
+                                                useConsumable(item, false, snackIDX);
                                         }
                                     }
                                 }
@@ -271,11 +275,12 @@ public class Inventory : MonoBehaviour
                                         loadStats(item);
                                         showStats = true;
 
-                                        if (currentEvent.isMouse && currentEvent.type == EventType.mouseDown && currentEvent.button == 0)
+                                        if (Input.GetKeyDown(KeyCode.E))
                                         {
                                             if (item.itemType == Item.ItemType.Consumable)
-                                                useConsumable(item, bevIDX, true);
+                                                useConsumable(item, false, bevIDX);
                                         }
+                                       
                                     }
                                 }
                                 bevIDX++;
@@ -611,7 +616,7 @@ public class Inventory : MonoBehaviour
         //return isFull;
     }
 
-    private void useConsumable(Item item, int slot, bool deleteItem)
+    private void useConsumable(Item item, bool fromHand, int slot = -1)
     {
         switch (item.itemID)
         {
@@ -628,27 +633,35 @@ public class Inventory : MonoBehaviour
                 }
         }
 
-        if (deleteItem)
+        if (item.getDestroy())
         {
-            for(int i = 0; i < inventory.Count; i++)
+            if (fromHand == true)
             {
-                if (inventory[i].itemID == item.itemID)
-                {
-                    inventory[i] = new Item();
-                }
+                Destroy(GameObject.Find("FPPCamera").GetComponent<PickupDrop>().itemInHand.gameObject);
+                itemHolding = -1;
             }
-            switch(item.specifier.ToString())
+            else
             {
-                case "SNACKS":
+                for (int i = 0; i < inventory.Count; i++)
+                {
+                    if (inventory[i].itemID == item.itemID)
                     {
-                        SNACKS[slot] = new Item();
-                        break;
+                        inventory[i] = new Item();
                     }
-                case "BEVERAGES":
-                    {
-                        BEVERAGES[slot] = new Item();
-                        break;
-                    }
+                }
+                switch (item.specifier.ToString())
+                {
+                    case "SNACKS":
+                        {
+                            SNACKS[slot] = new Item();
+                            break;
+                        }
+                    case "BEVERAGES":
+                        {
+                            BEVERAGES[slot] = new Item();
+                            break;
+                        }
+                }
             }
         }
     }

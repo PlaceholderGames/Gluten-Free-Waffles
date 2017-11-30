@@ -14,6 +14,8 @@ public class PickupDrop : MonoBehaviour
     public float spawnDistance;
     public GameObject daInventoryMan;
     // Use this for initialization
+    public Rigidbody itemInHand;
+
     void Start()
     {
 
@@ -28,10 +30,8 @@ public class PickupDrop : MonoBehaviour
             RaycastHit hit;
             
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, itemRange) && hit.transform.tag == "item")
+            if (Physics.Raycast(ray, out hit, itemRange) && hit.transform.tag == "item")    //checking that item trying to be picked up is tagged to be held
             {
-                Rigidbody rb;
-                //checking that item trying to be picked up is tagged to be held
                 if (!holdingItem)
                 {
                     //setting object as a child and giving new position
@@ -41,13 +41,11 @@ public class PickupDrop : MonoBehaviour
                     holdingItem = true;
                     
                     //setting the objects rigid body and turning off collisions
-                    rb = hit.transform.GetComponent<Rigidbody>();
-                    rb.isKinematic = true;
-                    rb.detectCollisions = false;
-                    rb.useGravity = false;
-                    rb.constraints = RigidbodyConstraints.FreezeAll;
-                    
-      
+                    itemInHand = hit.transform.GetComponent<Rigidbody>();
+                    itemInHand.isKinematic = true;
+                    itemInHand.detectCollisions = false;
+                    itemInHand.useGravity = false;
+                    itemInHand.constraints = RigidbodyConstraints.FreezeAll;
                 }
                 else if(holdingItem)
                 {
