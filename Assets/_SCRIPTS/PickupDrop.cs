@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class PickupDrop : MonoBehaviour
 {
+    public GUISkin Messages;
     //setting max distance player can pick up items from
     public float itemRange;
     public Transform player;
     //used to reference which item if any should be activated on the camera
-    int itemOut = 0;//0=no item, 1=stick, 2-rock, etc 
-    //used to store name of which item is currently being held
-    string currentItem;
+    bool holdingItem = false;
     //distance dropped objects drop from player
     public float spawnDistance;
+    public GameObject daInventoryMan;
     // Use this for initialization
+    public Rigidbody itemInHand;
+
     void Start()
     {
-
+      
     }
 
     // Update is called once per frame
@@ -25,97 +27,82 @@ public class PickupDrop : MonoBehaviour
         //player input to try and pick up an item
         if (Input.GetKeyDown(KeyCode.E))
         {
-            //checking if player is currently holding a item
-            if (itemOut == 0)
+            
+            if (holdingItem)
             {
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out hit, itemRange))
-                {
-                    //checking that item trying to be picked up is tagged to be held
-                    if (hit.transform.tag == "item")
-                    {
-                        //setting the objects rigid body and turning off collisions
-                        Rigidbody rb;
-                        rb = hit.transform.GetComponent<Rigidbody>();
-                        rb.isKinematic = false;
-                        rb.detectCollisions = false;
-                        rb.useGravity = false;
-                            //setting object as a child and giving new position
-                        hit.transform.SetParent(player, false);
-                        hit.transform.position = new Vector3(1f, 0.5f, 1f) + hit.transform.parent.position;
-                        /*OLD VERSION OF PICKING ITEMS UP
-                        //ITEMS BEING PICK UP   
-                        //checking which object has been hit
-                        if (hit.transform.gameObject.name.Contains("stick"))
-                        {
-                            //removing hit object from the scene
-                            Destroy(hit.transform.gameObject);
-                            //setting the item to be held as active
-                            transform.Find("stick").gameObject.SetActive(true);
-                            //setting which item it currently being held
-                            itemOut = 1;
-                        }
-                        else if (hit.transform.gameObject.name.Contains("rock"))
-                        {
-                            //removing hit object from the scene
-                            Destroy(hit.transform.gameObject);
-                            //setting the item to be held as active
-                            transform.Find("rock").gameObject.SetActive(true);
-                            //setting which item it currently being held
-                            itemOut = 2;
-                        }*/
-                    }
-                    //if player is trying to drop item raycast should return as null
-                }
+                dropItem();
+                
             }
+            else if (!holdingItem)
+            {
+                pickupItem();
+            }
+        }
+    }
+    void dropItem()
+    {
+        itemInHand.isKinematic = false;
+        itemInHand.detectCollisions = true;
+        itemInHand.useGravity = true;
+        itemInHand.constraints = RigidbodyConstraints.None;
+        itemInHand.transform.parent = null;
+        holdingItem = false;
+    }
+    void pickupItem()
+    {
+        RaycastHit hit;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit, itemRange) && hit.transform.tag == "item")    //checking that item trying to be picked up is tagged to be held
+        {
+                //setting object as a child and giving new position
+                hit.transform.SetParent(player);
+                //changing the items position so that it is in a set position when picked up
+                hit.transform.position = hit.transform.parent.position + Camera.main.transform.right * 0.8f + Camera.main.transform.forward - Camera.main.transform.up * 0.08f;
+                //getting the rotation of the player to base item rotation off of
+                Quaternion playerRotation = player.transform.rotation;
+                //adjusting the rotation of the item to a prefered alignment
+                hit.transform.rotation = playerRotation;
+                hit.transform.Rotate(Vector3.right, -90);
+                hit.transform.Rotate(Vector3.forward, 180);
+                daInventoryMan.GetComponent<Inventory>().setItemHolding(hit.transform.GetComponent<ItemID>().itemID);
+                holdingItem = true;
+
+                //setting the objects rigid body and turning off collisions
+                itemInHand = hit.transform.GetComponent<Rigidbody>();
+                itemInHand.isKinematic = true;
+                itemInHand.detectCollisions = false;
+                itemInHand.useGravity = false;
+                itemInHand.constraints = RigidbodyConstraints.FreezeAll;
         }
     }
 }
-            /*else
-            {
-                //ITEMS BEING DROPPED
-                //looking to drop a stick
-                //string ssdasd;
-                if (itemOut == 1)
-                {
-                    //setting the currently held item to false
-                    //ssdasd = arraywtvtf[itemOut];
-                    transform.Find("stick").gameObject.SetActive(false);
-                    //spawning in the dropped item
-                    dropItem(itemOut);
-                    //reseting item held to 0
-                    itemOut = 0;
-                }
-                //looking to drop a rock
-                else if (itemOut == 2)
-                {
-                    //setting the currently held item to false
-                    transform.Find("rock").gameObject.SetActive(false);
-                    //spawning in the dropped item
-                    dropItem(itemOut);
-                    //reseting item held to 0
-                    itemOut = 0;
-                }
-            }
-        }
-    }
-    //player looking to drop an item
-    void dropItem(int itemRef)
-    {
-        Vector3 playerPos = player.transform.position;
-        Vector3 playerDirection = player.transform.forward;
-        Quaternion playerRotation = player.transform.rotation;
-        Vector3 spawnPos = playerPos + playerDirection * spawnDistance;
-        //dropping a stick
-        if (itemRef == 1)
-        {
-            Instantiate(stick, spawnPos, playerRotation);
-        }
-        //dropping a rock
-        else if (itemRef == 2)
-        {
-            Instantiate(rock, spawnPos, playerRotation);
-        }
-    }
-}*/
+//else
+//{
+//    //ITEMS BEING DROPPED
+//    //looking to drop a stick
+//    //string ssdasd;
+//    if (itemOut == 1)
+//    {
+//        //setting the currently held item to false
+//        //ssdasd = arraywtvtf[itemOut];
+//        transform.Find("stick").gameObject.SetActive(false);
+//        //spawning in the dropped item
+//        dropItem(itemOut);
+//        //reseting item held to 0
+//        itemOut = 0;
+//    }
+//    //looking to drop a rock
+//    else if (itemOut == 2)
+//    {
+//        //setting the currently held item to false
+//        transform.Find("rock").gameObject.SetActive(false);
+//        //spawning in the dropped item
+//        dropItem(itemOut);
+//        //reseting item held to 0
+//        itemOut = 0;
+//    }
+//}
+//}
+//}
+//player looking to drop an item
