@@ -17,13 +17,21 @@ public class Inventory : MonoBehaviour
     public List<Item> BOTTOM = new List<Item>();
     public List<Item> SHOES = new List<Item>();
 
+    private int itemHolding = -1;        //IDs start at 0. -1 indicated no item present.
+
     private bool showInventory;
     private bool showStats;
     private string stats;
     private int selectedPage = 0;
 
+    public void setItemHolding(int i)
+    {
+        itemHolding = i;
+    }
+
     void Start()
     {
+        
         int maxSnacks = 10;
         int maxBevs = 10;
         int maxKey = 20;
@@ -34,10 +42,9 @@ public class Inventory : MonoBehaviour
 
         int totalInv = maxSnacks + maxBevs + maxKey + maxHold + maxTop + maxBottom + maxShoes;
 
-
         Populate(inventory, totalInv);             //This number is the max number of items across the whole inventory that the player can hold.
 
-        Populate(SNACKS, maxSnacks);                //Initialises lists for slot creation
+        Populate(SNACKS, maxSnacks);              //Initialises lists for slot creation
         Populate(BEVERAGES, maxBevs);
         Populate(KEY, maxKey);
         Populate(HOLD, maxHold);
@@ -46,13 +53,14 @@ public class Inventory : MonoBehaviour
         Populate(SHOES, maxShoes);
 
         database = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>();
-
+        /*
         //Pass the ID of the item that is picked up.
         addItem(0);
         addItem(1);
         addItem(2);
 
         updateSections();
+        */
     }
 
     void Populate(List<Item> section, int amount)
@@ -129,6 +137,21 @@ public class Inventory : MonoBehaviour
             showInventory = !showInventory;
 
         showStats = false;            //Fixes issue where tooltip remains on screen if inventory is closed while tt is open.
+        
+        if (itemHolding != -1)
+        {
+            if (Input.GetButtonDown("Store"))
+            {
+                addItem(itemHolding);
+                updateSections();
+                itemHolding = -1;
+                Destroy(GameObject.Find("FPPCamera").GetComponent<PickupDrop>().itemInHand.gameObject);
+            }
+            if (Input.GetButtonDown("Fire2"))
+            {
+                useConsumable(GameObject.Find("ItemDatabase").GetComponent<ItemDatabase>().items[itemHolding],true);
+            }
+        }
     }
 
 
@@ -138,7 +161,18 @@ public class Inventory : MonoBehaviour
         GUI.skin = skin;            //Sets the GUI skin to the skin configurated in the inspector.
 
         if (showInventory)
+        {
             DrawInventory();
+            Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Time.timeScale = 1;
+        }
         
         if (showStats)        //Draws the tooltip if the mouse is hovering over it.
             GUI.Box(new Rect(Event.current.mousePosition.x, Event.current.mousePosition.y, 150, 100), stats, skin.GetStyle("Stats"));
@@ -220,11 +254,10 @@ public class Inventory : MonoBehaviour
                                     {
                                         loadStats(item);
                                         showStats = true;
-
-                                        if (currentEvent.isMouse && currentEvent.type == EventType.mouseDown && currentEvent.button == 0)
+                                        if (Input.GetKeyDown(KeyCode.E))
                                         {
                                             if (item.itemType == Item.ItemType.Consumable)
-                                                useConsumable(item, snackIDX, true);
+                                                useConsumable(item, false, snackIDX);
                                         }
                                     }
                                 }
@@ -242,16 +275,16 @@ public class Inventory : MonoBehaviour
                                         loadStats(item);
                                         showStats = true;
 
-                                        if (currentEvent.isMouse && currentEvent.type == EventType.mouseDown && currentEvent.button == 0)
+                                        if (Input.GetKeyDown(KeyCode.E))
                                         {
                                             if (item.itemType == Item.ItemType.Consumable)
-                                                useConsumable(item, bevIDX, true);
+                                                useConsumable(item, false, bevIDX);
                                         }
+                                       
                                     }
                                 }
                                 bevIDX++;
                             }
-
 
                             if (stats == "")
                                 showStats = false;
@@ -311,9 +344,9 @@ public class Inventory : MonoBehaviour
                     boxHeight += 65;        //Pushes the boxes down
                     int idx = 0;
 
-                    for (int y = 0; y < 4; y++)
+                    for (int y = 0; y < 3; y++)
                     {
-                        for (int x = 0; x < 3; x++)
+                        for (int x = 0; x < 5; x++)
                         {
                             int xspacing = 95;
                             int yspacing = 95;
@@ -583,7 +616,7 @@ public class Inventory : MonoBehaviour
         //return isFull;
     }
 
-    private void useConsumable(Item item, int slot, bool deleteItem)
+    private void useConsumable(Item item, bool fromHand, int slot = -1)
     {
         switch (item.itemID)
         {
@@ -598,30 +631,37 @@ public class Inventory : MonoBehaviour
                     print("Ate dat slush");
                     break;
                 }
-                
-
         }
-        if (deleteItem)
+
+        if (item.getDestroy())
         {
-            for(int i = 0; i < inventory.Count; i++)
+            if (fromHand == true)
             {
-                if (inventory[i].itemID == item.itemID)
-                {
-                    inventory[i] = new Item();
-                }
+                Destroy(GameObject.Find("FPPCamera").GetComponent<PickupDrop>().itemInHand.gameObject);
+                itemHolding = -1;
             }
-            switch(item.specifier.ToString())
+            else
             {
-                case "SNACKS":
+                for (int i = 0; i < inventory.Count; i++)
+                {
+                    if (inventory[i].itemID == item.itemID)
                     {
-                        SNACKS[slot] = new Item();
-                        break;
+                        inventory[i] = new Item();
                     }
-                case "BEVERAGES":
-                    {
-                        BEVERAGES[slot] = new Item();
-                        break;
-                    }
+                }
+                switch (item.specifier.ToString())
+                {
+                    case "SNACKS":
+                        {
+                            SNACKS[slot] = new Item();
+                            break;
+                        }
+                    case "BEVERAGES":
+                        {
+                            BEVERAGES[slot] = new Item();
+                            break;
+                        }
+                }
             }
         }
     }
