@@ -51,9 +51,12 @@
      <Compile Include="Assets\_SCRIPTS\Inventory.cs" />
      <Compile Include="Assets\_SCRIPTS\Item.cs" />
      <Compile Include="Assets\_SCRIPTS\ItemDatabase.cs" />
+     <Compile Include="Assets\_SCRIPTS\ItemID.cs" />
      <Compile Include="Assets\_SCRIPTS\MENU\LoadSceneOnClick.cs" />
      <Compile Include="Assets\_SCRIPTS\MENU\PlayGame.cs" />
      <Compile Include="Assets\_SCRIPTS\MENU\QuitOnClick.cs" />
+     <Compile Include="Assets\_SCRIPTS\MobilePhone.cs" />
+     <Compile Include="Assets\_SCRIPTS\PickupDrop.cs" />
      <Compile Include="Assets\_SCRIPTS\PlayerController.cs" />
      <Compile Include="Assets\_SCRIPTS\playerGUI.cs" />
      <None Include="Assets\_SHADERS\ToonShading\Shaders\ToonBasic.shader" />

@@ -65,7 +65,7 @@ public class PickupDrop : MonoBehaviour
                 hit.transform.rotation = playerRotation;
                 hit.transform.Rotate(Vector3.right, -90);
                 hit.transform.Rotate(Vector3.forward, 180);
-                daInventoryMan.GetComponent<Inventory>().setItemHolding(hit.transform.GetComponent<ItemID>().itemID);
+                //daInventoryMan.GetComponent<Inventory>().setItemHolding(hit.transform.GetComponent<ItemID>().itemID);                 //FIX THIS NOW PLS THANKS <3
                 holdingItem = true;
 
                 //setting the objects rigid body and turning off collisions
