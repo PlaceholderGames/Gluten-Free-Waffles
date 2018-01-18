@@ -148,9 +148,7 @@ public class Inventory : MonoBehaviour
                 Destroy(GameObject.Find("FPPCamera").GetComponent<PickupDrop>().itemInHand.gameObject);
             }
             if (Input.GetButtonDown("Fire2"))
-            {
                 useConsumable(GameObject.Find("ItemDatabase").GetComponent<ItemDatabase>().items[itemHolding],true);
-            }
         }
     }
 
@@ -254,7 +252,7 @@ public class Inventory : MonoBehaviour
                                     {
                                         loadStats(item);
                                         showStats = true;
-                                        if (Input.GetKeyDown(KeyCode.E))
+                                        if (Input.GetButtonDown("Fire2"))
                                         {
                                             if (item.itemType == Item.ItemType.Consumable)
                                                 useConsumable(item, false, snackIDX);
@@ -275,7 +273,7 @@ public class Inventory : MonoBehaviour
                                         loadStats(item);
                                         showStats = true;
 
-                                        if (Input.GetKeyDown(KeyCode.E))
+                                        if (Input.GetButtonDown("Fire2"))
                                         {
                                             if (item.itemType == Item.ItemType.Consumable)
                                                 useConsumable(item, false, bevIDX);
