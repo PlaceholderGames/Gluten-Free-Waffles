@@ -7,6 +7,7 @@ public class Inventory : MonoBehaviour
     private ItemDatabase database;
 
     public GUISkin skin;
+    public Transform mobilePhone;
 
     public List<Item> inventory = new List<Item>();
     public List<Item> SNACKS = new List<Item>();
@@ -19,14 +20,42 @@ public class Inventory : MonoBehaviour
 
     private int itemHolding = -1;        //IDs start at 0. -1 indicated no item present.
 
+    private bool hasPhone = false;
+    //Add other collectable identifiers here for use in quests etc
+
+    private bool phoneOut = false;
     private bool showInventory;
     private bool showStats;
     private string stats;
     private int selectedPage = 0;
 
+    public void CollectedCollectable(int itemCollected)
+    {
+        switch(itemCollected)
+        {
+            //Add ID's and bools for collectable items eg. wallet, shirt etc.
+            case 3:
+                {
+                    Instantiate(mobilePhone);
+                    hasPhone = true;
+                    break;
+                }
+        }
+    }
+
+    public void setPhoneOut(bool set)
+    {
+        phoneOut = set;
+    }
+
     public void setItemHolding(int i)
     {
         itemHolding = i;
+    }
+
+    public int getItemHolding()
+    {
+        return itemHolding;
     }
 
     void Start()
@@ -135,6 +164,13 @@ public class Inventory : MonoBehaviour
     {
         if (Input.GetButtonDown("Inventory"))       //When the i button is pressed, shows the inventory. Uses trigger in editor.
             showInventory = !showInventory;
+        
+        if (Input.GetButtonDown("Phone") && hasPhone && !phoneOut)
+        {
+            Instantiate(mobilePhone);
+            phoneOut = true;
+        }
+
 
         showStats = false;            //Fixes issue where tooltip remains on screen if inventory is closed while tt is open.
         

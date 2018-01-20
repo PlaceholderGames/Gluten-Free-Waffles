@@ -47,6 +47,7 @@ public class PickupDrop : MonoBehaviour
         itemInHand.constraints = RigidbodyConstraints.None;
         itemInHand.transform.parent = null;
         holdingItem = false;
+        daInventoryMan.GetComponent<Inventory>().setItemHolding(-1);
     }
     void pickupItem()
     {
@@ -55,6 +56,14 @@ public class PickupDrop : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, itemRange) && hit.transform.tag == "item")    //checking that item trying to be picked up is tagged to be held
         {
+            if (hit.transform.GetComponent<ItemID>().itemID == 3)
+            {
+                print("Picked Up Phone");
+                daInventoryMan.GetComponent<Inventory>().CollectedCollectable(hit.transform.GetComponent<ItemID>().itemID);
+                Destroy(hit.rigidbody.gameObject);
+            }
+            else
+            {
                 //setting object as a child and giving new position
                 hit.transform.SetParent(player);
                 //changing the items position so that it is in a set position when picked up
@@ -74,6 +83,8 @@ public class PickupDrop : MonoBehaviour
                 itemInHand.detectCollisions = false;
                 itemInHand.useGravity = false;
                 itemInHand.constraints = RigidbodyConstraints.FreezeAll;
+            }
+
         }
     }
 }
