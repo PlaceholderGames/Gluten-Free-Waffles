@@ -7,7 +7,7 @@ public class Inventory : MonoBehaviour
     private ItemDatabase database;
 
     public GUISkin skin;
-    public Transform mobilePhone;
+    public GameObject playerPhone;
 
     public List<Item> inventory = new List<Item>();
     public List<Item> SNACKS = new List<Item>();
@@ -20,10 +20,10 @@ public class Inventory : MonoBehaviour
 
     private int itemHolding = -1;        //IDs start at 0. -1 indicated no item present.
 
-    private bool hasPhone = false;
+    private bool hasPhone;
     //Add other collectable identifiers here for use in quests etc
 
-    private bool phoneOut = false;
+    private bool phoneOut;
     private bool showInventory;
     private bool showStats;
     private string stats;
@@ -37,16 +37,19 @@ public class Inventory : MonoBehaviour
             case 3:
                 {
                     hasPhone = true;
+                    phoneOut = false;
+                    print("You found your phone!!"); 
                     break;
+                    //Display message to user saying they found phone here
+
                 }
         }
     }
 
-    public void phoneAway()
+    public void updatePhone()
     {
-        print(phoneOut);
-        phoneOut = false;
-        print(phoneOut);
+        phoneOut = !phoneOut;
+        playerPhone.SetActive(phoneOut);
     }
 
     public void setItemHolding(int i)
@@ -61,7 +64,9 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
-        
+        playerPhone = GameObject.FindGameObjectWithTag("Phone");
+        playerPhone.SetActive(false);
+
         int maxSnacks = 10;
         int maxBevs = 10;
         int maxKey = 20;
@@ -83,6 +88,7 @@ public class Inventory : MonoBehaviour
         Populate(SHOES, maxShoes);
 
         database = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>();
+
         /*
         //Pass the ID of the item that is picked up.
         addItem(0);
@@ -165,12 +171,12 @@ public class Inventory : MonoBehaviour
     {
         if (Input.GetButtonDown("Inventory"))       //When the i button is pressed, shows the inventory. Uses trigger in editor.
             showInventory = !showInventory;
-        
-        if (Input.GetButtonDown("Phone") && phoneOut == false)
+
+        if (Input.GetButtonDown("Phone") && hasPhone)
         {
-            Instantiate(mobilePhone);
-            phoneOut = true;
+            updatePhone();
         }
+
 
 
         showStats = false;            //Fixes issue where tooltip remains on screen if inventory is closed while tt is open.
