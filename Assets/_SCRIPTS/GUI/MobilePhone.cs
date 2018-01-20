@@ -16,7 +16,7 @@ public class MobilePhone : MonoBehaviour {
 	void Update () {
         if (Input.GetButtonDown("Phone"))
         {
-            inventory.GetComponent<Inventory>().setPhoneOut(false);
+            inventory.GetComponent<Inventory>().phoneAway();
             Destroy(GameObject.FindGameObjectWithTag("Phone"));
         }
 

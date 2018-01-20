@@ -36,16 +36,17 @@ public class Inventory : MonoBehaviour
             //Add ID's and bools for collectable items eg. wallet, shirt etc.
             case 3:
                 {
-                    Instantiate(mobilePhone);
                     hasPhone = true;
                     break;
                 }
         }
     }
 
-    public void setPhoneOut(bool set)
+    public void phoneAway()
     {
-        phoneOut = set;
+        print(phoneOut);
+        phoneOut = false;
+        print(phoneOut);
     }
 
     public void setItemHolding(int i)
@@ -165,7 +166,7 @@ public class Inventory : MonoBehaviour
         if (Input.GetButtonDown("Inventory"))       //When the i button is pressed, shows the inventory. Uses trigger in editor.
             showInventory = !showInventory;
         
-        if (Input.GetButtonDown("Phone") && hasPhone && !phoneOut)
+        if (Input.GetButtonDown("Phone") && phoneOut == false)
         {
             Instantiate(mobilePhone);
             phoneOut = true;
