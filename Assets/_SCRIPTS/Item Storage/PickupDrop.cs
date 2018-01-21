@@ -58,7 +58,6 @@ public class PickupDrop : MonoBehaviour
         {
             if (hit.transform.GetComponent<ItemID>().itemID == 3)
             {
-                print("Picked Up Phone");
                 daInventoryMan.GetComponent<Inventory>().CollectedCollectable(hit.transform.GetComponent<ItemID>().itemID);
                 Destroy(hit.rigidbody.gameObject);
             }

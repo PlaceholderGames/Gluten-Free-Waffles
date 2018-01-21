@@ -17,6 +17,8 @@ public class MobilePhone : MonoBehaviour {
 
         transform.Rotate(Vector3.right, -90);
         transform.Rotate(Vector3.up, -110);
+
+        //transform.GetChild(1).transform.GetComponent<Canvas>().transform.
 	}
 	
 	// Update is called once per frame
