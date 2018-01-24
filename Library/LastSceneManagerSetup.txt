@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_PREFABS/MainScene.unity
+- path: Assets/PlaceholderCity.unity
   isLoaded: 1
   isActive: 1
