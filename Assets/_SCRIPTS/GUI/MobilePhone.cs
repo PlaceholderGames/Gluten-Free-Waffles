@@ -6,9 +6,10 @@ public class MobilePhone : MonoBehaviour {
 
     public Transform player;
     public Transform playerCamera;
+    private GUIStyle guiStyle = new GUIStyle();
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         
         transform.SetParent(GameObject.FindGameObjectWithTag("MainCamera").transform);
 
@@ -17,9 +18,7 @@ public class MobilePhone : MonoBehaviour {
 
         transform.Rotate(Vector3.right, -90);
         transform.Rotate(Vector3.up, -110);
-
-        //transform.GetChild(1).transform.GetComponent<Canvas>().transform.
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
