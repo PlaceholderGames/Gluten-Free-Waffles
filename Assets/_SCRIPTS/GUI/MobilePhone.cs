@@ -12,28 +12,26 @@ public class MobilePhone : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        
+
+        Vector3 phoneDimentions = this.GetComponent<Renderer>().bounds.size;
         transform.SetParent(GameObject.FindGameObjectWithTag("MainCamera").transform);
         dayNightCycle = GameObject.Find("Sun").GetComponent<DayNightCycle>();
 
-        Vector3 worldPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width * 0.84f, Screen.height * 0.12f, 3));
+        Vector3 worldPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width * 0.8f, Screen.height * 0.12f, 3));
         transform.position = worldPoint;
 
         transform.Rotate(Vector3.right, -90);
         transform.Rotate(Vector3.up, -110);
     }
-	
-	// Update is called once per frame
-	void Update () {
 
-	}
     void OnGUI()
     {
-        Vector3 phoneDimentions = this.GetComponent<Renderer>().bounds.size;
-        print(phoneDimentions);
         var position = Camera.main.WorldToScreenPoint(gameObject.transform.position);
         var textSize = GUI.skin.label.CalcSize(new GUIContent(text));
-        GUI.Label(new Rect(position.x, Screen.height - position.y - 495, textSize.x + 100, textSize.y + 100), formatTime(dayNightCycle.getTime()));
+
+        //Draw time onto the phone
+        Rect phoneTime = new Rect(position.x, position.y + 100, textSize.x + 100, textSize.y + 100);
+        GUI.Label(phoneTime, formatTime(dayNightCycle.getTime()));
     }
 
     private string formatTime(int currentTime)
