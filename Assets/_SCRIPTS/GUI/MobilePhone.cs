@@ -30,8 +30,8 @@ public class MobilePhone : MonoBehaviour {
         var textSize = GUI.skin.label.CalcSize(new GUIContent(text));
 
         //Draw time onto the phone
-        Rect phoneTime = new Rect(position.x, position.y + 100, textSize.x + 100, textSize.y + 100);
-        GUI.Label(phoneTime, formatTime(dayNightCycle.getTime()));
+        Rect phoneTime = new Rect(position.x, position.y + 160, textSize.x + 100, textSize.y + 100);
+        //GUI.Label phone = GUI.Label(phoneTime, formatTime(dayNightCycle.getTime()));
     }
 
     private string formatTime(int currentTime)
