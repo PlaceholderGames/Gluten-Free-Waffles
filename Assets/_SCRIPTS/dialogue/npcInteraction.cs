@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 public class npcInteraction : MonoBehaviour
 {
     //stores the range at which the npc can interact with the player
     public float npcRange;
+    public GUISkin skin;
+
     private bool showGUI = false;
 
     // Use this for initialization
@@ -26,16 +27,16 @@ public class npcInteraction : MonoBehaviour
             {
                 print("YOU TOUCHED THE NPC!");
                 showGUI = true;
-
-                drawQuad();
             }
         }
     }
 
     void OnGUI()
     {
+        GUI.skin = skin; //Sets the GUI skin to the skin configurated in the inspector.
+
         if (showGUI) {
-           // GUI.Label(Rect(25, 25, 100, 30), style);
+            GUI.Box(new Rect(0, 100, Screen.width, 100), "<color=#ffffff>Snacks</color>\n", skin.GetStyle("Label"));
         }
     }
 
