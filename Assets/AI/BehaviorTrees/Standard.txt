@@ -1,0 +1,3 @@
+<behaviortree name="Standard">
+  <sequencer name="root"></sequencer>
+</behaviortree>
