@@ -60,6 +60,7 @@
      <Compile Include="Assets\_SCRIPTS\MENU\QuitOnClick.cs" />
      <Compile Include="Assets\_SCRIPTS\PlayerController.cs" />
      <None Include="Assets\_SHADERS\ToonShading\Shaders\ToonBasic.shader" />
+     <None Include="Assets\Fonts\Exo\OFL.txt" />
      <None Include="Assets\_SHADERS\ToonShading\Shaders\ToonBasicOutline.shader" />
      <None Include="Assets\Fonts\Raleway\OFL.txt" />
      <None Include="Assets\_SHADERS\ToonShading\Shaders\ToonLitOutline.shader" />
