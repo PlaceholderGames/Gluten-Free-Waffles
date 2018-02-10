@@ -48,18 +48,19 @@
   <ItemGroup>
      <Compile Include="Assets\_SCRIPTS\CamMouseLook.cs" />
      <Compile Include="Assets\_SCRIPTS\DayNightCycle.cs" />
-     <Compile Include="Assets\_SCRIPTS\Inventory.cs" />
-     <Compile Include="Assets\_SCRIPTS\Item.cs" />
-     <Compile Include="Assets\_SCRIPTS\ItemDatabase.cs" />
-     <Compile Include="Assets\_SCRIPTS\ItemID.cs" />
+     <Compile Include="Assets\_SCRIPTS\GUI\MobilePhone.cs" />
+     <Compile Include="Assets\_SCRIPTS\GUI\playerGUI.cs" />
+     <Compile Include="Assets\_SCRIPTS\Item Storage\Inventory.cs" />
+     <Compile Include="Assets\_SCRIPTS\Item Storage\Item.cs" />
+     <Compile Include="Assets\_SCRIPTS\Item Storage\ItemDatabase.cs" />
+     <Compile Include="Assets\_SCRIPTS\Item Storage\ItemID.cs" />
+     <Compile Include="Assets\_SCRIPTS\Item Storage\PickupDrop.cs" />
      <Compile Include="Assets\_SCRIPTS\MENU\LoadSceneOnClick.cs" />
      <Compile Include="Assets\_SCRIPTS\MENU\PlayGame.cs" />
      <Compile Include="Assets\_SCRIPTS\MENU\QuitOnClick.cs" />
-     <Compile Include="Assets\_SCRIPTS\MobilePhone.cs" />
-     <Compile Include="Assets\_SCRIPTS\PickupDrop.cs" />
      <Compile Include="Assets\_SCRIPTS\PlayerController.cs" />
-     <Compile Include="Assets\_SCRIPTS\playerGUI.cs" />
      <None Include="Assets\_SHADERS\ToonShading\Shaders\ToonBasic.shader" />
+     <None Include="Assets\Fonts\Exo\OFL.txt" />
      <None Include="Assets\_SHADERS\ToonShading\Shaders\ToonBasicOutline.shader" />
      <None Include="Assets\Fonts\Raleway\OFL.txt" />
      <None Include="Assets\_SHADERS\ToonShading\Shaders\ToonLitOutline.shader" />
@@ -81,6 +82,9 @@
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.VR">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
