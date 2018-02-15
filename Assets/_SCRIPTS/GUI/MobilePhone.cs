@@ -8,7 +8,6 @@ public class MobilePhone : MonoBehaviour {
     public DayNightCycle dayNightCycle;
     public Transform player;
     public Transform playerCamera;
-    private GUIStyle guiStyle = new GUIStyle();
     private string text;
     private int selection = 0;
     private int oldSelection = 0;
@@ -36,7 +35,6 @@ public class MobilePhone : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
             {
-                print("hit");
                 transform.GetChild(6).GetChild(0).gameObject.SetActive(false);
                 errorMessage = false;
             }
@@ -47,10 +45,7 @@ public class MobilePhone : MonoBehaviour {
     }
 
     void OnGUI()
-    {
-        var position = Camera.main.WorldToScreenPoint(gameObject.transform.position);
-        var textSize = GUI.skin.label.CalcSize(new GUIContent(text));
-        
+    {        
         transform.GetChild(1).GetComponent<Text>().text = formatHours(dayNightCycle.getTime());
         transform.GetChild(2).GetComponent<Text>().text = formatMins(dayNightCycle.getTime());
         transform.GetChild(3).GetComponent<Text>().text = dayNightCycle.getDay().ToString();
@@ -224,6 +219,8 @@ public class MobilePhone : MonoBehaviour {
                 }
         }
     }
+
+
     private void AppUnavailable()
     {
         transform.GetChild(6).GetChild(0).gameObject.SetActive(true);
@@ -233,12 +230,9 @@ public class MobilePhone : MonoBehaviour {
     private string formatMins(int currentTime)
     {
         string newTime;
-        int hours, mins, secs;
-        hours = currentTime / 3600;
+        int mins;
         currentTime %= 3600;
         mins = currentTime / 60;
-        currentTime %= 60;
-        secs = currentTime;
 
         string minuteUpdate;
        
@@ -253,12 +247,9 @@ public class MobilePhone : MonoBehaviour {
     private string formatHours(int currentTime)
     {
         string newTime;
-        int hours, mins, secs;
+        int hours;
         hours = currentTime / 3600;
         currentTime %= 3600;
-        mins = currentTime / 60;
-        currentTime %= 60;
-        secs = currentTime;
 
         string hourUpdate;
         hourUpdate = hours.ToString();

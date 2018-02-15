@@ -49,6 +49,7 @@
      <Compile Include="Assets\_SCRIPTS\CamMouseLook.cs" />
      <Compile Include="Assets\_SCRIPTS\DayNightCycle.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\MobilePhone.cs" />
+     <Compile Include="Assets\_SCRIPTS\GUI\Phone Apps\Health.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\playerGUI.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\Inventory.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\Item.cs" />
