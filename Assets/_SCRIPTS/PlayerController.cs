@@ -29,6 +29,17 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
+        
+    }
+	
+	// Update is called once per frame
+	void Update () {
+        translation = Input.GetAxis("Vertical") * speed;
+        strafe = Input.GetAxis("Horizontal") * speed;
+        translation *= Time.deltaTime;
+        strafe *= Time.deltaTime;
+
+        //transform.Translate(strafe, 0, translation);
         transform.Translate(strafe, 0, translation);
 
         //selfRigidBody.AddForce(0, -10, 0, ForceMode.Force);
@@ -45,17 +56,6 @@ public class PlayerController : MonoBehaviour {
         {
             speed = normalSpeed;
         }
-    }
-	
-	// Update is called once per frame
-	void Update () {
-        translation = Input.GetAxis("Vertical") * speed;
-        strafe = Input.GetAxis("Horizontal") * speed;
-        translation *= Time.deltaTime;
-        strafe *= Time.deltaTime;
-
-        //transform.Translate(strafe, 0, translation);
-
         if (Input.GetKeyDown(KeyCode.Space) && onGround) //if space isn't being pressed, allows the player to jump
         {
             canJump = true;
