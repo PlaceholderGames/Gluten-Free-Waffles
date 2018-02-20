@@ -6,17 +6,27 @@ public class npcInteraction : MonoBehaviour
 {
     //stores the range at which the npc can interact with the player
     public float npcRange;
-    public GUISkin skin;
+
+    public string inputText;
 
     private bool showGUI = false;
 
+
+    //var font : Font;
+
+
     // Use this for initialization
     void Start ()
-    {	
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    {
+        var Text = new GameObject();
+        var DialogueTextMesh = gameObject.AddComponent<TextMesh>();
+       // DialogueTextMesh.font = font;
+       // DialogueTextMesh.GetComponent<Renderer>().material = font.material;
+        DialogueTextMesh.text = "Hello World!";
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
         if (Input.GetKeyDown(KeyCode.F)) {
             RaycastHit hit;
@@ -33,18 +43,6 @@ public class npcInteraction : MonoBehaviour
 
     void OnGUI()
     {
-        GUI.skin = skin; //Sets the GUI skin to the skin configurated in the inspector.
-
-        if (showGUI) {
-            GUI.Box(new Rect(0, 100, Screen.width, 100), "<color=#ffffff>Snacks</color>\n", skin.GetStyle("Label"));
-        }
-    }
-
-    void drawQuad(Rect position, Color color) {
-        Texture2D texture = new Texture2D(1, 1);
-        texture.SetPixel(0, 0, color);
-        texture.Apply();
-        GUI.skin.box.normal.background = texture;
-        GUI.Box(position, GUIContent.none);
+       // GUI.Label(new Rect(10, Screen.height - 10, 150, 130), "HELLO WORLD!!!!");
     }
 }
