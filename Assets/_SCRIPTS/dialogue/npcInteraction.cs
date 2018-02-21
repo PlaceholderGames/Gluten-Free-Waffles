@@ -6,23 +6,15 @@ public class npcInteraction : MonoBehaviour
 {
     //stores the range at which the npc can interact with the player
     public float npcRange;
-
     public string inputText;
 
     private bool showGUI = false;
 
-
-    //var font : Font;
-
+    public GameObject player;
 
     // Use this for initialization
     void Start ()
     {
-        var Text = new GameObject();
-        var DialogueTextMesh = gameObject.AddComponent<TextMesh>();
-       // DialogueTextMesh.font = font;
-       // DialogueTextMesh.GetComponent<Renderer>().material = font.material;
-        DialogueTextMesh.text = "Hello World!";
     }
 
     // Update is called once per frame
@@ -43,6 +35,6 @@ public class npcInteraction : MonoBehaviour
 
     void OnGUI()
     {
-       // GUI.Label(new Rect(10, Screen.height - 10, 150, 130), "HELLO WORLD!!!!");
+        transform.GetChild(1).GetComponent<TextMesh>().text = inputText;
     }
 }
