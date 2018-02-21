@@ -45,6 +45,8 @@ public class PickupDrop : MonoBehaviour
         itemInHand.detectCollisions = true;
         itemInHand.useGravity = true;
         itemInHand.constraints = RigidbodyConstraints.None;
+        if(itemInHand.GetComponent<ItemHeldBool>() != null)
+        itemInHand.GetComponent<ItemHeldBool>().beingHeld = false;
         itemInHand.transform.parent = null;
         holdingItem = false;
         daInventoryMan.GetComponent<Inventory>().setItemHolding(-1);
@@ -82,6 +84,8 @@ public class PickupDrop : MonoBehaviour
                 itemInHand.detectCollisions = false;
                 itemInHand.useGravity = false;
                 itemInHand.constraints = RigidbodyConstraints.FreezeAll;
+                if(itemInHand.GetComponent<ItemHeldBool>() != null)
+                    itemInHand.GetComponent<ItemHeldBool>().beingHeld = true;
             }
 
         }

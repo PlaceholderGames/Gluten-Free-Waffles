@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RAIN.Core;
 
 public class TrialScriptPleaseDelete : MonoBehaviour {
+    // Use this for initialization
 
-    public Component comp;
-
-	// Use this for initialization
+    bool active = true;
 	void Start () {
 		
 	}
@@ -15,7 +15,8 @@ public class TrialScriptPleaseDelete : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.U))
         {
-            GetComponent<AIRig>();
+            active = !active;
+            GetComponent<AIRig>().enabled = active ;
         }
 	}
 }
