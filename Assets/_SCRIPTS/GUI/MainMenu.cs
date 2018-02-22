@@ -11,6 +11,12 @@ public class MainMenu : MonoBehaviour {
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
+            transform.parent.gameObject.SetActive(false);
+        }
         
     }
 
