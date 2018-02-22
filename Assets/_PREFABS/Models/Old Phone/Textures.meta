@@ -1,8 +1,15 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 8d3b49fb27c575b4486df556393f8ad1
 folderAsset: yes
 timeCreated: 1519261463
 licenseType: Free
+=======
+guid: 3de62e5ac29ac4b43abdfa5011c83fbb
+folderAsset: yes
+timeCreated: 1518611069
+licenseType: Pro
+>>>>>>> 2DMainMenu
 DefaultImporter:
   userData: 
   assetBundleName: 
