@@ -59,7 +59,7 @@
      <Compile Include="Assets\_SCRIPTS\MENU\PlayGame.cs" />
      <Compile Include="Assets\_SCRIPTS\MENU\QuitOnClick.cs" />
      <Compile Include="Assets\_SCRIPTS\PlayerController.cs" />
-     <Compile Include="Assets\_SCRIPTS\dialogue\dialogueGUI.cs" />
+     <Compile Include="Assets\_SCRIPTS\dialogue\connectToDatabase.cs" />
      <Compile Include="Assets\_SCRIPTS\dialogue\npcInteraction.cs" />
      <None Include="Assets\_SHADERS\ToonShading\Shaders\ToonBasic.shader" />
      <None Include="Assets\_SHADERS\ToonShading\Shaders\ToonBasicOutline.shader" />
