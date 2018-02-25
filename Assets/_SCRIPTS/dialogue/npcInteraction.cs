@@ -2,29 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Mono.Data.Sqlite;
+using System.Data;
+using System;
 
 public class npcInteraction : MonoBehaviour
 {
+    //stores values to reference against the dialogue database
+    public int characterID;
+
     //stores the range at which the npc can interact with the player
     public float npcRange;
-    public string inputText;
 
     private bool GUIShowing = false;
     private byte optionSelected = 1;
     private Transform player;
 
+    //stores the various dialogue text that will be displayed
+    private string[] dbDialogue = new string[4];
+    //Stores the currently active dialogue and response options for the NPC
+    private int currentDialogue;
+
     private GameObject dialoguePopup;
     private GameObject dialogueOverlay;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         //Stores a reference to the actual player transformation
         player = GameObject.Find("Character").transform;
+
+        //establish a connection to the database
+        dbConnect();
     }
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
         if (Input.GetButtonDown("Interact") && !GUIShowing) {
             RaycastHit hit;
@@ -71,19 +84,19 @@ public class npcInteraction : MonoBehaviour
 
         //Spawns an instance of the dialogue popup above the NPC head and set its text
         dialoguePopup = Instantiate(Resources.Load("DialogueSystem/DialoguePopup"), new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity) as GameObject;
-        dialoguePopup.GetComponent<TextMesh>().text = inputText;
+        dialoguePopup.GetComponent<TextMesh>().text = dbDialogue[0];
 
         //spawns an instance of the large GUI popup that allows the player to choose responses
         dialogueOverlay = Instantiate(Resources.Load("DialogueSystem/DialogueOverlay"), Vector3.zero, Quaternion.identity) as GameObject;
 
         //Find the question text box within the canvas and sets its text
         GameObject question = dialogueOverlay.transform.Find("DialoguePanel/Question").gameObject;
-        question.GetComponent<Text>().text = inputText;
+        question.GetComponent<Text>().text = dbDialogue[0];
 
         //Finds the children of the canvas and sets their text to the correct responses
         for (int i = 1; i <= 3; i++) {
             GameObject option = dialogueOverlay.transform.Find("DialoguePanel/Option" + i).gameObject;
-            option.GetComponent<Text>().text = i + ") This is some text!";
+            option.GetComponent<Text>().text = dbDialogue[i];
         }
 
         //Calls this at the start to highlight a default option
@@ -150,5 +163,44 @@ public class npcInteraction : MonoBehaviour
         //Finds and then highlists the selected response option that is selected
         GameObject OptionSelected = dialogueOverlay.transform.Find("DialoguePanel/Selected" + optionSelected).gameObject;
         OptionSelected.GetComponent<Image>().enabled = true;
+    }
+
+    void dbConnect()
+    {
+        //Path to database
+        string conn = "URI=file:" + Application.dataPath + "/Resources/DialogueSystem/dialogueDB.db";
+        IDbConnection dbconn;
+        dbconn = (IDbConnection) new SqliteConnection(conn);
+
+        //Open connection to the database
+        dbconn.Open();
+        IDbCommand dbcmd = dbconn.CreateCommand();
+
+        string sqlQuery = "SELECT D.Dialogue, R.Response, R.ResponseID " +
+                          "FROM Dialogue AS D " +
+                          "INNER JOIN Response AS R " +
+                          "ON D.CharacterID = R.CharacterID " +
+                          "WHERE D.CharacterID = " + characterID +
+                          " GROUP BY R.ResponseID";
+
+
+        dbcmd.CommandText = sqlQuery;
+        IDataReader reader = dbcmd.ExecuteReader();
+
+        byte i = 1;
+        while (reader.Read()) {
+            dbDialogue[0] = reader.GetString(0);
+            dbDialogue[i] = reader.GetString(1);
+
+            i++;
+        }
+
+        //close the connection to the database once done
+        reader.Close();
+        reader = null;
+        dbcmd.Dispose();
+        dbcmd = null;
+        dbconn.Close();
+        dbconn = null;
     }
 }
