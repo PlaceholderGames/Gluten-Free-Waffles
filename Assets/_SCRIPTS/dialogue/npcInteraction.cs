@@ -75,6 +75,7 @@ public class npcInteraction : MonoBehaviour
             //Configured to use the left mouse btn and the return key
             if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return)) {
                 print("YOU SELECTED OPTION " + optionSelected);
+                dbConnect();
             }
         }
     }
@@ -85,10 +86,14 @@ public class npcInteraction : MonoBehaviour
 
         //Spawns an instance of the dialogue popup above the NPC head and set its text
         dialoguePopup = Instantiate(Resources.Load("DialogueSystem/DialoguePopup"), new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity) as GameObject;
+        
         dialoguePopup.GetComponent<TextMesh>().text = dbDialogue[0];
 
         //spawns an instance of the large GUI popup that allows the player to choose responses
         dialogueOverlay = Instantiate(Resources.Load("DialogueSystem/DialogueOverlay"), Vector3.zero, Quaternion.identity) as GameObject;
+        Transform overlay = dialogueOverlay.transform.Find("DialoguePanel");
+        overlay.GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, 200);
+        overlay.position = new Vector2(Screen.width * 0.5f, 0);
 
         //Find the question text box within the canvas and sets its text
         GameObject question = dialogueOverlay.transform.Find("DialoguePanel/Question").gameObject;
