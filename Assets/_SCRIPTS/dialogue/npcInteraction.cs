@@ -19,9 +19,9 @@ public class npcInteraction : MonoBehaviour
     private Transform player;
 
     //stores the various dialogue text that will be displayed
-    private string[] dbDialogue = new string[4];
+    private string[] dbDialogue = new string[6];
     //Stores the currently active dialogue and response options for the NPC
-    private int currentDialogue;
+    private int currentDialogue = 0;
 
     private GameObject dialoguePopup;
     private GameObject dialogueOverlay;
@@ -31,9 +31,6 @@ public class npcInteraction : MonoBehaviour
     {
         //Stores a reference to the actual player transformation
         player = GameObject.Find("Character").transform;
-
-        //establish a connection to the database
-        dbConnect();
     }
 
     // Update is called once per frame
@@ -49,6 +46,10 @@ public class npcInteraction : MonoBehaviour
             {
                 print("OW! YOU TOUCHED ME?!");
 
+                //establish a connection to the database and find the correct data
+                dbConnect();
+
+                //now create a GUI to display the data
                 spawnGUI();
             }
         }
@@ -176,23 +177,20 @@ public class npcInteraction : MonoBehaviour
         dbconn.Open();
         IDbCommand dbcmd = dbconn.CreateCommand();
 
-        string sqlQuery = "SELECT D.Dialogue, R.Response, R.ResponseID " +
-                          "FROM Dialogue AS D " +
-                          "INNER JOIN Response AS R " +
-                          "ON D.CharacterID = R.CharacterID " +
-                          "WHERE D.CharacterID = " + characterID +
-                          " GROUP BY R.ResponseID";
+        string sqlQuery = "SELECT D.Dialogue, D.ResponseTop, D.ResponseMiddle, D.ResponseBottom, D.PreviousDialogue, C.Name " + "FROM Dialogue AS D " + "INNER JOIN Character AS C " + "ON D.CharacterID = C.CharacterID " +
+                          "WHERE D.CharacterID = " + characterID + " AND D.PreviousDialogue = " + currentDialogue.ToString();
 
 
         dbcmd.CommandText = sqlQuery;
         IDataReader reader = dbcmd.ExecuteReader();
 
-        byte i = 1;
         while (reader.Read()) {
             dbDialogue[0] = reader.GetString(0);
-            dbDialogue[i] = reader.GetString(1);
-
-            i++;
+            dbDialogue[1] = reader.GetString(1);
+            dbDialogue[2] = reader.GetString(2);
+            dbDialogue[3] = reader.GetString(3);
+            dbDialogue[4] = reader.GetInt32(4).ToString();
+            dbDialogue[5] = reader.GetString(5);
         }
 
         //close the connection to the database once done
@@ -202,5 +200,8 @@ public class npcInteraction : MonoBehaviour
         dbcmd = null;
         dbconn.Close();
         dbconn = null;
+
+        //once the database has been closed, increment the currentDialogue by one
+        //currentDialogue++;
     }
 }
