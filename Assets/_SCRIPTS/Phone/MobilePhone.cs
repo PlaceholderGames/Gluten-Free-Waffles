@@ -8,11 +8,13 @@ public class MobilePhone : MonoBehaviour {
     public DayNightCycle dayNightCycle;
     public Transform player;
     public Transform playerCamera;
+    public bool appClosed = false;
+
     private GUIStyle guiStyle = new GUIStyle();
-    private string text;
     private int selection = 0;
     private int oldSelection = 0;
     private bool errorMessage = false;
+    private bool inApp = false;
 
     // Use this for initialization
     void Start () {
@@ -36,10 +38,15 @@ public class MobilePhone : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
             {
-                print("hit");
                 transform.GetChild(6).GetChild(0).gameObject.SetActive(false);
                 errorMessage = false;
             }
+        }
+
+        if (inApp == true)
+        {
+            if (appClosed == true)
+                openHome();
         }
            
 
@@ -48,9 +55,6 @@ public class MobilePhone : MonoBehaviour {
 
     void OnGUI()
     {
-        var position = Camera.main.WorldToScreenPoint(gameObject.transform.position);
-        var textSize = GUI.skin.label.CalcSize(new GUIContent(text));
-        
         transform.GetChild(1).GetComponent<Text>().text = formatHours(dayNightCycle.getTime());
         transform.GetChild(2).GetComponent<Text>().text = formatMins(dayNightCycle.getTime());
         transform.GetChild(3).GetComponent<Text>().text = dayNightCycle.getDay().ToString();
@@ -58,31 +62,33 @@ public class MobilePhone : MonoBehaviour {
 
     void HomeScreenSelection ()
     {
-        oldSelection = selection;
+        if (!inApp)
+        {
+            oldSelection = selection;
 
-        if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.UpArrow))
-            selection = selection - 4;
-        if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.LeftArrow))
-            selection--;
-        if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.RightArrow))
-            selection++;
-        if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.DownArrow))
-            selection = selection + 4;
+            if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.UpArrow))
+                selection = selection - 4;
+            if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.LeftArrow))
+                selection--;
+            if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.RightArrow))
+                selection++;
+            if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.DownArrow))
+                selection = selection + 4;
 
-        if (selection < 0)
-            selection = 0;
-        if (selection > 21)
-            selection = 21;
+            if (selection < 0)
+                selection = 0;
+            if (selection > 21)
+                selection = 21;
 
-        transform.GetChild(4).GetChild(oldSelection).GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
-        transform.GetChild(4).GetChild(oldSelection).GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", Color.white);
+            transform.GetChild(4).GetChild(oldSelection).GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
+            transform.GetChild(4).GetChild(oldSelection).GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", Color.white);
 
-        transform.GetChild(4).GetChild(selection).GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
-        transform.GetChild(4).GetChild(selection).GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", Color.grey);
+            transform.GetChild(4).GetChild(selection).GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
+            transform.GetChild(4).GetChild(selection).GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", Color.grey);
 
-        if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
-            Launch(selection);
-
+            if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
+                Launch(selection);
+        }
     }
 
     private void Launch(int selection)
@@ -147,7 +153,9 @@ public class MobilePhone : MonoBehaviour {
             case 9:
                 {
                     //Inventory
-                    AppUnavailable();
+                    transform.GetChild(7).GetChild(9).gameObject.SetActive(true);
+                    hideHome();
+                    inApp = true;
                     break;
                 }
             case 10:
@@ -224,6 +232,28 @@ public class MobilePhone : MonoBehaviour {
                 }
         }
     }
+
+    private void hideHome ()
+    {
+        //transform.GetChild(0)... change background here
+        transform.GetChild(1).gameObject.SetActive(false);
+        transform.GetChild(2).gameObject.SetActive(false);
+        transform.GetChild(3).gameObject.SetActive(false);
+        transform.GetChild(4).gameObject.SetActive(false);
+    }
+
+    private void openHome()
+    {
+        //transform.GetChild(0)... change background here
+        transform.GetChild(1).gameObject.SetActive(true);
+        transform.GetChild(2).gameObject.SetActive(true);
+        transform.GetChild(3).gameObject.SetActive(true);
+        transform.GetChild(4).gameObject.SetActive(true);
+
+        inApp = false;
+        appClosed = false;
+    }
+
     private void AppUnavailable()
     {
         transform.GetChild(6).GetChild(0).gameObject.SetActive(true);
@@ -233,12 +263,9 @@ public class MobilePhone : MonoBehaviour {
     private string formatMins(int currentTime)
     {
         string newTime;
-        int hours, mins, secs;
-        hours = currentTime / 3600;
+        int mins;
         currentTime %= 3600;
         mins = currentTime / 60;
-        currentTime %= 60;
-        secs = currentTime;
 
         string minuteUpdate;
        
@@ -253,12 +280,9 @@ public class MobilePhone : MonoBehaviour {
     private string formatHours(int currentTime)
     {
         string newTime;
-        int hours, mins, secs;
+        int hours;
         hours = currentTime / 3600;
         currentTime %= 3600;
-        mins = currentTime / 60;
-        currentTime %= 60;
-        secs = currentTime;
 
         string hourUpdate;
         hourUpdate = hours.ToString();

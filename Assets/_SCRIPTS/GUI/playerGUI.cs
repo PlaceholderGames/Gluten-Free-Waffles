@@ -6,7 +6,6 @@ public class playerGUI : MonoBehaviour {
     public DayNightCycle dayNightCycle;
     public Camera camalam;
     private float deltaTime = 0.0f;
-    private string txtTime = "TIME TEST";
 
     void OnGUI()
     {
