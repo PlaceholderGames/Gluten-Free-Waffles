@@ -185,7 +185,32 @@ public class InventoryApp : MonoBehaviour {
 
         if (Input.GetButtonDown("Interact"))
         {
-            print("Move item to hand here in pickupdrop");
+            GameObject item = Instantiate(Resources.Load("ItemPrefabs/" + itemList[itemSelection].itemName)) as GameObject;
+
+            Debug.Log("Wow it spawned!");
+            Transform player = GameObject.Find("Character/FPPCamera").transform;
+            item.transform.SetParent(player);
+            //changing the items position so that it is in a set position when picked up
+            item.transform.position = item.transform.parent.position + Camera.main.transform.right * 0.8f + Camera.main.transform.forward - Camera.main.transform.up * 0.08f;
+            //getting the rotation of the player to base item rotation off of
+            Quaternion playerRotation = player.transform.rotation;
+            //adjusting the rotation of the item to a prefered alignment
+            item.transform.rotation = playerRotation;
+            item.transform.Rotate(Vector3.right, -90);
+            item.transform.Rotate(Vector3.forward, 180);
+            inventory.setItemHolding(item.GetComponent<ItemID>().itemID);
+            player.GetComponentInChildren<PickupDrop>().holdingItem = true;
+
+            player.GetComponentInChildren<PickupDrop>().itemInHand = item.GetComponent<Rigidbody>();
+
+            //setting the objects rigid body and turning off collisions
+            player.GetComponentInChildren<PickupDrop>().itemInHand.isKinematic = true;
+            player.GetComponentInChildren<PickupDrop>().itemInHand.detectCollisions = false;
+            player.GetComponentInChildren<PickupDrop>().itemInHand.useGravity = false;
+            player.GetComponentInChildren<PickupDrop>().itemInHand.constraints = RigidbodyConstraints.FreezeAll;
+
+            inventory.GetComponent<Inventory>().updateItems(itemList[itemSelection].itemID, false);
+            inventory.GetComponent<Inventory>().updatePhone();
         }
 
     }

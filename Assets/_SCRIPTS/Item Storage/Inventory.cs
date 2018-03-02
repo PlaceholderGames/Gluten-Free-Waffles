@@ -112,6 +112,7 @@ public class Inventory : MonoBehaviour
         bool remove = true;
         if (aor == true)
         {
+            current.itemQuantity++;
             for (int i = 0; i < list.Count; i++)
             {
                 //If the player already has the item, increases the quantity
