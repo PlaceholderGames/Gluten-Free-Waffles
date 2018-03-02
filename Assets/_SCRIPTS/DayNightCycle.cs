@@ -127,7 +127,7 @@ public class DayNightCycle : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update () 
+    void FixedUpdate () 
     {
         //rotates the light around a pivot; in degrees per second
         if (currentSecs < SECS_IN_DAY) 

@@ -24,7 +24,7 @@ public class playerGUI : MonoBehaviour {
         GUI.Label(rect, text, style);
 
 
-        GUI.Label(new Rect(10, 30, 100, 20), "Day " + dayNightCycle.getDay().ToString());
+        //GUI.Label(new Rect(10, 30, 100, 20), "Day " + dayNightCycle.getDay().ToString());
 
         Ray checkForItem = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit found;

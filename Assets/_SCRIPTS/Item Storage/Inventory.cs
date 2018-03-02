@@ -208,12 +208,12 @@ public class Inventory : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            Time.timeScale = 1;
-        }
+        //else
+        //{
+        //    Cursor.lockState = CursorLockMode.Locked;
+        //    Cursor.visible = false;
+        //    Time.timeScale = 1;
+        //}
         
         if (showStats)        //Draws the tooltip if the mouse is hovering over it.
             GUI.Box(new Rect(Event.current.mousePosition.x, Event.current.mousePosition.y, 150, 100), stats, skin.GetStyle("Stats"));

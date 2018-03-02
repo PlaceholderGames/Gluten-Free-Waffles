@@ -4,7 +4,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
+    public GameObject MenuSystem;
+    public GameObject character;
 
+    PlayerController pc;
+    CamMouseLook cml;
+    private void Start()
+    {
+        character = GameObject.Find("Character");
+        MenuSystem = this.transform.parent.gameObject;
+        pc = character.GetComponent<PlayerController>();
+        cml = character.GetComponentInChildren<CamMouseLook>();
+    }
     public void playGame()
     {
         if(SceneManager.GetActiveScene().buildIndex == 0)
@@ -15,6 +26,11 @@ public class MainMenu : MonoBehaviour {
         {
             Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            MenuSystem.SetActive(false);
+            cml.enabled = true;
+            pc.enabled = true;
             transform.parent.gameObject.SetActive(false);
         }
         
