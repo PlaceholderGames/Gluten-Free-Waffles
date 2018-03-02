@@ -8,13 +8,11 @@ public class ItemDatabase : MonoBehaviour
 
     void Awake()        //Awake used to fix execution order issue.
     {
-        //Add all items in the game here. Format:
-        //"Name",ID,"Description",Item.ItemType.ENTERITEMTYPE,destroyWhenUsed, quantity stored in inventory already (should be 0)
-        //LIST OF SPECIFIERS: SNACKS, BEVERAGES, TOP, BOTTOM, SHOES, KEY
-        items.Add(new Item("Energy Drink", 0, "Increases your speed for a short amount of time.", Item.ItemType.Drink, true, 0));
-        items.Add(new Item("Energy Drink - Frozen", 1, "Frozen. Increases your speed for a short amount of time.", Item.ItemType.Drink, true, 0));
-        items.Add(new Item("Police Hat", 2, "Definitely should not have this.", Item.ItemType.Drink, false, 0));
-        items.Add(new Item("Mobile Phone", 3, "Mobile Phone", Item.ItemType.Drink, false, 0));
+        //Add all items in the game here
+        items.Add(new Item(name: "Energy Drink", id: 0, desc: "Increases your speed for a short amount of time.", type: Item.ItemType.Drink, destroy: true, quantity: 0));
+        items.Add(new Item(name: "Energy Drink - Frozen", id: 1, desc: "Frozen. Increases your speed for a short amount of time.", type: Item.ItemType.Drink, destroy: true, quantity: 0));
+        items.Add(new Item(name: "Police Hat", id: 2, desc: "Definitely should not have this.", type: Item.ItemType.Drink, destroy: false, quantity: 0));
+        items.Add(new Item(name: "Mobile Phone", id: 3, desc: "Mobile Phone", type: Item.ItemType.Drink, destroy: false, quantity: 0));
     }
 
 }
