@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class playerGUI : MonoBehaviour {
     public DayNightCycle dayNightCycle;
+    public Font font;
     public Camera camalam;
     private float deltaTime = 0.0f;
-    private string txtTime = "TIME TEST";
 
     void OnGUI()
     {
@@ -15,9 +15,10 @@ public class playerGUI : MonoBehaviour {
         GUIStyle style = new GUIStyle();
 
         Rect rect = new Rect(0, 0, w, h * 2 / 100);
-        style.alignment = TextAnchor.UpperLeft;
+        style.alignment = TextAnchor.MiddleCenter;
         style.fontSize = h * 2 / 100;
-        style.normal.textColor = new Color(0.0f, 0.0f, 0.5f, 1.0f);
+        style.normal.textColor = Color.white;
+        style.font = font;
         float msec = deltaTime * 1000.0f;
         float fps = 1.0f / deltaTime;
         string text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
@@ -30,7 +31,15 @@ public class playerGUI : MonoBehaviour {
         RaycastHit found;
 
         if (Physics.Raycast(checkForItem, out found, camalam.GetComponent<PickupDrop>().itemRange) && found.transform.tag == "item")
-            GUI.Label(new Rect(10, 50, 300, 20), "Press E to Interact");
+        {
+            if (GameObject.Find("FPPCamera").GetComponent<PickupDrop>().holdingItem == false)
+            {
+                GUI.Label(new Rect((Screen.width / 2), Screen.height / 2 + 30, 1, 20), "Press E to Interact", style);
+                Rect keyPromt = new Rect((Screen.width / 2 - 20), Screen.height / 2 + 50, 40, 40);
+                GUI.DrawTexture(keyPromt, Resources.Load<Texture2D>("KeyPrompts/" + "E"));
+            }
+ 
+        }
     }
 
     // Use this for initialization

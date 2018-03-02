@@ -48,7 +48,6 @@
   <ItemGroup>
      <Compile Include="Assets\_SCRIPTS\CamMouseLook.cs" />
      <Compile Include="Assets\_SCRIPTS\DayNightCycle.cs" />
-     <Compile Include="Assets\_SCRIPTS\GUI\MobilePhone.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\playerGUI.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\Inventory.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\Item.cs" />
@@ -58,6 +57,8 @@
      <Compile Include="Assets\_SCRIPTS\MENU\LoadSceneOnClick.cs" />
      <Compile Include="Assets\_SCRIPTS\MENU\PlayGame.cs" />
      <Compile Include="Assets\_SCRIPTS\MENU\QuitOnClick.cs" />
+     <Compile Include="Assets\_SCRIPTS\Phone\Apps\InventoryApp.cs" />
+     <Compile Include="Assets\_SCRIPTS\Phone\MobilePhone.cs" />
      <Compile Include="Assets\_SCRIPTS\PlayerController.cs" />
      <Compile Include="Assets\_SCRIPTS\npcInteraction.cs" />
      <Compile Include="Assets\_UTILITIES\Hierarchy Sort.cs" />
