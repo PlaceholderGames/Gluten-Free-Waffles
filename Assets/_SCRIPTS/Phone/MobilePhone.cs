@@ -10,7 +10,6 @@ public class MobilePhone : MonoBehaviour {
     public Transform playerCamera;
     public bool appClosed = false;
 
-    private GUIStyle guiStyle = new GUIStyle();
     private int selection = 0;
     private int oldSelection = 0;
     private bool errorMessage = false;
