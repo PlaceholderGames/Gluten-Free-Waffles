@@ -26,7 +26,7 @@ public class MobilePhone : MonoBehaviour {
         transform.position = worldPoint;
 
         //transform.Rotate(Vector3.right, -90);
-        transform.Rotate(Vector3.up, -110);
+        transform.Rotate(Vector3.up, -120);
     }
 
     private void Update()
