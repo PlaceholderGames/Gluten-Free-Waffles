@@ -68,22 +68,7 @@ public class PlayerController : MonoBehaviour {
         {
             canSprint = false;
         }
-        //transform.Translate(strafe, 0, translation);
-
-
-        if (Input.GetKeyDown("escape"))
-        {
-            if (Cursor.lockState == CursorLockMode.Locked)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Time.timeScale = 0;
-            }                
-            else if (Cursor.lockState == CursorLockMode.None)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Time.timeScale = 1;
-            }    
-        }		
+        //transform.Translate(strafe, 0, translation);		
 	}
     void OnCollisionStay(Collision coll)
     {
