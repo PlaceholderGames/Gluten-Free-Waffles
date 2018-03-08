@@ -5,10 +5,13 @@ using UnityEngine;
 public class StarSystem : MonoBehaviour
 {
     public Color starColour;
+    public Color lerpedColour = Color.white;
     public int starMax = 600;
     public float starSize = 0.35f;
     public float starDistance = 60f;
     public float starClipDistance = 15f;
+
+    private DayNightCycle dayNightCycle;
 
     private Transform starSystem;
     private Transform playerPos;
@@ -20,12 +23,14 @@ public class StarSystem : MonoBehaviour
     {
         points = new ParticleSystem.Particle[starMax];
 
-        for (int i = 0; i < starMax; i++) {
+        for (int i = 0; i < starMax; i++)
+        {
             var pos = Random.insideUnitSphere;
-            pos = new Vector3(pos.x, Random.Range(0.1f, 0.2f), pos.z);
-            //print(pos);
+            pos = new Vector3(pos.x, Random.Range(0.1f, 0.3f), pos.z);
 
-            points[i].position = pos * starDistance + starSystem.position;
+            //points[i].position = pos * starDistance + starSystem.position;
+
+            points[i].position = Random.insideUnitSphere * starDistance + starSystem.position;
 
 
             points[i].startColor = new Color(starColour.r, starColour.g, starColour.b, starColour.a);
@@ -49,22 +54,22 @@ public class StarSystem : MonoBehaviour
         if (points == null)
             createStars();
 
-        for (int i = 0; i < starMax; i++) {
-            if ((points[i].position - starSystem.position).sqrMagnitude > starDistanceSqr) {
+        for (int i = 0; i < starMax; i++)
+        {
+            if ((points[i].position - starSystem.position).sqrMagnitude > starDistanceSqr)
+            {
                 points[i].position = Random.insideUnitSphere.normalized * starDistance + starSystem.position;
             }
 
-            if ((points[i].position - starSystem.position).sqrMagnitude <= starClipDistanceSqr) {
+            if ((points[i].position - starSystem.position).sqrMagnitude <= starClipDistanceSqr)
+            {
                 float percentage = (points[i].position - starSystem.position).sqrMagnitude / starClipDistanceSqr;
                 points[i].startColor = new Color(starColour.r, starColour.g, starColour.b, 1);
                 points[i].startSize = percentage * starSize;
             }
 
-
-            float distToPlayer = Vector3.Distance(playerPos.position, points[i].position);
-            if (distToPlayer > 80) {
-                points[i].startColor = new Color(points[i].GetCurrentColor., points[i].color.g, points[i].color.b, points[i].GetCurrentColor.a);
-            }
+            lerpedColour = Color.Lerp(Color.white, starColour, Mathf.PingPong(Time.time, Random.Range(1.0f, 2.0f)));
+            points[i].startColor = new Color(lerpedColour.r, lerpedColour.g, lerpedColour.b, points[i].startColor.a);
         }
 
         GetComponent<ParticleSystem>().SetParticles(points, points.Length);
