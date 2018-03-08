@@ -194,8 +194,8 @@ public class DayNightCycle : MonoBehaviour
         //checks if it's day or night
         checkIfDay();
 
-        moon.transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward, player.position - transform.position, 10.0f, 0.0f));
-        moon.transform.rotation = Quaternion.Euler(moon.transform.eulerAngles.x, moon.transform.eulerAngles.y + 180, moon.transform.eulerAngles.z);
+        moon.transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(moon.transform.forward, player.position - moon.transform.position, 180.0f, 0.0f));
+        moon.transform.rotation = Quaternion.Euler(moon.transform.eulerAngles.x, moon.transform.eulerAngles.y, moon.transform.eulerAngles.z);
 
         //updates the game clock
         //updateClock();
