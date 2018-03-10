@@ -4,28 +4,35 @@ using UnityEngine;
 
 public class PickupDrop : MonoBehaviour
 {
-    public GUISkin Messages;
     //setting max distance player can pick up items from
     public float itemRange;
     public Transform player;
     //used to reference which item if any should be activated on the camera
-    bool holdingItem = false;
+    public bool holdingItem = false;
     //distance dropped objects drop from player
     public float spawnDistance;
     public GameObject daInventoryMan;
     // Use this for initialization
     public Rigidbody itemInHand;
+    //Font to be used
+    public Font font;
+    private GUIStyle style = new GUIStyle();
+    bool showMessage = false;
 
     void Start()
     {
-      
+        int h = Screen.height;
+        style.alignment = TextAnchor.MiddleCenter;
+        style.fontSize = h * 2 / 100;
+        style.normal.textColor = Color.white;
+        style.font = font;
     }
 
     // Update is called once per frame
     void Update()
     {
         //player input to try and pick up an item
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetButtonDown("Interact"))
         {
             
             if (holdingItem)
@@ -38,6 +45,25 @@ public class PickupDrop : MonoBehaviour
                 pickupItem();
             }
         }
+    }
+
+    private void OnGUI()
+    {
+        if (holdingItem && !daInventoryMan.GetComponent<Inventory>().phoneOut)
+        {
+            GUI.Label(new Rect((Screen.width - 100), Screen.height - 20, 1, 20), "Press R to Use", style);
+            Rect dropPromt = new Rect((Screen.width - 120), Screen.height - 70, 40, 40);
+            GUI.DrawTexture(dropPromt, Resources.Load<Texture2D>("KeyPrompts/" + "R"));
+
+            GUI.Label(new Rect((Screen.width - 250), Screen.height - 20, 1, 20), "Press Q to Store", style);
+            Rect storePromt = new Rect((Screen.width -270), Screen.height - 70, 40, 40);
+            GUI.DrawTexture(storePromt, Resources.Load<Texture2D>("KeyPrompts/" + "Q"));
+
+            GUI.Label(new Rect((Screen.width - 400), Screen.height - 20, 1, 20), "Press E to Drop", style);
+            Rect usePromt = new Rect((Screen.width - 420), Screen.height - 70, 40, 40);
+            GUI.DrawTexture(usePromt, Resources.Load<Texture2D>("KeyPrompts/" + "E"));
+        }
+
     }
     void dropItem()
     {

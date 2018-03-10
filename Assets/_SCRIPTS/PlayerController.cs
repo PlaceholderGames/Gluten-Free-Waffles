@@ -29,9 +29,20 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
+        translation *= Time.deltaTime;
+        strafe *= Time.deltaTime;
+
         transform.Translate(strafe, 0, translation);
 
         //selfRigidBody.AddForce(0, -10, 0, ForceMode.Force);
+        
+    }
+	
+	// Update is called once per frame
+	void Update () {
+        translation = Input.GetAxis("Vertical") * speed;
+        strafe = Input.GetAxis("Horizontal") * speed;
+
         if (canJump)
         {
             canJump = false;
@@ -45,17 +56,6 @@ public class PlayerController : MonoBehaviour {
         {
             speed = normalSpeed;
         }
-    }
-	
-	// Update is called once per frame
-	void Update () {
-        translation = Input.GetAxis("Vertical") * speed;
-        strafe = Input.GetAxis("Horizontal") * speed;
-        translation *= Time.deltaTime;
-        strafe *= Time.deltaTime;
-
-        //transform.Translate(strafe, 0, translation);
-
         if (Input.GetKeyDown(KeyCode.Space) && onGround) //if space isn't being pressed, allows the player to jump
         {
             canJump = true;
@@ -68,20 +68,7 @@ public class PlayerController : MonoBehaviour {
         {
             canSprint = false;
         }
-
-        if (Input.GetKeyDown("escape"))
-        {
-            if (Cursor.lockState == CursorLockMode.Locked)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Time.timeScale = 0;
-            }                
-            else if (Cursor.lockState == CursorLockMode.None)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Time.timeScale = 1;
-            }    
-        }		
+        //transform.Translate(strafe, 0, translation);		
 	}
     void OnCollisionStay(Collision coll)
     {
