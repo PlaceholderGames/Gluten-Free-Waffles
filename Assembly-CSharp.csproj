@@ -82,7 +82,9 @@
      <Compile Include="Assets\_ASSET_STORE\Water_Stuff\MakeSomeNoise.cs" />
      <Compile Include="Assets\_ASSET_STORE\Water_Stuff\WaterPlaneGen.cs" />
      <Compile Include="Assets\_SCRIPTS\CamMouseLook.cs" />
-     <Compile Include="Assets\_SCRIPTS\DayNightCycle.cs" />
+     <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\DayNightCycle.cs" />
+     <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\StarSystem.cs" />
+     <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\moonSystem.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\MainMenu.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\RotateCameraMainMenu.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\SetRotation.cs" />
@@ -100,7 +102,6 @@
      <Compile Include="Assets\_SCRIPTS\Phone\Apps\InventoryApp.cs" />
      <Compile Include="Assets\_SCRIPTS\Phone\MobilePhone.cs" />
      <Compile Include="Assets\_SCRIPTS\PlayerController.cs" />
-     <Compile Include="Assets\_SCRIPTS\StarSystem.cs" />
      <Compile Include="Assets\_SCRIPTS\npcInteraction.cs" />
      <Compile Include="Assets\_UTILITIES\Hierarchy Sort.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
