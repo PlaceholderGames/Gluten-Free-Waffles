@@ -82,7 +82,9 @@
      <Compile Include="Assets\_ASSET_STORE\Water_Stuff\MakeSomeNoise.cs" />
      <Compile Include="Assets\_ASSET_STORE\Water_Stuff\WaterPlaneGen.cs" />
      <Compile Include="Assets\_SCRIPTS\CamMouseLook.cs" />
-     <Compile Include="Assets\_SCRIPTS\DayNightCycle.cs" />
+     <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\DayNightCycle.cs" />
+     <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\StarSystem.cs" />
+     <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\moonSystem.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\MainMenu.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\RotateCameraMainMenu.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\SetRotation.cs" />
