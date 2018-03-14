@@ -105,7 +105,7 @@ public class DayNightCycle : MonoBehaviour
         if (!stateUpdated)
         {
             stateUpdated = true;
-            updateWorldLights(true);
+            updateWorldLights(false);
         }
 
         //check if the state should update to the next one
@@ -131,7 +131,7 @@ public class DayNightCycle : MonoBehaviour
         if (!stateUpdated)
         {
             stateUpdated = true;
-            updateWorldLights(false);
+            updateWorldLights(true);
         }
 
         //check if the state should update to the next one
