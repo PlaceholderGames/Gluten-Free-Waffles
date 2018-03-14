@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class currency : MonoBehaviour
 {
 
+    public static bool transactionScreen = false;
     public static bool transaction = false;
+    public static bool buying = false;
     public GameObject transactionUI;
     public GameObject buyingScreen;
 
@@ -28,16 +30,24 @@ public class currency : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 5) && hit.transform.tag == "vendor")
             {
+                transactionScreen = true;
                 transaction = true;
             }
         }
         if (transaction)
         {
-            vendorScreen();
+            if (transactionScreen)
+            {
+                VendorScreen();
+            }
+            if (buying)
+            {
+                BuyingPanel();
+            }
         }
     }
 
-    void vendorScreen()
+    void VendorScreen()
     {
         //bringing up the ui and pausing the game
         transactionUI.SetActive(true);
@@ -48,10 +58,21 @@ public class currency : MonoBehaviour
     }
 
     //function to be used with on click for buying button
-    public void buyingPanel()
+    public void BuyingPanel()
     {
-
+        buying = true;
+        transactionScreen = false;
         transactionUI.SetActive(false);
         buyingScreen.SetActive(true);
+    }
+
+    public void ReturnToGame()
+    {
+        transactionUI.SetActive(false);
+        transaction = false;
+        //re-enabling time and returning cursor
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
     }
 }
