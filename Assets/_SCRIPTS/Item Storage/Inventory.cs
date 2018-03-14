@@ -7,7 +7,7 @@ public class Inventory : MonoBehaviour
 {
     private ItemDatabase database;
 
-    public GameObject playerPhone;
+    private GameObject playerPhone;
 
     public List<Item> foodList = new List<Item>();
     public List<Item> drinkList = new List<Item>();
@@ -26,8 +26,8 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         //Hides the phone as it hasn't been found at the start of the game.
-        playerPhone = GameObject.FindGameObjectWithTag("Phone");
-        playerPhone.SetActive(false);
+        //playerPhone = GameObject.FindGameObjectWithTag("Phone");
+        //playerPhone.SetActive(false);
 
         database = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>();
     }
@@ -66,7 +66,7 @@ public class Inventory : MonoBehaviour
     public void updatePhone()
     {
         phoneOut = !phoneOut;
-        playerPhone.SetActive(phoneOut);
+        //playerPhone.SetActive(phoneOut);
     }
 
     //Adds or removes items into the system based on bool (true = add)
@@ -171,6 +171,8 @@ public class Inventory : MonoBehaviour
             //Add ID's and bools for collectable items eg. wallet, shirt etc.
             case 3:
                 {
+                    playerPhone = Instantiate(Resources.Load("Phone"), Vector3.zero, Quaternion.identity) as GameObject;
+
                     hasPhone = true;
                     phoneOut = false;
                     print("You found your phone!!");

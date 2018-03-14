@@ -17,12 +17,22 @@ public class MobilePhone : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        print("hello");
 
         Vector3 phoneDimentions = this.GetComponent<Renderer>().bounds.size;
         transform.SetParent(GameObject.FindGameObjectWithTag("MainCamera").transform);
         dayNightCycle = GameObject.Find("DayAndNightSystem").GetComponent<DayNightCycle>();
 
-        Vector3 worldPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width * 0.8f, Screen.height * 0.12f, 3));
+        //float phoneWidth = transform.Find("Notifications").GetComponent<Canvas>().GetComponent<RectTransform>().rect.width * 20;
+        //float phoneHeight = transform.Find("Notifications").GetComponent<Canvas>().GetComponent<RectTransform>().rect.height * 20;
+
+        //print(phoneHeight);
+        //print(phoneWidth);
+
+        //print(Screen.width);
+        //print(Screen.height);
+
+        Vector3 worldPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width -300.0f, 400.0f, 3));
         transform.position = worldPoint;
 
         //transform.Rotate(Vector3.right, -90);
