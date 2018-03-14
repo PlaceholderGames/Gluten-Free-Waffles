@@ -58,7 +58,7 @@ public class playerGUI : MonoBehaviour
         GUI.Label(rect, text, style);
 
         //check if the player has their cursor hoving over an item and display a UI popup if they do
-        Ray checkForItem = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray checkForItem = transform.GetChild(2).GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit found;
         if (Physics.Raycast(checkForItem, out found, playerCamera.GetComponent<PickupDrop>().itemRange) && found.transform.tag == "item")
         {
