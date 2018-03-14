@@ -29,10 +29,7 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
-        translation *= Time.deltaTime;
-        strafe *= Time.deltaTime;
-
-        transform.Translate(strafe, 0, translation);
+        
 
         //selfRigidBody.AddForce(0, -10, 0, ForceMode.Force);
         
@@ -69,7 +66,11 @@ public class PlayerController : MonoBehaviour {
             canSprint = false;
         }
         //transform.Translate(strafe, 0, translation);		
-	}
+        translation *= Time.deltaTime;
+        strafe *= Time.deltaTime;
+
+        transform.Translate(strafe, 0, translation);
+    }
     void OnCollisionStay(Collision coll)
     {
         onGround = true;
