@@ -9,18 +9,22 @@ public class currency : MonoBehaviour
     public static bool transactionScreen = false;
     public static bool transaction = false;
     public static bool buying = false;
+    public static bool selling = false;
+    public static bool confirm = false;
+    public GameObject confirmationScreen;
+    public GameObject sellingScreen;
     public GameObject transactionUI;
     public GameObject buyingScreen;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         GameObject player = GameObject.Find("Character");
         funds money = player.GetComponent<funds>();
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         //lmb click
         if (Input.GetMouseButtonDown(0))
@@ -40,9 +44,17 @@ public class currency : MonoBehaviour
             {
                 VendorScreen();
             }
-            if (buying)
+            else if (buying)
             {
-                BuyingPanel();
+                BuyingUI();
+            }
+            else if (selling)
+            {
+                SellingUI();
+            }
+            else if (confirm)
+            {
+                ConfirmPurchaseUI();
             }
         }
     }
@@ -58,7 +70,7 @@ public class currency : MonoBehaviour
     }
 
     //function to be used with on click for buying button
-    public void BuyingPanel()
+    public void BuyingUI()
     {
         buying = true;
         transactionScreen = false;
@@ -74,5 +86,50 @@ public class currency : MonoBehaviour
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
+    }
+
+    public void exitBuyingPanel()
+    {
+        //turning on the initial transaction screen back on
+        //also turning off the buying screen
+        buyingScreen.SetActive(false);
+        transactionUI.SetActive(true);
+        //setting transaction back to true so that only the transaction screen is showing
+        buying = false;
+        transactionScreen = true;
+    }
+
+    //SELLING SCREEN FUNCTIONS
+    public void SellingUI()
+    {
+        selling = true;
+        transactionScreen = false;
+        transactionUI.SetActive(false);
+        sellingScreen.SetActive(true);
+    }
+
+    public void exitSellingPanel()
+    {
+        sellingScreen.SetActive(false);
+        transactionUI.SetActive(true);
+        selling = false;
+        transactionScreen = true;
+    }
+
+    //FUNCTIONS RELATED TO THE CONFIRMATION OF PURCHASE SCREEN
+    public void ConfirmPurchaseUI()
+    {
+        buying = false;
+        confirm = true;
+        buyingScreen.SetActive(false);
+        confirmationScreen.SetActive(true);
+    }
+
+    public void DeclinePurchase()
+    {
+        buyingScreen.SetActive(true);
+        confirmationScreen.SetActive(false);
+        confirm = false;
+        buying = true;     
     }
 }
