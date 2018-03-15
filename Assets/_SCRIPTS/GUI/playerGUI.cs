@@ -18,7 +18,7 @@ public class playerGUI : MonoBehaviour
     void Start()
     {
         //Finds the FPP camera in a fairly efficient way, privately that is...
-        playerCamera = GameObject.FindWithTag("Player").transform.Find("FPPCamera").gameObject;
+        playerCamera = GameObject.Find("Character/FPPCamera").gameObject;
 
         //Load the crosshair texture
         crosshair = Resources.Load("Textures/crosshair", typeof(Texture2D)) as Texture2D;
@@ -58,7 +58,7 @@ public class playerGUI : MonoBehaviour
         GUI.Label(rect, text, style);
 
         //check if the player has their cursor hoving over an item and display a UI popup if they do
-        Ray checkForItem = transform.GetChild(2).GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        Ray checkForItem = playerCamera.GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit found;
         if (Physics.Raycast(checkForItem, out found, playerCamera.GetComponent<PickupDrop>().itemRange) && found.transform.tag == "item")
         {
