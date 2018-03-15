@@ -83,8 +83,9 @@
      <Compile Include="Assets\_ASSET_STORE\Water_Stuff\WaterPlaneGen.cs" />
      <Compile Include="Assets\_SCRIPTS\CamMouseLook.cs" />
      <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\DayNightCycle.cs" />
+     <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\MoonSystem.cs" />
      <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\StarSystem.cs" />
-     <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\moonSystem.cs" />
+     <Compile Include="Assets\_SCRIPTS\DialogueSystem.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\MainMenu.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\RotateCameraMainMenu.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\SetRotation.cs" />
@@ -97,6 +98,7 @@
      <Compile Include="Assets\_SCRIPTS\Item Storage\ItemHeldBool.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\ItemID.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\PickupDrop.cs" />
+     <Compile Include="Assets\_SCRIPTS\KnockedOut.cs" />
      <Compile Include="Assets\_SCRIPTS\MENU\LoadSceneOnClick.cs" />
      <Compile Include="Assets\_SCRIPTS\MENU\PlayGame.cs" />
      <Compile Include="Assets\_SCRIPTS\MENU\QuitOnClick.cs" />
@@ -105,7 +107,7 @@
      <Compile Include="Assets\_SCRIPTS\PlayerController.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\BasicQuestLocation.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\ItemQuestPickup.cs" />
-     <Compile Include="Assets\_SCRIPTS\npcInteraction.cs" />
+     <Compile Include="Assets\_SCRIPTS\Vitals.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />

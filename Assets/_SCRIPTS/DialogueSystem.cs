@@ -6,7 +6,7 @@ using Mono.Data.Sqlite;
 using System.Data;
 using System;
 
-public class npcInteraction : MonoBehaviour
+public class DialogueSystem : MonoBehaviour
 {
     //stores values to reference against the dialogue database
     public int characterID;
