@@ -7,7 +7,7 @@ public class Inventory : MonoBehaviour
 {
     private ItemDatabase database;
 
-    private GameObject playerPhone;
+    public GameObject playerPhone;
 
     public List<Item> foodList = new List<Item>();
     public List<Item> drinkList = new List<Item>();
@@ -171,7 +171,7 @@ public class Inventory : MonoBehaviour
             //Add ID's and bools for collectable items eg. wallet, shirt etc.
             case 3:
                 {
-                    playerPhone = Instantiate(Resources.Load("Phone"), Vector3.zero, Quaternion.identity) as GameObject;
+                    Instantiate(playerPhone, Vector3.zero, Quaternion.identity);
 
                     hasPhone = true;
                     phoneOut = false;

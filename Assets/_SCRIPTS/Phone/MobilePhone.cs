@@ -20,7 +20,7 @@ public class MobilePhone : MonoBehaviour {
         print("hello");
 
         Vector3 phoneDimentions = this.GetComponent<Renderer>().bounds.size;
-        transform.SetParent(GameObject.FindGameObjectWithTag("MainCamera").transform);
+        //transform.SetParent(GameObject.FindGameObjectWithTag("Player").transform.Find("Phone Canvas"));
         dayNightCycle = GameObject.Find("DayAndNightSystem").GetComponent<DayNightCycle>();
 
         //float phoneWidth = transform.Find("Notifications").GetComponent<Canvas>().GetComponent<RectTransform>().rect.width * 20;
@@ -32,11 +32,17 @@ public class MobilePhone : MonoBehaviour {
         //print(Screen.width);
         //print(Screen.height);
 
-        Vector3 worldPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width -300.0f, 400.0f, 3));
-        transform.position = worldPoint;
+        //Vector3 worldPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width -300.0f, 400.0f, 3));
+        //transform.position = worldPoint;
 
         //transform.Rotate(Vector3.right, -90);
-        transform.Rotate(Vector3.up, -120);
+        //transform.Rotate(Vector3.up, -120);
+        
+        transform.parent.GetComponent<Canvas>().worldCamera = GameObject.FindGameObjectWithTag("Player").transform.Find("UI Camera").GetComponent<Camera>();
+        transform.parent.GetComponent<Canvas>().planeDistance = 1;
+
+
+
     }
 
     private void Update()

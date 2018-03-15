@@ -19,8 +19,11 @@ public class PickupDrop : MonoBehaviour
     private GUIStyle style = new GUIStyle();
     bool showMessage = false;
 
+    private GameObject playerCamera;
+
     void Start()
     {
+        playerCamera = GameObject.Find("Character/FPPCamera");
         int h = Screen.height;
         style.alignment = TextAnchor.MiddleCenter;
         style.fontSize = h * 2 / 100;
@@ -79,7 +82,7 @@ public class PickupDrop : MonoBehaviour
     {
         RaycastHit hit;
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = playerCamera.GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         if (Physics.Raycast(ray, out hit, itemRange) && hit.transform.tag == "item")    //checking that item trying to be picked up is tagged to be held
         {
             if (hit.transform.GetComponent<ItemID>().itemID == 3)
