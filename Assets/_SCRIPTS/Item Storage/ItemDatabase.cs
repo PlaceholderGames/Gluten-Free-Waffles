@@ -14,5 +14,5 @@ public class ItemDatabase : MonoBehaviour
         items.Add(new Item(name: "Police Hat", id: 2, desc: "Definitely should not have this.", type: Item.ItemType.Drink, destroy: false, quantity: 0));
         items.Add(new Item(name: "Mobile Phone", id: 3, desc: "Mobile Phone", type: Item.ItemType.Drink, destroy: false, quantity: 0));
     }
-
+    //ITEM DESCRIPTIONS: Need to be implemented with \n to make new lines. No text wrap so must be done manually.
 }

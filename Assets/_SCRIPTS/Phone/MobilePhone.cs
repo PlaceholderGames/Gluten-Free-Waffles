@@ -41,6 +41,7 @@ public class MobilePhone : MonoBehaviour {
         transform.parent.GetComponent<Canvas>().worldCamera = GameObject.FindGameObjectWithTag("Player").transform.Find("UI Camera").GetComponent<Camera>();
         transform.parent.GetComponent<Canvas>().planeDistance = 1;
 
+        transform.Find("Minutes");
 
 
     }
@@ -70,9 +71,9 @@ public class MobilePhone : MonoBehaviour {
 
     void OnGUI()
     {
-        transform.GetChild(1).GetComponent<Text>().text = formatHours(dayNightCycle.getTime());
-        transform.GetChild(2).GetComponent<Text>().text = formatMins(dayNightCycle.getTime());
-        transform.GetChild(3).GetComponent<Text>().text = dayNightCycle.getDay().ToString();
+        transform.GetChild(1).GetComponent<TextMesh>().text = formatHours(dayNightCycle.getTime());
+        transform.GetChild(2).GetComponent<TextMesh>().text = formatMins(dayNightCycle.getTime());
+        transform.GetChild(3).GetComponent<TextMesh>().text = dayNightCycle.getDay().ToString();
     }
 
     void HomeScreenSelection ()

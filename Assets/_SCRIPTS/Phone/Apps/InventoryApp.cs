@@ -8,8 +8,10 @@ public class InventoryApp : MonoBehaviour {
     public Material background;
     public Material homescreen;
     public Inventory inventory;
+
     public Font normal;
     public Font bold;
+
 
     private GameObject phone;
     private bool backgroundUpdate = true;
@@ -22,6 +24,7 @@ public class InventoryApp : MonoBehaviour {
     // Use this for initialization
     void Start () {
         phone = GameObject.FindGameObjectWithTag("Phone");
+        inventory = GameObject.FindGameObjectWithTag("inventory").transform.Find("Inventory").GetComponent<Inventory>();
     }
 	
 	// Update is called once per frame
@@ -65,7 +68,7 @@ public class InventoryApp : MonoBehaviour {
             transform.GetChild(oldCategorySelection).gameObject.GetComponent<RawImage>().color = Color.white;
             transform.GetChild(categorySelection).gameObject.GetComponent<RawImage>().color = Color.gray;
 
-            transform.Find("Category").GetComponent<Text>().text = transform.GetChild(categorySelection).name;
+            transform.Find("Category").GetComponent<TextMesh>().text = transform.GetChild(categorySelection).name;
         }
 
         //Loads the current category into the list
@@ -174,7 +177,8 @@ public class InventoryApp : MonoBehaviour {
             }
 
             transform.Find("Lists").Find("Items").GetChild(0).GetComponent<Text>().text = "Empty";
-            transform.Find("Description").GetComponent<Text>().text = "No item to show. Go find some!";
+            transform.Find("Description").GetComponent<TextMesh>().text = "No item \nto show. \nGo find \nsome!";
+            //transform.Find("Description").GetComponent<TextMesh>().text.Replace("//n", "/n");
             transform.Find("Item Icon").gameObject.SetActive(false);
         }
         
