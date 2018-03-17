@@ -36,8 +36,10 @@ public class ItemQuestPickup : MonoBehaviour
         {
             if (GetComponent<ItemHeldBool>().beingHeld)
             {
+                Debug.Log("Item being held");
                 if (nextQuestPoint != null)
                 {
+                    Debug.Log("Next Quest is not null!");
                     if (!nextQuestPoint.activeSelf)
                     {
                         nextQuestPoint.SetActive(true);
