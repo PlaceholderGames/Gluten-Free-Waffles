@@ -1,18 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using Mono.Data.Sqlite;
 using System.Data;
 using System;
 
+[CustomEditor(typeof(DialogueSystem))]
+public class DialogueSystemHandle : Editor
+{
+    protected virtual void OnSceneGUI()
+    {
+        DialogueSystem npc = (DialogueSystem)target;
+
+        GUIStyle style = new GUIStyle(GUI.skin.label);
+        style.normal.textColor = Color.white;
+        style.fontSize = 13;
+        style.alignment = TextAnchor.MiddleCenter;
+
+        Handles.Label(npc.transform.position + new Vector3(0, 1.4f, 0), "ID: " + npc.npcID, style);
+
+        Handles.color = Color.magenta;
+        Handles.DrawWireDisc(npc.transform.position, Vector3.up, npc.npcRange); 
+        Handles.Label(npc.transform.position + new Vector3(npc.npcRange, 0, 0), "NPC Entry Range", style);
+
+        Handles.color = Color.cyan;
+        Handles.DrawWireDisc(npc.transform.position, Vector3.up, npc.npcRange * 2);
+        Handles.Label(npc.transform.position + new Vector3(npc.npcRange * 2, 0, 0), "NPC Exit Range", style);
+    }
+}
+
 public class DialogueSystem : MonoBehaviour
 {
     //stores values to reference against the dialogue database
-    public int characterID;
+    public int npcID = 2;
 
     //stores the range at which the npc can interact with the player
-    public float npcRange;
+    public float npcRange = 7.0f;
 
     private static bool GUIShowing = false;
     private byte optionSelected = 1;
@@ -34,6 +59,20 @@ public class DialogueSystem : MonoBehaviour
     //stores a reference to the question and response text lines for the dialogue overlay
     private GameObject question;
     private GameObject[] option = new GameObject[4];
+
+    //protected virtual void OnSceneGUI() {
+    //   // Gizmos.color = Color.magenta;
+    //    //Gizmos.DrawWireCube(transform.position, new Vector3(npcRange, 0, npcRange));
+
+    //    //Gizmos.color = Color.cyan;
+    //    //Gizmos.DrawWireCube(transform.position, new Vector3(npcRange * 2, 0, npcRange * 2));
+
+    //    Handles.color = Color.magenta;
+    //    Handles.DrawWireCube(transform.position, new Vector3(npcRange, 0, npcRange));
+    //    Handles.Label(transform.position, "Left");
+
+    //    Handles.DrawWireDisc(transform.position, new Vector3(0, 0, 0), npcRange);
+    //}
 
     // Use this for initialization
     void Start()
@@ -255,7 +294,7 @@ public class DialogueSystem : MonoBehaviour
                           "FROM Dialogue AS D " +
                           "INNER JOIN Character AS C " +
                           "ON D.CharacterID = C.CharacterID " +
-                          "WHERE D.CharacterID = " + characterID + " AND D.DialogueID = " + nextDialogue;
+                          "WHERE D.CharacterID = " + npcID + " AND D.DialogueID = " + nextDialogue;
 
         dbcmd.CommandText = sqlQuery;
         IDataReader reader = dbcmd.ExecuteReader();
@@ -322,7 +361,7 @@ public class DialogueSystem : MonoBehaviour
 
         string sqlInsert = "UPDATE Dialogue " +
                            "SET PlayerHasSaid = " + updatedPlayerHasSaid +
-                           " WHERE CharacterID = " + characterID + " AND DialogueID = " + nextDialogue;
+                           " WHERE CharacterID = " + npcID + " AND DialogueID = " + nextDialogue;
 
         dbcmd.CommandText = sqlInsert;
         IDataReader reader = dbcmd.ExecuteReader();

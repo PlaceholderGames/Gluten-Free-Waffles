@@ -8,6 +8,8 @@ public class Vitals : MonoBehaviour
     public int health = 100;
     [Range(0, 100)]
     public int soberness = 100;
+    [Range(0, 100)]
+    public int energy = 100;
 
     private GameObject kockedOutObj;
 
