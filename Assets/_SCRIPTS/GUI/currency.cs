@@ -11,6 +11,8 @@ public class currency : MonoBehaviour
     public static bool buying = false;
     public static bool selling = false;
     public static bool confirm = false;
+    //bool to prevent multiply vendor screens from being opened
+    public static bool clicked = false;
     public GameObject confirmationScreen;
     public GameObject sellingScreen;
     public GameObject transactionUI;
@@ -26,16 +28,20 @@ public class currency : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //lmb click
-        if (Input.GetMouseButtonDown(0))
+        if (!clicked)
         {
-            //checking if a vendor was selected
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 5) && hit.transform.tag == "vendor")
+            //lmb click
+            if (Input.GetMouseButtonDown(0))
             {
-                transactionScreen = true;
-                transaction = true;
+                //checking if a vendor was selected
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit, 5) && hit.transform.tag == "vendor")
+                {
+                    transactionScreen = true;
+                    transaction = true;
+                    clicked = true;
+                }
             }
         }
         if (transaction)
@@ -82,6 +88,7 @@ public class currency : MonoBehaviour
     {
         transactionUI.SetActive(false);
         transaction = false;
+        clicked = false;
         //re-enabling time and returning cursor
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Confined;
@@ -130,6 +137,7 @@ public class currency : MonoBehaviour
         buyingScreen.SetActive(true);
         confirmationScreen.SetActive(false);
         confirm = false;
+        transactionScreen = false;
         buying = true;     
     }
 }
