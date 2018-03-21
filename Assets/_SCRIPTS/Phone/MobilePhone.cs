@@ -20,13 +20,13 @@ public class MobilePhone : MonoBehaviour {
 
         Vector3 phoneDimentions = this.GetComponent<Renderer>().bounds.size;
         transform.SetParent(GameObject.FindGameObjectWithTag("MainCamera").transform);
-        dayNightCycle = GameObject.Find("Sun").GetComponent<DayNightCycle>();
+        dayNightCycle = GameObject.Find("DayAndNightSystem").GetComponent<DayNightCycle>();
 
         Vector3 worldPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width * 0.8f, Screen.height * 0.12f, 3));
         transform.position = worldPoint;
 
         //transform.Rotate(Vector3.right, -90);
-        transform.Rotate(Vector3.up, -110);
+        transform.Rotate(Vector3.up, -120);
     }
 
     private void Update()

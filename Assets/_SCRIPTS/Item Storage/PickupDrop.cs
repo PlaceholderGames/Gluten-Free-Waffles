@@ -18,9 +18,12 @@ public class PickupDrop : MonoBehaviour
     public Font font;
     private GUIStyle style = new GUIStyle();
     bool showMessage = false;
+    private GameObject playerCamera;
 
     void Start()
     {
+
+        playerCamera = GameObject.Find("Character/FPPCamera").gameObject;
         int h = Screen.height;
         style.alignment = TextAnchor.MiddleCenter;
         style.fontSize = h * 2 / 100;
@@ -79,7 +82,7 @@ public class PickupDrop : MonoBehaviour
     {
         RaycastHit hit;
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = playerCamera.GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         if (Physics.Raycast(ray, out hit, itemRange) && hit.transform.tag == "item")    //checking that item trying to be picked up is tagged to be held
         {
             if (hit.transform.GetComponent<ItemID>().itemID == 3)
@@ -108,38 +111,11 @@ public class PickupDrop : MonoBehaviour
                 itemInHand.detectCollisions = false;
                 itemInHand.useGravity = false;
                 itemInHand.constraints = RigidbodyConstraints.FreezeAll;
+
+                if (itemInHand.GetComponent<ItemHeldBool>() != null)
+                    itemInHand.GetComponent<ItemHeldBool>().beingHeld = true;
             }
 
         }
     }
 }
-
-//else
-//{
-//    //ITEMS BEING DROPPED
-//    //looking to drop a stick
-//    //string ssdasd;
-//    if (itemOut == 1)
-//    {
-//        //setting the currently held item to false
-//        //ssdasd = arraywtvtf[itemOut];
-//        transform.Find("stick").gameObject.SetActive(false);
-//        //spawning in the dropped item
-//        dropItem(itemOut);
-//        //reseting item held to 0
-//        itemOut = 0;
-//    }
-//    //looking to drop a rock
-//    else if (itemOut == 2)
-//    {
-//        //setting the currently held item to false
-//        transform.Find("rock").gameObject.SetActive(false);
-//        //spawning in the dropped item
-//        dropItem(itemOut);
-//        //reseting item held to 0
-//        itemOut = 0;
-//    }
-//}
-//}
-//}
-//player looking to drop an item
