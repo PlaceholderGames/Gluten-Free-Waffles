@@ -65,8 +65,8 @@ public class InventoryApp : MonoBehaviour {
         //Updates colour of icon and title to represent selection
         if (oldCategorySelection != categorySelection)
         {
-            transform.GetChild(oldCategorySelection).gameObject.GetComponent<RawImage>().color = Color.white;
-            transform.GetChild(categorySelection).gameObject.GetComponent<RawImage>().color = Color.gray;
+            transform.GetChild(oldCategorySelection).gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            transform.GetChild(categorySelection).gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
 
             transform.Find("Category").GetComponent<TextMesh>().text = transform.GetChild(categorySelection).name;
         }
@@ -138,10 +138,10 @@ public class InventoryApp : MonoBehaviour {
             }
 
             //Updates the item description
-            transform.Find("Description").GetComponent<Text>().text = itemList[itemSelection].itemDesc;
+            transform.Find("Description").GetComponent<TextMesh>().text = itemList[itemSelection].itemDesc;
 
             transform.Find("Item Icon").gameObject.SetActive(true);
-            transform.Find("Item Icon").GetComponent<RawImage>().texture = Resources.Load<Texture2D>("ItemIcons/" + itemList[itemSelection].itemName);
+            transform.Find("Item Icon").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ItemIcons/" + itemList[itemSelection].itemName);
 
             oldItemSelection = itemSelection;
 
