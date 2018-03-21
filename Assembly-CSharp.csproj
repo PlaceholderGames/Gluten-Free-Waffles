@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_3;UNITY_5_6;UNITY_5;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_3;UNITY_5_6;UNITY_5;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;CROSS_PLATFORM_INPUT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -82,7 +82,9 @@
      <Compile Include="Assets\_ASSET_STORE\Water_Stuff\MakeSomeNoise.cs" />
      <Compile Include="Assets\_ASSET_STORE\Water_Stuff\WaterPlaneGen.cs" />
      <Compile Include="Assets\_SCRIPTS\CamMouseLook.cs" />
-     <Compile Include="Assets\_SCRIPTS\DayNightCycle.cs" />
+     <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\DayNightCycle.cs" />
+     <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\StarSystem.cs" />
+     <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\moonSystem.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\MainMenu.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\RotateCameraMainMenu.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\SetRotation.cs" />
@@ -93,18 +95,18 @@
      <Compile Include="Assets\_SCRIPTS\Item Storage\Inventory.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\Item.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\ItemDatabase.cs" />
+     <Compile Include="Assets\_SCRIPTS\Item Storage\ItemHeldBool.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\ItemID.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\PickupDrop.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\VendorSupplies.cs" />
-     <Compile Include="Assets\_SCRIPTS\MENU\LoadSceneOnClick.cs" />
-     <Compile Include="Assets\_SCRIPTS\MENU\PlayGame.cs" />
-     <Compile Include="Assets\_SCRIPTS\MENU\QuitOnClick.cs" />
      <Compile Include="Assets\_SCRIPTS\Phone\Apps\InventoryApp.cs" />
      <Compile Include="Assets\_SCRIPTS\Phone\MobilePhone.cs" />
      <Compile Include="Assets\_SCRIPTS\PlayerController.cs" />
+     <Compile Include="Assets\_SCRIPTS\Quests\BasicQuestLocation.cs" />
+     <Compile Include="Assets\_SCRIPTS\Quests\ItemQuestPickup.cs" />
+     <Compile Include="Assets\_SCRIPTS\Quests\RotateTowardsPlayer.cs" />
      <Compile Include="Assets\_SCRIPTS\funds.cs" />
      <Compile Include="Assets\_SCRIPTS\npcInteraction.cs" />
-     <Compile Include="Assets\_UTILITIES\Hierarchy Sort.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
@@ -173,6 +175,7 @@
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\Tonemapping.cginc" />
      <None Include="Assets\_UTILITIES\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\Uber.shader" />
+     <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\Blit.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Editor Resources\Monitors\WaveformRender.shader" />
@@ -194,8 +197,10 @@
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Bluenoise64\COPYING.txt" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\NotoSans - License.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
+     <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Editor Resources\UI\Trackball.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
+     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
      <None Include="Assets\_SHADERS\ToonShading\Shaders\ToonLitOutline.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\_SHADERS\ToonShading\Shaders\ToonLit.shader" />
@@ -205,6 +210,7 @@
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\EyeHistogram.compute" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\TAA.cginc" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\EyeAdaptation.cginc" />
+     <None Include="Assets\Standard Assets\Environment\Water\Water\Shaders\FXWaterPro.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\GrainGen.shader" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\FXAA.shader" />
@@ -214,8 +220,11 @@
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\Bloom.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Editor Resources\Monitors\VectorscopeRender.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\EyeAdaptation.shader" />
+     <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\ColorGrading.cginc" />
+     <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Advanced.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\AmbientOcclusion.cginc" />
+     <None Include="Assets\water.shader.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Editor Resources\Monitors\WaveformCompute.compute" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
@@ -250,6 +259,10 @@
  <Reference Include="TextMeshPro-5.6-1.0.56-Runtime">
  <HintPath>F:/My Documents/GitHub/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Runtime.dll</HintPath>
  </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{6347FF1A-F6B5-E273-BE86-66F7AC26CADB}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
