@@ -25,10 +25,6 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        //Hides the phone as it hasn't been found at the start of the game.
-        //playerPhone = GameObject.FindGameObjectWithTag("Phone");
-        //playerPhone.SetActive(false);
-
         database = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>();
     }
 
@@ -66,7 +62,7 @@ public class Inventory : MonoBehaviour
     public void updatePhone()
     {
         phoneOut = !phoneOut;
-        //playerPhone.SetActive(phoneOut);
+        GameObject.FindWithTag("Phone").transform.GetChild(0).gameObject.SetActive(phoneOut);
     }
 
     //Adds or removes items into the system based on bool (true = add)
@@ -174,7 +170,8 @@ public class Inventory : MonoBehaviour
                     Instantiate(playerPhone, Vector3.zero, Quaternion.identity);
 
                     hasPhone = true;
-                    phoneOut = false;
+                    phoneOut = true;
+
                     print("You found your phone!!");
                     break;
                     //Display message to user saying they found phone here

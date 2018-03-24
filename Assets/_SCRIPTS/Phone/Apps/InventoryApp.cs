@@ -23,7 +23,7 @@ public class InventoryApp : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        phone = GameObject.FindGameObjectWithTag("Phone");
+        phone = GameObject.FindGameObjectWithTag("Phone").transform.GetChild(0).gameObject;
         inventory = GameObject.FindGameObjectWithTag("inventory").transform.Find("Inventory").GetComponent<Inventory>();
     }
 	
@@ -133,8 +133,8 @@ public class InventoryApp : MonoBehaviour {
             //Updates the item selected with bold text and makes the previous one normal
             if (oldItemSelection != itemSelection)
             {
-                transform.Find("Lists").Find("Items").GetChild(oldItemSelection).gameObject.GetComponent<Text>().font = normal;
-                transform.Find("Lists").Find("Items").GetChild(itemSelection).gameObject.GetComponent<Text>().font = bold;
+                transform.Find("Lists").Find("Items").GetChild(oldItemSelection).gameObject.GetComponent<TextMesh>().font = normal;
+                transform.Find("Lists").Find("Items").GetChild(itemSelection).gameObject.GetComponent<TextMesh>().font = bold;
             }
 
             //Updates the item description
@@ -148,8 +148,8 @@ public class InventoryApp : MonoBehaviour {
             while (counter < itemList.Count)
             {
                 //Displays items and quantites in current list
-                transform.Find("Lists").Find("Items").GetChild(counter).GetComponent<Text>().text = itemList[counter].itemName;
-                transform.Find("Lists").Find("Quantities").GetChild(counter).GetComponent<Text>().text = itemList[counter].itemQuantity.ToString();
+                transform.Find("Lists").Find("Items").GetChild(counter).GetComponent<TextMesh>().text = itemList[counter].itemName;
+                transform.Find("Lists").Find("Quantities").GetChild(counter).GetComponent<TextMesh>().text = itemList[counter].itemQuantity.ToString();
                 counter++;
 
                 //Stops overflow
@@ -160,8 +160,8 @@ public class InventoryApp : MonoBehaviour {
             //Fills unfilled slots with blanks
             while(counter < 12)
             {
-                transform.Find("Lists").Find("Items").GetChild(counter).GetComponent<Text>().text = "";
-                transform.Find("Lists").Find("Quantities").GetChild(counter).GetComponent<Text>().text = "";
+                transform.Find("Lists").Find("Items").GetChild(counter).GetComponent<TextMesh>().text = "";
+                transform.Find("Lists").Find("Quantities").GetChild(counter).GetComponent<TextMesh>().text = "";
                 counter++;
             }
 
@@ -173,12 +173,12 @@ public class InventoryApp : MonoBehaviour {
             for (int i = 0; i < 12; i++)
             {
                 transform.Find("Lists").Find("Items").GetChild(i).GetComponent<TextMesh>().text = "";
-                //transform.Find("Lists").Find("Quantities").GetChild(i).GetComponent<TextMesh>().text = "";
+                transform.Find("Lists").Find("Quantities").GetChild(i).GetComponent<TextMesh>().text = "";
             }
 
             transform.Find("Lists").Find("Items").GetChild(0).GetComponent<TextMesh>().text = "Empty";
             transform.Find("Description").GetComponent<TextMesh>().text = "No item \nto show. \nGo find \nsome!";
-            //transform.Find("Description").GetComponent<TextMesh>().text.Replace("//n", "/n");
+            transform.Find("Description").GetComponent<TextMesh>().text.Replace("//n", "/n");
             transform.Find("Item Icon").gameObject.SetActive(false);
         }
         

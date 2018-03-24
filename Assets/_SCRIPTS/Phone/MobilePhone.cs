@@ -16,40 +16,23 @@ public class MobilePhone : MonoBehaviour {
     private bool inApp = false;
 
     // Use this for initialization
-    void Start () {
-        print("hello");
-
+    void Start () 
+    {
         Vector3 phoneDimentions = this.GetComponent<Renderer>().bounds.size;
-        //transform.SetParent(GameObject.FindGameObjectWithTag("Player").transform.Find("Phone Canvas"));
+
         dayNightCycle = GameObject.Find("DayAndNightSystem").GetComponent<DayNightCycle>();
-
-        //float phoneWidth = transform.Find("Notifications").GetComponent<Canvas>().GetComponent<RectTransform>().rect.width * 20;
-        //float phoneHeight = transform.Find("Notifications").GetComponent<Canvas>().GetComponent<RectTransform>().rect.height * 20;
-
-        //print(phoneHeight);
-        //print(phoneWidth);
-
-        //print(Screen.width);
-        //print(Screen.height);
-
-        //Vector3 worldPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width -300.0f, 400.0f, 3));
-        //transform.position = worldPoint;
-
-        //transform.Rotate(Vector3.right, -90);
-        //transform.Rotate(Vector3.up, -120);
         
         transform.parent.GetComponent<Canvas>().worldCamera = GameObject.FindGameObjectWithTag("Player").transform.Find("UI Camera").GetComponent<Camera>();
         transform.parent.GetComponent<Canvas>().planeDistance = 1;
 
-        transform.Find("Minutes");
-
-
+        //transform.Find("Minutes");
     }
 
     private void Update()
     {
         if (errorMessage == false)
             HomeScreenSelection();
+        
         else
         {
             if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
@@ -169,7 +152,7 @@ public class MobilePhone : MonoBehaviour {
             case 9:
                 {
                     //Inventory
-                    transform.GetChild(7).GetChild(9).gameObject.SetActive(true);
+                    transform.Find("Applications").Find("Inventory").gameObject.SetActive(true);
                     hideHome();
                     inApp = true;
                     break;
