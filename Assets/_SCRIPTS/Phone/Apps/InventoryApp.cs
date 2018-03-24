@@ -172,11 +172,11 @@ public class InventoryApp : MonoBehaviour {
         {
             for (int i = 0; i < 12; i++)
             {
-                transform.Find("Lists").Find("Items").GetChild(i).GetComponent<Text>().text = "";
-                transform.Find("Lists").Find("Quantities").GetChild(i).GetComponent<Text>().text = "";
+                transform.Find("Lists").Find("Items").GetChild(i).GetComponent<TextMesh>().text = "";
+                //transform.Find("Lists").Find("Quantities").GetChild(i).GetComponent<TextMesh>().text = "";
             }
 
-            transform.Find("Lists").Find("Items").GetChild(0).GetComponent<Text>().text = "Empty";
+            transform.Find("Lists").Find("Items").GetChild(0).GetComponent<TextMesh>().text = "Empty";
             transform.Find("Description").GetComponent<TextMesh>().text = "No item \nto show. \nGo find \nsome!";
             //transform.Find("Description").GetComponent<TextMesh>().text.Replace("//n", "/n");
             transform.Find("Item Icon").gameObject.SetActive(false);
