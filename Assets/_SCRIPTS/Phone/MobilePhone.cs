@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MobilePhone : MonoBehaviour {
+public class MobilePhone : MonoBehaviour
+{
 
     public DayNightCycle dayNightCycle;
     public Transform player;
@@ -15,24 +16,33 @@ public class MobilePhone : MonoBehaviour {
     private bool errorMessage = false;
     private bool inApp = false;
 
+    private Transform HourHand, MinuteHand, SecondHand;
+    private float hourTime, minuteTime, secondsTime, day;
+
     // Use this for initialization
-    void Start () 
+    void Start()
     {
         Vector3 phoneDimentions = this.GetComponent<Renderer>().bounds.size;
 
         dayNightCycle = GameObject.Find("DayAndNightSystem").GetComponent<DayNightCycle>();
-        
+
         transform.parent.GetComponent<Canvas>().worldCamera = GameObject.FindGameObjectWithTag("Player").transform.Find("UI Camera").GetComponent<Camera>();
         transform.parent.GetComponent<Canvas>().planeDistance = 1;
 
-        //transform.Find("Minutes");
+        HourHand = transform.Find("Home Screen").Find("Clock").Find("Clock Hands").Find("Hours");
+        MinuteHand = transform.Find("Home Screen").Find("Clock").Find("Clock Hands").Find("Minutes");
+        SecondHand = transform.Find("Home Screen").Find("Clock").Find("Clock Hands").Find("Seconds");
+        hourTime = dayNightCycle.getTime() / 3600;
+        minuteTime = dayNightCycle.getTime() / 60;
+        secondsTime = dayNightCycle.getTime();
+        day = dayNightCycle.getDay();
     }
 
     private void Update()
     {
         if (errorMessage == false)
             HomeScreenSelection();
-        
+
         else
         {
             if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
@@ -47,9 +57,8 @@ public class MobilePhone : MonoBehaviour {
             if (appClosed == true)
                 openHome();
         }
-           
 
-            
+        UpdateClock();
     }
 
     void OnGUI()
@@ -59,7 +68,7 @@ public class MobilePhone : MonoBehaviour {
         transform.GetChild(3).GetComponent<TextMesh>().text = dayNightCycle.getDay().ToString();
     }
 
-    void HomeScreenSelection ()
+    void HomeScreenSelection()
     {
         if (!inApp)
         {
@@ -92,7 +101,7 @@ public class MobilePhone : MonoBehaviour {
 
     private void Launch(int selection)
     {
-        switch(selection)
+        switch (selection)
         {
 
             case 0:
@@ -232,7 +241,7 @@ public class MobilePhone : MonoBehaviour {
         }
     }
 
-    private void hideHome ()
+    private void hideHome()
     {
         //transform.GetChild(0)... change background here
         transform.GetChild(1).gameObject.SetActive(false);
@@ -267,7 +276,7 @@ public class MobilePhone : MonoBehaviour {
         mins = currentTime / 60;
 
         string minuteUpdate;
-       
+
         if (mins < 10)
             minuteUpdate = "0" + mins.ToString();
         else
@@ -290,4 +299,49 @@ public class MobilePhone : MonoBehaviour {
 
         return newTime;
     }
+
+    private void UpdateClock()
+    {
+        float hour, min, sec;
+
+        hour = dayNightCycle.getTime();
+        hour = hour / 3600;
+
+        min = dayNightCycle.getTime();
+        min = min / 60;
+
+        sec = dayNightCycle.getTime();
+
+        if (hour > hourTime + 1)
+        {
+            HourHand.Rotate(0, 0, 30);
+            hourTime = hour;
+        }
+
+        if (min > minuteTime + 1)
+        {
+            float temp = min;
+            min -= minuteTime;
+            MinuteHand.Rotate(0, 0, 6 * min);
+            minuteTime = temp;
+        }
+
+        if (sec > secondsTime + 1)
+        {
+            float temp = sec;
+            sec -= secondsTime;
+            SecondHand.Rotate(0, 0, 6 * sec);
+            secondsTime = temp;
+
+        }
+        if (dayNightCycle.getDay() > day)
+        {
+            hourTime = dayNightCycle.getTime() / 3600;
+            minuteTime = dayNightCycle.getTime() / 60;
+            secondsTime = dayNightCycle.getTime();
+            HourHand.Rotate(0, 0, 30);
+            day++;
+        }
+    }
+
 }
