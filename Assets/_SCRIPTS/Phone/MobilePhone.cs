@@ -74,14 +74,76 @@ public class MobilePhone : MonoBehaviour
         {
             oldSelection = selection;
 
-            if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.UpArrow))
-                selection = selection - 4;
+     
             if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.LeftArrow))
                 selection--;
             if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.RightArrow))
                 selection++;
+            
+            if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                switch (selection)
+                {
+                    case 18:
+                        {
+                            selection = 16;
+                            break;
+                        }
+                    case 19:
+                        {
+                            selection = 17;
+                            break;
+                        }
+                    case 20:
+                        {
+                            selection = 17;
+                            break;
+                        }
+                    case 21:
+                        {
+                            selection = 17;
+                            break;
+                        }
+
+                    default:
+                        {
+                            selection -= 4;
+                            break;
+                        }
+                }
+            }
+
             if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.DownArrow))
-                selection = selection + 4;
+            {
+                switch(selection)
+                {
+                     case 14:
+                        {
+                            selection = 17;
+                            break;
+                        }
+                    case 15:
+                        {
+                            selection = 17;
+                            break;
+                        }
+                    case 16:
+                        {
+                            selection = 18;
+                            break;
+                        }
+                    case 17:
+                        {
+                            selection = 19;
+                            break;
+                        }
+                default:
+                    {
+                            selection += 4;
+                            break;
+                    }
+                }
+            }
 
             if (selection < 0)
                 selection = 0;
