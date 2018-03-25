@@ -37,7 +37,7 @@ public class MobilePhone : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
             {
-                transform.GetChild(6).GetChild(0).gameObject.SetActive(false);
+                transform.Find("Notifications").Find("Update Message").gameObject.SetActive(false);
                 errorMessage = false;
             }
         }

@@ -9,10 +9,6 @@ public class InventoryApp : MonoBehaviour {
     public Material homescreen;
     public Inventory inventory;
 
-    public Font normal;
-    public Font bold;
-
-
     private GameObject phone;
     private bool backgroundUpdate = true;
     private int categorySelection = 0;
@@ -133,8 +129,10 @@ public class InventoryApp : MonoBehaviour {
             //Updates the item selected with bold text and makes the previous one normal
             if (oldItemSelection != itemSelection)
             {
-                transform.Find("Lists").Find("Items").GetChild(oldItemSelection).gameObject.GetComponent<TextMesh>().font = normal;
-                transform.Find("Lists").Find("Items").GetChild(itemSelection).gameObject.GetComponent<TextMesh>().font = bold;
+                transform.Find("Lists").Find("Items").GetChild(oldItemSelection).gameObject.GetComponent<TextMesh>().fontStyle = FontStyle.Normal;
+                transform.Find("Lists").Find("Items").GetChild(oldItemSelection).gameObject.GetComponent<TextMesh>().fontSize = 50;
+                transform.Find("Lists").Find("Items").GetChild(itemSelection).gameObject.GetComponent<TextMesh>().fontStyle = FontStyle.BoldAndItalic;
+                transform.Find("Lists").Find("Items").GetChild(itemSelection).gameObject.GetComponent<TextMesh>().fontSize = 70;
             }
 
             //Updates the item description
@@ -178,7 +176,7 @@ public class InventoryApp : MonoBehaviour {
 
             transform.Find("Lists").Find("Items").GetChild(0).GetComponent<TextMesh>().text = "Empty";
             transform.Find("Description").GetComponent<TextMesh>().text = "No item \nto show. \nGo find \nsome!";
-            transform.Find("Description").GetComponent<TextMesh>().text.Replace("//n", "/n");
+            transform.Find("Description").GetComponent<TextMesh>().text.Replace("\\n", "\n");
             transform.Find("Item Icon").gameObject.SetActive(false);
         }
         
