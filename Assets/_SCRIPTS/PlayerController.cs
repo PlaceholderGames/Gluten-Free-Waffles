@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour {
         {
             speed = normalSpeed;
         }
-        if (Input.GetKeyDown(KeyCode.Space) && onGround && jumpTimer) //if space isn't being pressed, allows the player to jump
+        if (Input.GetAxis("Jump") != 0 && onGround && jumpTimer) //if space isn't being pressed, allows the player to jump
         {
             canJump = true;
 
