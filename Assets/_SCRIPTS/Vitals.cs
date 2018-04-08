@@ -11,30 +11,46 @@ public class Vitals : MonoBehaviour
     [Range(0, 100)]
     public int energy = 100;
 
-    private GameObject kockedOutObj;
+    private bool playerIsDead = false;
+
+    public void setHealth(int newHealth)
+    {
+        health = newHealth;
+
+        //if the new health is greater than 0 than set the player as alive
+        if (health > 0)
+            playerIsDead = false;
+    }
+
+    public int getHealth()
+    {
+        return health;
+    }
 
     // Use this for initialization
     private void Start ()
     {
-        kockedOutObj = GameObject.Find("_SCRIPTS/KockedOut");
     }
 	
 	// Update is called once per frame
-	private void Update ()
+	public void Update ()
     {
+        //debug command to instalty kill the player
         debugRemoveHP();
 
-        if (health == 0)
+        if (health == 0 && !playerIsDead)
         {
-            Debug.Log("Boi, you dead!");
+            playerIsDead = true;
+
+            GameObject knockedOutObj = Instantiate(Resources.Load("Prefabs/KnockedOut"), Vector3.zero, Quaternion.identity) as GameObject;
         }
-	}
+    }
 
     private void debugRemoveHP()
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            if (Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.D) && !playerIsDead)
             {
                 print("HP lowered to 0.");
                 health = 0;
