@@ -18,6 +18,11 @@ public class PlayerController : MonoBehaviour {
     private bool onGround = true; //if the player is on the ground this will be true
     private bool canSprint; //variable changed when the player does to sprint
 
+    private bool jumpTimer = true;
+
+    [SerializeField]
+    private float jumpTime = 1f;
+
     private Rigidbody selfRigidBody;
     
 
@@ -29,12 +34,6 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
-        translation *= Time.deltaTime;
-        strafe *= Time.deltaTime;
-
-        transform.Translate(strafe, 0, translation);
-
-        //selfRigidBody.AddForce(0, -10, 0, ForceMode.Force);
         
     }
 	
@@ -46,6 +45,7 @@ public class PlayerController : MonoBehaviour {
         if (canJump)
         {
             canJump = false;
+            
             selfRigidBody.AddForce(0, forceConst, 0, ForceMode.Impulse);
         }
         if (canSprint)
@@ -56,9 +56,12 @@ public class PlayerController : MonoBehaviour {
         {
             speed = normalSpeed;
         }
-        if (Input.GetKeyDown(KeyCode.Space) && onGround) //if space isn't being pressed, allows the player to jump
+        if (Input.GetAxis("Jump") != 0 && onGround && jumpTimer) //if space isn't being pressed, allows the player to jump
         {
             canJump = true;
+
+            jumpTimer = false;
+            Invoke("resetJumpTimer", jumpTime);
         }
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -69,7 +72,11 @@ public class PlayerController : MonoBehaviour {
             canSprint = false;
         }
         //transform.Translate(strafe, 0, translation);		
-	}
+        translation *= Time.deltaTime;
+        strafe *= Time.deltaTime;
+
+        transform.Translate(strafe, 0, translation);
+    }
     void OnCollisionStay(Collision coll)
     {
         onGround = true;
@@ -81,5 +88,10 @@ public class PlayerController : MonoBehaviour {
         {
             onGround = false;
         }
+    }
+
+    void resetJumpTimer()
+    {
+        jumpTimer = true;
     }
 }

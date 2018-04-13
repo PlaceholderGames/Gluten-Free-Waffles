@@ -48,7 +48,7 @@ public class StarSystem : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update()
+    private void FixedUpdate()
     {
         //checks which state the day and night cycle is in and adjusts the stars depending on that
         switch (dayNightCycle.getTimeState())
