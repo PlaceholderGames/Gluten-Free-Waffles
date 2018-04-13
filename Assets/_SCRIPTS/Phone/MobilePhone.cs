@@ -26,13 +26,13 @@ public class MobilePhone : MonoBehaviour
 
         dayNightCycle = GameObject.Find("DayAndNightSystem").GetComponent<DayNightCycle>();
 
-        transform.parent.GetComponent<Canvas>().worldCamera = GameObject.FindGameObjectWithTag("Player").transform.Find("UI Camera").GetComponent<Camera>();
+        transform.parent.GetComponent<Canvas>().worldCamera = GameObject.FindGameObjectWithTag("Player").transform.Find("Phone Camera").GetComponent<Camera>();
         transform.parent.GetComponent<Canvas>().planeDistance = 1;
 
         HourHand = transform.Find("Home Screen").Find("Clock").Find("Clock Hands").Find("Hours");
         MinuteHand = transform.Find("Home Screen").Find("Clock").Find("Clock Hands").Find("Minutes");
         SecondHand = transform.Find("Home Screen").Find("Clock").Find("Clock Hands").Find("Seconds");
-        hourTime = dayNightCycle.getTime() / 3600;
+        hourTime = (dayNightCycle.getTime() / 3600) - 1;
         minuteTime = dayNightCycle.getTime() / 60;
         secondsTime = dayNightCycle.getTime();
         day = dayNightCycle.getDay();
@@ -376,8 +376,10 @@ public class MobilePhone : MonoBehaviour
 
         if (hour > hourTime + 1)
         {
-            HourHand.Rotate(0, 0, 30);
-            hourTime = hour;
+            float temp = hour;
+            hour -= hourTime;
+            HourHand.Rotate(0, 0, 30 * hour);
+            hourTime = temp;
         }
 
         if (min > minuteTime + 1)
@@ -396,6 +398,7 @@ public class MobilePhone : MonoBehaviour
             secondsTime = temp;
 
         }
+
         if (dayNightCycle.getDay() > day)
         {
             hourTime = dayNightCycle.getTime() / 3600;
