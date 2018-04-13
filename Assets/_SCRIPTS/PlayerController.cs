@@ -39,8 +39,8 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        translation = Input.GetAxis("Vertical") * speed;
-        strafe = Input.GetAxis("Horizontal") * speed;
+        translation = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+        strafe = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
 
         if (canJump)
         {
@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour {
         {
             canSprint = false;
         }
-        //transform.Translate(strafe, 0, translation);		
+        transform.Translate(strafe, 0, translation);		
 	}
     void OnCollisionStay(Collision coll)
     {
