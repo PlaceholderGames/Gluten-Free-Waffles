@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class Drunk : MonoBehaviour
 {
-    public float reduceDrunkSpeed = 10.0f;
+    public float reduceDrunkSpeed = 30.0f;
     public float initialAlpha = 0.1f;
 
+    private GameObject player;
     private Vitals vitals;
     private Camera FPPCamera;
     private Image drunkOverlay;
@@ -30,7 +31,7 @@ public class Drunk : MonoBehaviour
     private void Start()
     {
         //get some components & objects
-        GameObject player = GameObject.Find("Character");
+        player = GameObject.Find("Character");
         vitals = player.GetComponent<Vitals>();
         FPPCamera = player.transform.Find("FPPCamera").GetComponent<Camera>();
         drunkOverlay = transform.Find("DrunkOverlay").GetComponent<Image>();
@@ -38,6 +39,9 @@ public class Drunk : MonoBehaviour
 
         //set the initial alpha value for the drunk overlay
         drunkOverlay.color = new Color(drunkOverlay.color.r, drunkOverlay.color.g, drunkOverlay.color.b, initialAlpha);
+
+        reduceDrunkSpeed = 100.0f - vitals.getSoberness();
+        print("speed = " + reduceDrunkSpeed);
     }
 
     private void Update()
@@ -61,7 +65,8 @@ public class Drunk : MonoBehaviour
             }
         }
 
-        vitals.setSoberness(vitals.getSoberness() + (1.0f * Time.deltaTime));
+        vitals.setSoberness(vitals.getSoberness() + (1.0f * reduceDrunkSpeed * Time.deltaTime));
+        //print("delta~ = " + (reduceDrunkSpeed * Time.deltaTime));
 
         //lerp the alpha of the drunk panel overlay
         float newAlpha = Mathf.Lerp(initialAlpha, 0.0f, fadeTime);
@@ -70,9 +75,22 @@ public class Drunk : MonoBehaviour
         //lerp the alpha of the black gradient around the camera
         drunkOverlayGroup.alpha = Mathf.Lerp(1.0f, 0.0f, fadeTime);
 
+        //reduceDrunkSpeed = 100.0f - vitals.getSoberness();
+        //print("speed = " + reduceDrunkSpeed);
+
         fadeTime += (1.0f / reduceDrunkSpeed) * Time.deltaTime;
 
-        print("soberness = " + Mathf.Round(vitals.getSoberness()));
+        print("soberness = " + vitals.getSoberness());
+
+        if (vitals.getSoberness() >= 100.0f) {
+            //ensures the sober value is exactly 100.0f | 100%
+            vitals.setSoberness(100.0f);
+            print("You're sober again boi!");
+
+            //destory this script, resetting the player back to normal
+            destroyScript();
+        }
+
     }
 
     // Update is called once per frame
@@ -86,5 +104,11 @@ public class Drunk : MonoBehaviour
         rotationY += smoothYAxis * sensitivityY;
 
         FPPCamera.transform.localEulerAngles = new Vector3(-rotationY, rotationX, transform.localEulerAngles.z);
+    }
+
+    private void destroyScript()
+    {
+        //deletes this game object
+        Destroy(gameObject);
     }
 }
