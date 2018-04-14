@@ -17,12 +17,12 @@ public class funds : MonoBehaviour
 		
 	}
 
-    void addingFunds(double add)
+    public void addingFunds(double add)
     {
         money = money + add;
     }
 
-    void removingFunds(double sub)
+    public void removingFunds(double sub)
     {
         money = money - sub;
     }

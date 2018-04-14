@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class currency : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class currency : MonoBehaviour
     public static bool buying = false;
     public static bool selling = false;
     public static bool confirm = false;
+    public static bool congrats = false;
+    public static bool refuse = false;
     //bool to prevent multiply vendor screens from being opened
     public static bool clicked = false;
 
@@ -18,9 +21,17 @@ public class currency : MonoBehaviour
     public GameObject sellingScreen;
     public GameObject transactionUI;
     public GameObject buyingScreen;
+    public GameObject congratsScreen;
+    public GameObject refusedScreen;
+    public GameObject[] buyingButtons;
     public Text[] itemButtons;
     public Text[] itemCosts;
     public Text funds;
+    public Text congratsText;
+    //index 0=item name and price, index 1=item description, index 2=players funds
+    //SET AS ARRAY INSTEAD OF SEPERATE TO TRY HELP REMOVE ANY CONFUSION WITH PREVIOUS PUBLIC TEXT VALUES
+    public Text[] confirmationScreenTexts;
+    
 
     //references to other game objects required
     private GameObject player;
@@ -78,6 +89,14 @@ public class currency : MonoBehaviour
             {
                 ConfirmPurchaseUI();
             }
+            else if(congrats)
+            {
+                accepted();
+            }
+            else if(refuse)
+            {
+                refused();
+            }
         }
     }
 
@@ -107,6 +126,10 @@ public class currency : MonoBehaviour
                 itemRef = database.items[vendorSupplies.supplies[i]];
                 itemButtons[i].text = itemRef.itemName;
                 itemCosts[i].text = "Cost: " + itemRef.price.ToString();
+            }
+            else if (vendorSupplies.supplies[i] < 0)
+            {
+                buyingButtons[i].SetActive(false);
             }
         }
         funds.text = "Funds: " + playerMoney.money.ToString();
@@ -154,10 +177,22 @@ public class currency : MonoBehaviour
     //FUNCTIONS RELATED TO THE CONFIRMATION OF PURCHASE SCREEN
     public void ConfirmPurchaseUI()
     {
+        //finding which item was selected to buy based off of which button was pressed
+        for (int i = 0; i < 4; i++)
+        {
+            if (EventSystem.current.currentSelectedGameObject.name == "Item" + (i + 1))
+            {
+                itemRef = database.items[vendorSupplies.supplies[i]];
+            }
+        }
+        
         buying = false;
         confirm = true;
         buyingScreen.SetActive(false);
         confirmationScreen.SetActive(true);
+        confirmationScreenTexts[0].text = itemRef.itemName + "  Cost: " + itemRef.price;
+        confirmationScreenTexts[1].text = itemRef.itemDesc;
+        confirmationScreenTexts[2].text = playerMoney.money.ToString();
     }
 
     public void DeclinePurchase()
@@ -167,5 +202,54 @@ public class currency : MonoBehaviour
         confirm = false;
         transactionScreen = false;
         buying = true;     
+    }
+
+    //FUNCTIONS RELATED TO WHEN A PURCHASE IS ATTEMPTED
+    public void AttemptPurchase()
+    {
+        confirmationScreen.SetActive(false);
+        confirm = false;
+        if (itemRef.price <= playerMoney.money)
+        {
+            congratsScreen.SetActive(true);
+            congrats = true;
+            //adding item to inventory
+            inventory.updateItems(itemRef.itemID, true);
+            playerMoney.removingFunds(itemRef.price);
+            accepted();
+        }
+        else if(itemRef.price > playerMoney.money)
+        {
+            refusedScreen.SetActive(true);
+            refuse = true;
+            refused();
+        }
+    }
+
+    public void refused()
+    {
+        refusedScreen.SetActive(true);
+    }
+
+    public void accepted()
+    {
+        congratsScreen.SetActive(true);
+        congratsText.text = "Congrats! You bought the " + itemRef.itemName;
+    }
+
+    public void returnFromAccept()
+    {
+        buyingScreen.SetActive(true);
+        congratsScreen.SetActive(false);
+        buying = true;
+        congrats = false;
+    }
+
+    public void returnFromRefuse()
+    {
+        buyingScreen.SetActive(true);
+        refusedScreen.SetActive(false);
+        buying = true;
+        refuse = false;
     }
 }
