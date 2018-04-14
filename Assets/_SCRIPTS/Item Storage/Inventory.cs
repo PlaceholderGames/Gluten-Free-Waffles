@@ -58,18 +58,18 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public bool ItemSearch(Item item)
+    public bool ItemSearch(int ID)
     {
         //Pass in an item and the function will return true if the player possesses it or false if not.
 
-        string type = item.itemType.ToString();
+        string type = database.items[ID].itemType.ToString();
         switch (type)
         {
             case "Food":
                 {
                     for(int i = 0; i < foodList.Count; i++)
                     {
-                        if (foodList[i] == item)
+                        if (foodList[i].itemID == ID)
                             return true;
                     }
                     return false;
@@ -78,7 +78,7 @@ public class Inventory : MonoBehaviour
                 {
                     for (int i = 0; i < drinkList.Count; i++)
                     {
-                        if (drinkList[i] == item)
+                        if (drinkList[i].itemID == ID)
                             return true;
                     }
                     return false;
@@ -87,7 +87,7 @@ public class Inventory : MonoBehaviour
                 {
                     for (int i = 0; i < clothesList.Count; i++)
                     {
-                        if (clothesList[i] == item)
+                        if (clothesList[i].itemID == ID)
                             return true;
                     }
                     return false;
@@ -96,7 +96,7 @@ public class Inventory : MonoBehaviour
                 {
                     for (int i = 0; i < questList.Count; i++)
                     {
-                        if (questList[i] == item)
+                        if (questList[i].itemID == ID)
                             return true;
                     }
                     return false;
@@ -105,7 +105,7 @@ public class Inventory : MonoBehaviour
                 {
                     for (int i = 0; i < miscList.Count; i++)
                     {
-                        if (miscList[i] == item)
+                        if (miscList[i].itemID == ID)
                             return true;
                     }
                     return false;
