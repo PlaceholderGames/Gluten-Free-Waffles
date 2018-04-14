@@ -7,79 +7,146 @@ public class Vitals : MonoBehaviour
     [Range(1, 100)]
     public int health = 100;
     [Range(0, 100)]
-    public float soberness = 100;
+    public float soberness = 100.0f;
+    [Header("50% energy is standard.")]
+    [Header("More than that is hyper & less is tired.")]
     [Range(0, 100)]
-    public int energy = 100;
+    public float energy = 50.0f;
 
-    private bool playerIsDead = false;
+    private bool playerIsKnockedOut = false;
     private bool playerIsDrunk = false;
+    private bool playerEnergyNotNeutral = false;
+
+    public void setKnockedOutState(bool KnockedOutArg)
+    {
+        playerIsKnockedOut = KnockedOutArg;
+    }
+
+    public void setDrunkState(bool drunkArg)
+    {
+        playerIsDrunk = drunkArg;
+    }
+
+    public void setEnergyState(bool energyArg)
+    {
+        playerEnergyNotNeutral = energyArg;
+    }
 
     public void setHealth(int newHealth)
     {
         health = newHealth;
-
-        //if the new health is greater than 0 than set the player as alive
-        if (health > 0)
-            playerIsDead = false;
     }
 
-    public int getHealth()
-    {
+    public int getHealth() {
         return health;
     }
 
-    public void setSoberness(float newSoberness) {
-        soberness = newSoberness;
+    public void setSoberness(float newSoberness, bool drunkOverride = false)
+    {
+        if (!drunkOverride)
+            soberness += newSoberness;
+        else
+            soberness = newSoberness;
+
+        //ensure the float value for soberness is exactly 0.0f if it drops this low
+        if (soberness <= 0.0f)
+            soberness = 0.0f;
     }
 
-    public float getSoberness() {
+    public float getSoberness()
+    {
         return soberness;
     }
 
-    // Use this for initialization
-    private void Start ()
+    public void setEnergy(float newEnergy, bool energyOverride = false)
     {
+        if (!energyOverride) {
+            if ((energy + newEnergy) > 100.0f)
+                energy = 100.0f;
+            else
+                energy += newEnergy;
+        } else
+            if (energy <= 100.0f)
+            energy = newEnergy;
+        else
+            energy = 100.0f;
     }
-	
-	// Update is called once per frame
-	public void Update ()
+
+    public float getEnergy()
+    {
+        return energy;
+    }
+
+    // Update is called once per frame
+    private void Update ()
     {
         //debug command to instalty kill the player
-        debugRemoveHP();
+        debugSetHP();
 
         //debug command to instalty make the player drunk
-        debugMakeDrunk();
+        debugSetSoberness();
 
-        if (health == 0 && !playerIsDead)
+        //debug command to instantly change the players energy levels
+        debugsetEnergy();
+
+        //knock the player out
+        if ((health == 0 || soberness == 0.0f || energy == 0.0f) && !playerIsKnockedOut)
         {
-            playerIsDead = true;
             GameObject knockedOutObj = Instantiate(Resources.Load("Prefabs/KnockedOut"), Vector3.zero, Quaternion.identity) as GameObject;
+
+            if (health == 0)
+                knockedOutObj.GetComponent<KnockedOut>().setMode(KnockedOut.Mode.Dead);
+            else if (soberness == 0.0f)
+                knockedOutObj.GetComponent<KnockedOut>().setMode(KnockedOut.Mode.Drunk);
+            else if (energy == 0.0f)
+                knockedOutObj.GetComponent<KnockedOut>().setMode(KnockedOut.Mode.Exhausted);
         }
 
-        if (soberness <= 50 && !playerIsDrunk)
+        //make the player drunk
+        if (soberness < 100.0f && !playerIsDrunk)
         {
-            playerIsDrunk = true;
             GameObject drunkObj = Instantiate(Resources.Load("Prefabs/Drunk"), Vector3.zero, Quaternion.identity) as GameObject;
+        }
+
+        //make the player tired or hyper
+        if (energy != 50.0f && !playerEnergyNotNeutral)
+        {
+            GameObject energyObj = Instantiate(Resources.Load("Prefabs/Energy"), Vector3.zero, Quaternion.identity) as GameObject;
         }
     }
 
-    private void debugRemoveHP()
+    private void debugSetHP()
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            if (Input.GetKeyDown(KeyCode.D) && !playerIsDead)
+            if (Input.GetKeyDown(KeyCode.R))
             {
-                print("HP lowered to 0.");
-                health = 0;
+                setHealth(0);
+                print("HP is now " + getHealth() + ".");
             }
         }
     }
 
-    private void debugMakeDrunk() {
-        if (Input.GetKey(KeyCode.LeftShift)) {
-            if (Input.GetKeyDown(KeyCode.E) && !playerIsDrunk) {
-                print("Player is now drunk.");
-                soberness = 0;
+    private void debugSetSoberness()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                setSoberness(-30);
+                print("Player is now " + getSoberness() + "% drunk.");
+            }
+        }
+    }
+
+    private void debugsetEnergy()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                setEnergy(10.0f);
+                print("Player now has " + getEnergy() + " energy.");
             }
         }
     }

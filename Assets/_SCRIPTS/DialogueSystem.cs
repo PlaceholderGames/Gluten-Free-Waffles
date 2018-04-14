@@ -119,7 +119,7 @@ public class DialogueSystem : MonoBehaviour
             float distToPlayer = Vector3.Distance(player.position, transform.position);
 
             //if the players moves too far away from the npc, remove the dialogue GUI and set the dialogueID to the character phase
-            if (distToPlayer > (npcRange * 2) && GUIShowing)
+            if (distToPlayer > npcRange && GUIShowing)
             {
                 destroyGUI();
 
@@ -408,7 +408,7 @@ public class DialogueSystem : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.X))
             {
-                print("RESETTING THE DATABASE | This is a debug command, please delete on release.");
+                print("RESETTING THE DATABASE | This is a debug command, please delete on release. (Ctrl + X to clear DB)");
                 resetDB();
             }
         }

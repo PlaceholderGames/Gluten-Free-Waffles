@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class Drunk : MonoBehaviour
 {
-    public float reduceDrunkSpeed = 30.0f;
+    public float reduceDrunkSpeed = 20.0f; //In seconds, going from 0 - 100 soberness
     public float initialAlpha = 0.1f;
 
-    private GameObject player;
+    private float actualSpeed;
+
     private Vitals vitals;
     private Camera FPPCamera;
     private Image drunkOverlay;
@@ -17,7 +18,7 @@ public class Drunk : MonoBehaviour
     private float sensitivityX = 15.0f;
     private float sensitivityY = 15.0f;
 
-    private float smooth = 2.0f;
+    private float smooth = 1.0f;
     private float smoothXAxis;
     private float smoothYAxis;
 
@@ -25,30 +26,59 @@ public class Drunk : MonoBehaviour
     private float rotationY = 0.0f;
 
     private bool fovIncrease = true;
+    private bool drunkEnding = false;
+    private float fovModifier = 10.0f;
     private float fadeTime = 0.0f;
+    private float drunkOverlayGroupAlpha = 1.0f;
+
+    private float initialFOV;
+    private float resetFOVTimer = 0.0f;
 
     // Use this for initialization
     private void Start()
     {
         //get some components & objects
-        player = GameObject.Find("Character");
+        GameObject player = GameObject.Find("Character");
         vitals = player.GetComponent<Vitals>();
         FPPCamera = player.transform.Find("FPPCamera").GetComponent<Camera>();
         drunkOverlay = transform.Find("DrunkOverlay").GetComponent<Image>();
         drunkOverlayGroup = drunkOverlay.GetComponent<CanvasGroup>();
 
+        vitals.setDrunkState(true);
+
+        //get the initial fov
+        initialFOV = FPPCamera.fieldOfView;
+
+        UpdateDrunkness();
+    }
+
+    private void UpdateDrunkness() {
+        //func is used to set the initial drunk values
+        drunkEnding = false;
+        fadeTime = 0.0f;
+        smooth = 1.0f;
+        initialAlpha = 0.1f;
+        drunkOverlayGroupAlpha = 1.0f;
+        fovModifier = 10.0f;
+
+        //modifies the speed based off of the inital drunk value
+        actualSpeed = reduceDrunkSpeed;
+        if (vitals.getSoberness() > 0.0f) {
+            float modifier = 100f / (100.0f - vitals.getSoberness());
+            actualSpeed = reduceDrunkSpeed / modifier;
+            initialAlpha = (initialAlpha / modifier) - 0.01f;
+            drunkOverlayGroupAlpha = 1.0f / modifier;
+        }
+
         //set the initial alpha value for the drunk overlay
         drunkOverlay.color = new Color(drunkOverlay.color.r, drunkOverlay.color.g, drunkOverlay.color.b, initialAlpha);
-
-        reduceDrunkSpeed = 100.0f - vitals.getSoberness();
-        print("speed = " + reduceDrunkSpeed);
     }
 
     private void Update()
     {
         //increases and lowers the fov over time
         if (fovIncrease) {
-            FPPCamera.fieldOfView += 10.0f * Time.deltaTime;
+            FPPCamera.fieldOfView += fovModifier * Time.deltaTime;
 
             if (FPPCamera.fieldOfView >= 140.0f)
             {
@@ -57,7 +87,7 @@ public class Drunk : MonoBehaviour
         } 
         else
         {
-            FPPCamera.fieldOfView -= 10.0f * Time.deltaTime;
+            FPPCamera.fieldOfView -= fovModifier * Time.deltaTime;
 
             if (FPPCamera.fieldOfView <= 120.0f)
             {
@@ -65,36 +95,44 @@ public class Drunk : MonoBehaviour
             }
         }
 
-        vitals.setSoberness(vitals.getSoberness() + (1.0f * reduceDrunkSpeed * Time.deltaTime));
-        //print("delta~ = " + (reduceDrunkSpeed * Time.deltaTime));
+        //each frame, increase the soberness of the player
+        vitals.setSoberness((100.0f / actualSpeed) * Time.deltaTime);
+
+        //slowly change the smooth value for the camera lerp each frame
+        smooth = vitals.getSoberness() / 10.0f;
+
+        //slowly lower the fov modifer each frame
+        fovModifier -= ((10.0f / actualSpeed) * Time.deltaTime);
 
         //lerp the alpha of the drunk panel overlay
         float newAlpha = Mathf.Lerp(initialAlpha, 0.0f, fadeTime);
         drunkOverlay.color = new Color(drunkOverlay.color.r, drunkOverlay.color.g, drunkOverlay.color.b, newAlpha);
+        //print("alpha = " + drunkOverlay.color.a);
 
         //lerp the alpha of the black gradient around the camera
-        drunkOverlayGroup.alpha = Mathf.Lerp(1.0f, 0.0f, fadeTime);
+        drunkOverlayGroup.alpha = Mathf.Lerp(drunkOverlayGroupAlpha, 0.0f, fadeTime);
 
-        //reduceDrunkSpeed = 100.0f - vitals.getSoberness();
-        //print("speed = " + reduceDrunkSpeed);
+        fadeTime += (1.0f / actualSpeed) * Time.deltaTime;
 
-        fadeTime += (1.0f / reduceDrunkSpeed) * Time.deltaTime;
+        if (vitals.getSoberness() >= 100.0f)
+        {
+            drunkEnding = true;
 
-        print("soberness = " + vitals.getSoberness());
-
-        if (vitals.getSoberness() >= 100.0f) {
             //ensures the sober value is exactly 100.0f | 100%
-            vitals.setSoberness(100.0f);
-            print("You're sober again boi!");
+            vitals.setSoberness(100.0f, true);
 
-            //destory this script, resetting the player back to normal
-            destroyScript();
+            //reset the player fov over time
+            FPPCamera.fieldOfView = Mathf.Lerp(FPPCamera.fieldOfView, initialFOV, resetFOVTimer);
+            resetFOVTimer += (1.0f / 100.0f) * Time.deltaTime;
         }
 
+        //only destroy the script one the fov has finished resetting
+        if (FPPCamera.fieldOfView - Mathf.Abs(initialFOV) < 1.0f && drunkEnding)
+            destroyScript();
     }
 
     // Update is called once per frame
-    private void FixedUpdate ()
+    private void FixedUpdate()
     {
         //lerp the x and y pos of the mouse as the player moves the mouse
         smoothXAxis = Mathf.Lerp(smoothXAxis, Input.GetAxis("Mouse X"), Time.deltaTime * smooth);
@@ -108,7 +146,11 @@ public class Drunk : MonoBehaviour
 
     private void destroyScript()
     {
+        vitals.setDrunkState(false);
+
         //deletes this game object
         Destroy(gameObject);
+
+        print("You sober again boi!");
     }
 }

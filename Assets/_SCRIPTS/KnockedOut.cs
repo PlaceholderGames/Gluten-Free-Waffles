@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class KnockedOut : MonoBehaviour
 {
+    private Vitals vitals;
+
     private GameObject fadeTop;
     private GameObject fadeBottom;
 
@@ -14,16 +16,32 @@ public class KnockedOut : MonoBehaviour
     bool knockedOutFinished = false;
     bool alreadyResetting = false;
 
+    //stores the current mode that the knocked out script is in
+    public enum Mode { Dead, Drunk, Exhausted }
+    private Mode CurrentMode = Mode.Dead;
+
+    public void setMode(Mode newMode) 
+    {
+        CurrentMode = newMode;
+    }
+
     // Use this for initialization
     public void Start ()
     {
+        player = GameObject.Find("Character");
+
+        //gets a reference to the vitals class
+        vitals = player.GetComponent<Vitals>();
+
+        vitals.setKnockedOutState(true);
+
         Debug.Log("You've been knocked out...");
         knockedOutFinished = false;
 
         fadeTop = transform.Find("fadeTop").gameObject;
         fadeBottom = transform.Find("fadeBottom").gameObject;
 
-        player = GameObject.Find("Character");
+        print("The current mode is " + CurrentMode);
 
         //slightly rotates the player's z angle so that they can fall over
         player.transform.rotation = Quaternion.Euler(0, 0, -10.0f);
@@ -43,7 +61,8 @@ public class KnockedOut : MonoBehaviour
 	// Update is called once per frame
 	private void Update ()
     {
-        if (!knockedOutFinished) {
+        if (!knockedOutFinished)
+        {
             Transform fadeTopPos = fadeTop.transform;
             Transform fadeBottomPos = fadeBottom.transform;
 
@@ -63,7 +82,6 @@ public class KnockedOut : MonoBehaviour
         }
         else
         {
-            Debug.Log("Knocked out sequence finished.");
             resetPlayer();
         }
     }
@@ -98,20 +116,31 @@ public class KnockedOut : MonoBehaviour
         if (!alreadyResetting) {
             alreadyResetting = true;
 
+            Debug.Log("Knocked out sequence finished.");
+
             //sets the player position to the nearest respawn point
             player.transform.position = findClosedPoint().transform.position;
             player.transform.rotation = Quaternion.Euler(0, 0, 0);
 
-            //re-enables the disabled scripts
-            playerController.enabled = true;
-            CamMouseLook.enabled = true;
-
             //Freezes all the rotation axis
             player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 
-            //gets a reference to the health that's attached to the player and then reset the health
-            Vitals vitals = player.GetComponent<Vitals>();
-            vitals.setHealth(100);
+            switch (CurrentMode)
+            {
+                case Mode.Dead:
+                    //gets a reference to the health that's attached to the player and then reset the health
+                    vitals.setHealth(100);
+                    break;
+                case Mode.Drunk:
+                    vitals.setSoberness(100.0f, true);
+                    break;
+                case Mode.Exhausted:
+                    vitals.setEnergy(50);
+                    break;
+                default:
+                    break;
+            }
+            vitals.setKnockedOutState(false);
         }
 
         Transform fadeTopPos = fadeTop.transform;
@@ -128,6 +157,10 @@ public class KnockedOut : MonoBehaviour
         }
         else
         {
+            //re-enables the disabled scripts
+            playerController.enabled = true;
+            CamMouseLook.enabled = true;
+
             //since the reset seqence has finished, destroy the script
             alreadyResetting = false;
             destroyScript();
