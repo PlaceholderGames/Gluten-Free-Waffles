@@ -9,6 +9,8 @@ public class ItemQuestPickup : MonoBehaviour
 
     public string questGiverName;
 
+    public string questDirections;
+
     [TextArea]
     public string questText;
 
@@ -27,6 +29,8 @@ public class ItemQuestPickup : MonoBehaviour
             gameObject.SetActive(false);
             gameObject.transform.GetChild(0).gameObject.SetActive(false);
         }
+
+        this.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMesh>().text = questDirections;
     }
 
     // Update is called once per frame

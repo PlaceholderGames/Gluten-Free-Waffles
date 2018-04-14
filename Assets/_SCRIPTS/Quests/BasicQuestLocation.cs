@@ -10,6 +10,8 @@ public class BasicQuestLocation : MonoBehaviour {
 
     public string questGiverName;
 
+    public string questDirections;
+
     [TextArea]
     public string questText;
 
@@ -33,7 +35,10 @@ public class BasicQuestLocation : MonoBehaviour {
 
             gameObject.transform.GetChild(0).gameObject.SetActive(false);
         }
-	}
+
+        this.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMesh>().text = questDirections;
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
