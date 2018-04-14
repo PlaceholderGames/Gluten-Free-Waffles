@@ -19,10 +19,12 @@ public class currency : MonoBehaviour
     public GameObject transactionUI;
     public GameObject buyingScreen;
     public Text[] itemButtons;
+    public Text[] itemCosts;
+    public Text funds;
 
     //references to other game objects required
     private GameObject player;
-    private funds money;
+    private funds playerMoney;
     private Inventory inventory;
     private VendorSupplies vendorSupplies;
     private ItemDatabase database;
@@ -32,7 +34,7 @@ public class currency : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Character");
-        money = player.GetComponent<funds>();
+        playerMoney = player.GetComponent<funds>();
         inventory = player.GetComponent<Inventory>();
         database = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>();
     }
@@ -104,8 +106,10 @@ public class currency : MonoBehaviour
             {
                 itemRef = database.items[vendorSupplies.supplies[i]];
                 itemButtons[i].text = itemRef.itemName;
+                itemCosts[i].text = "Cost: " + itemRef.price.ToString();
             }
         }
+        funds.text = "Funds: " + playerMoney.money.ToString();
     }
 
     public void ReturnToGame()

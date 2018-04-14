@@ -144,22 +144,15 @@
      <Compile Include="Assets\_SCRIPTS\Item Storage\ItemHeldBool.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\ItemID.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\PickupDrop.cs" />
-<<<<<<< HEAD
      <Compile Include="Assets\_SCRIPTS\Item Storage\VendorSupplies.cs" />
-=======
->>>>>>> master
      <Compile Include="Assets\_SCRIPTS\Phone\Apps\InventoryApp.cs" />
      <Compile Include="Assets\_SCRIPTS\Phone\MobilePhone.cs" />
      <Compile Include="Assets\_SCRIPTS\PlayerController.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\BasicQuestLocation.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\ItemQuestPickup.cs" />
-<<<<<<< HEAD
-     <Compile Include="Assets\_SCRIPTS\Quests\RotateTowardsPlayer.cs" />
-     <Compile Include="Assets\_SCRIPTS\funds.cs" />
-=======
      <Compile Include="Assets\_SCRIPTS\Quests\QuestSettings.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\RotateTowardsPlayer.cs" />
->>>>>>> master
+     <Compile Include="Assets\_SCRIPTS\funds.cs" />
      <Compile Include="Assets\_SCRIPTS\npcInteraction.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
