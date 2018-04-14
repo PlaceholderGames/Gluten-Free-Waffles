@@ -77,7 +77,7 @@ public class DialogueSystem : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        print("Dialogue system debugging commands are currently enabled. Disable them before release.");
+        print("Dialogue system debugging commands are currently enabled. Disable them before release. (Ctrl + X to clear DB)");
 
         //Stores a reference to the actual player transformation
         player = GameObject.Find("Character").transform;
@@ -408,7 +408,7 @@ public class DialogueSystem : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.X))
             {
-                print("RESETTING THE DATABASE | This is a debug command, please delete on release. (Ctrl + X to clear DB)");
+                print("RESETTING THE DATABASE | This is a debug command, please delete on release.");
                 resetDB();
             }
         }

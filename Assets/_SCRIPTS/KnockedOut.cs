@@ -59,7 +59,7 @@ public class KnockedOut : MonoBehaviour
     }
 	
 	// Update is called once per frame
-	private void Update ()
+	private void FixedUpdate ()
     {
         if (!knockedOutFinished)
         {
@@ -68,12 +68,12 @@ public class KnockedOut : MonoBehaviour
 
             //Moves the top black overlay down to the centre
             if (fadeTop.GetComponent<RectTransform>().localPosition.y > -120)
-                fadeTop.transform.position = Vector3.Lerp(fadeTopPos.position, new Vector3(fadeTopPos.position.x, fadeTopPos.position.y - 0.8f), 1500.0f * Time.deltaTime);
+                fadeTop.transform.position = Vector3.Lerp(fadeTopPos.position, new Vector3(fadeTopPos.position.x, fadeTopPos.position.y - 4.0f), 100.0f * Time.deltaTime);
 
             //moves the bottom black overlay up to the centre
             if (fadeBottom.GetComponent<RectTransform>().localPosition.y < 120)
             {
-                fadeBottom.transform.position = Vector3.Lerp(fadeBottomPos.position, new Vector3(fadeBottomPos.position.x, fadeBottomPos.position.y + 0.8f), 1500.0f * Time.deltaTime);
+                fadeBottom.transform.position = Vector3.Lerp(fadeBottomPos.position, new Vector3(fadeBottomPos.position.x, fadeBottomPos.position.y + 4.0f), 100.0f * Time.deltaTime);
             } 
             else
             {
@@ -148,12 +148,12 @@ public class KnockedOut : MonoBehaviour
 
         //Moves the top black overlay down to the centre
         if (fadeTop.GetComponent<RectTransform>().localPosition.y < 1200)
-            fadeTop.transform.position = Vector3.Lerp(fadeTopPos.position, new Vector3(fadeTopPos.position.x, fadeTopPos.position.y + 0.8f), 1500.0f * Time.deltaTime);
+            fadeTop.transform.position = Vector3.Lerp(fadeTopPos.position, new Vector3(fadeTopPos.position.x, fadeTopPos.position.y + 4.0f), 100.0f * Time.deltaTime);
 
         //moves the bottom black overlay up to the centre
         if (fadeBottom.GetComponent<RectTransform>().localPosition.y > -1200)
         {
-            fadeBottom.transform.position = Vector3.Lerp(fadeBottomPos.position, new Vector3(fadeBottomPos.position.x, fadeBottomPos.position.y - 0.8f), 1500.0f * Time.deltaTime);
+            fadeBottom.transform.position = Vector3.Lerp(fadeBottomPos.position, new Vector3(fadeBottomPos.position.x, fadeBottomPos.position.y - 4.0f), 100.0f * Time.deltaTime);
         }
         else
         {

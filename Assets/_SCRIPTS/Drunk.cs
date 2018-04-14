@@ -5,15 +5,12 @@ using UnityEngine.UI;
 
 public class Drunk : MonoBehaviour
 {
-    public float reduceDrunkSpeed = 20.0f; //In seconds, going from 0 - 100 soberness
-    public float initialAlpha = 0.1f;
-
-    private float actualSpeed;
+    public float reduceDrunkSpeed = 30.0f; //In seconds, going from 0 - 100 soberness
 
     private Vitals vitals;
     private Camera FPPCamera;
     private Image drunkOverlay;
-    private CanvasGroup drunkOverlayGroup;
+    private Image drunkFade;
 
     private float sensitivityX = 15.0f;
     private float sensitivityY = 15.0f;
@@ -28,8 +25,6 @@ public class Drunk : MonoBehaviour
     private bool fovIncrease = true;
     private bool drunkEnding = false;
     private float fovModifier = 10.0f;
-    private float fadeTime = 0.0f;
-    private float drunkOverlayGroupAlpha = 1.0f;
 
     private float initialFOV;
     private float resetFOVTimer = 0.0f;
@@ -40,38 +35,16 @@ public class Drunk : MonoBehaviour
         //get some components & objects
         GameObject player = GameObject.Find("Character");
         vitals = player.GetComponent<Vitals>();
-        FPPCamera = player.transform.Find("FPPCamera").GetComponent<Camera>();
-        drunkOverlay = transform.Find("DrunkOverlay").GetComponent<Image>();
-        drunkOverlayGroup = drunkOverlay.GetComponent<CanvasGroup>();
-
         vitals.setDrunkState(true);
+
+        FPPCamera = player.transform.Find("FPPCamera").GetComponent<Camera>();
+
+        //get the 2 sub images within the drunk canvas object
+        drunkOverlay = transform.Find("DrunkOverlay").GetComponent<Image>();
+        drunkFade = transform.Find("Fade").GetComponent<Image>();
 
         //get the initial fov
         initialFOV = FPPCamera.fieldOfView;
-
-        UpdateDrunkness();
-    }
-
-    private void UpdateDrunkness() {
-        //func is used to set the initial drunk values
-        drunkEnding = false;
-        fadeTime = 0.0f;
-        smooth = 1.0f;
-        initialAlpha = 0.1f;
-        drunkOverlayGroupAlpha = 1.0f;
-        fovModifier = 10.0f;
-
-        //modifies the speed based off of the inital drunk value
-        actualSpeed = reduceDrunkSpeed;
-        if (vitals.getSoberness() > 0.0f) {
-            float modifier = 100f / (100.0f - vitals.getSoberness());
-            actualSpeed = reduceDrunkSpeed / modifier;
-            initialAlpha = (initialAlpha / modifier) - 0.01f;
-            drunkOverlayGroupAlpha = 1.0f / modifier;
-        }
-
-        //set the initial alpha value for the drunk overlay
-        drunkOverlay.color = new Color(drunkOverlay.color.r, drunkOverlay.color.g, drunkOverlay.color.b, initialAlpha);
     }
 
     private void Update()
@@ -96,24 +69,25 @@ public class Drunk : MonoBehaviour
         }
 
         //each frame, increase the soberness of the player
-        vitals.setSoberness((100.0f / actualSpeed) * Time.deltaTime);
+        vitals.setSoberness((100.0f / reduceDrunkSpeed) * Time.deltaTime);
 
         //slowly change the smooth value for the camera lerp each frame
         smooth = vitals.getSoberness() / 10.0f;
 
         //slowly lower the fov modifer each frame
-        fovModifier -= ((10.0f / actualSpeed) * Time.deltaTime);
+        fovModifier -= ((10.0f / reduceDrunkSpeed) * Time.deltaTime);
 
-        //lerp the alpha of the drunk panel overlay
-        float newAlpha = Mathf.Lerp(initialAlpha, 0.0f, fadeTime);
-        drunkOverlay.color = new Color(drunkOverlay.color.r, drunkOverlay.color.g, drunkOverlay.color.b, newAlpha);
-        //print("alpha = " + drunkOverlay.color.a);
+        //update the alpha of the drunk overlay image
+        float drunkOverlayAlpha = (0.1f / 100.0f) * (100.0f - vitals.getSoberness());
+        drunkOverlay.color = new Color(drunkOverlay.color.r, drunkOverlay.color.g, drunkOverlay.color.b, drunkOverlayAlpha);
+        //print("drunkOverlayAlpha = " + drunkOverlay.color.a);
 
-        //lerp the alpha of the black gradient around the camera
-        drunkOverlayGroup.alpha = Mathf.Lerp(drunkOverlayGroupAlpha, 0.0f, fadeTime);
+        //update the alpha of the drunk fade image
+        float drunkFadeAlpha = (1.0f / 100.0f) * (100.0f - vitals.getSoberness());
+        drunkFade.color = new Color(drunkFade.color.r, drunkFade.color.g, drunkFade.color.b, drunkFadeAlpha);
+        //print("drunkFadeAlpha = " + drunkFade.color.a);
 
-        fadeTime += (1.0f / actualSpeed) * Time.deltaTime;
-
+        //if the player is now sober again
         if (vitals.getSoberness() >= 100.0f)
         {
             drunkEnding = true;

@@ -133,7 +133,7 @@ public class Vitals : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                setSoberness(-30);
+                setSoberness(-10.0f);
                 print("Player is now " + getSoberness() + "% drunk.");
             }
         }
