@@ -18,6 +18,8 @@ public class SettingsMenu : MonoBehaviour {
 
     string[] qualityNames;
 
+    public float musicFloat;
+
     private void Start()
     {
 
@@ -55,7 +57,8 @@ public class SettingsMenu : MonoBehaviour {
 
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
-        
+        musicFloat = musicSource.volume;
+
     }
     public void SetVolume(float volume)
     {
@@ -64,6 +67,7 @@ public class SettingsMenu : MonoBehaviour {
     public void SetMusicVolume(float volume)
     {
         musicSource.volume = volume * 0.60f;
+        musicFloat = musicSource.volume;
     }
 
     public void SetQuality(int index)
