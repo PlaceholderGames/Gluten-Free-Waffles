@@ -13,8 +13,11 @@ public class MainMenu : MonoBehaviour {
     {
         character = GameObject.Find("Character");
         MenuSystem = this.transform.parent.gameObject;
-        pc = character.GetComponent<PlayerController>();
-        cml = character.GetComponentInChildren<CamMouseLook>();
+        if(character != null)
+        {
+            pc = character.GetComponent<PlayerController>();
+            cml = character.GetComponentInChildren<CamMouseLook>();
+        }
     }
     public void playGame()
     {
