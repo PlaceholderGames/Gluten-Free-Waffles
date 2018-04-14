@@ -58,6 +58,66 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public bool ItemSearch(Item item)
+    {
+        //Pass in an item and the function will return true if the player possesses it or false if not.
+
+        string type = item.itemType.ToString();
+        switch (type)
+        {
+            case "Food":
+                {
+                    for(int i = 0; i < foodList.Count; i++)
+                    {
+                        if (foodList[i] == item)
+                            return true;
+                    }
+                    return false;
+                }
+            case "Drink":
+                {
+                    for (int i = 0; i < drinkList.Count; i++)
+                    {
+                        if (drinkList[i] == item)
+                            return true;
+                    }
+                    return false;
+                }
+            case "Clothes":
+                {
+                    for (int i = 0; i < clothesList.Count; i++)
+                    {
+                        if (clothesList[i] == item)
+                            return true;
+                    }
+                    return false;
+                }
+            case "Quest":
+                {
+                    for (int i = 0; i < questList.Count; i++)
+                    {
+                        if (questList[i] == item)
+                            return true;
+                    }
+                    return false;
+                }
+            case "Misc":
+                {
+                    for (int i = 0; i < miscList.Count; i++)
+                    {
+                        if (miscList[i] == item)
+                            return true;
+                    }
+                    return false;
+                }
+            default:
+                {
+                    print("Error: Unknown item type.");
+                    return false;
+                }
+        }
+    }
+
     //Shows/hides the phone
     public void updatePhone()
     {
