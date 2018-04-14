@@ -63,7 +63,7 @@ public class SettingsMenu : MonoBehaviour {
     }
     public void SetMusicVolume(float volume)
     {
-        musicSource.volume = volume;
+        musicSource.volume = volume * 0.60f;
     }
 
     public void SetQuality(int index)
