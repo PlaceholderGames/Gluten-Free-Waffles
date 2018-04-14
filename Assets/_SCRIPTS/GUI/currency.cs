@@ -13,16 +13,28 @@ public class currency : MonoBehaviour
     public static bool confirm = false;
     //bool to prevent multiply vendor screens from being opened
     public static bool clicked = false;
+
     public GameObject confirmationScreen;
     public GameObject sellingScreen;
     public GameObject transactionUI;
     public GameObject buyingScreen;
+    public Text[] itemButtons;
+
+    //references to other game objects required
+    private GameObject player;
+    private funds money;
+    private Inventory inventory;
+    private VendorSupplies vendorSupplies;
+    private ItemDatabase database;
+    private Item itemRef;
 
     // Use this for initialization
     void Start()
     {
-        GameObject player = GameObject.Find("Character");
-        funds money = player.GetComponent<funds>();
+        player = GameObject.Find("Character");
+        money = player.GetComponent<funds>();
+        inventory = player.GetComponent<Inventory>();
+        database = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>();
     }
 
     // Update is called once per frame
@@ -41,6 +53,8 @@ public class currency : MonoBehaviour
                     transactionScreen = true;
                     transaction = true;
                     clicked = true;
+                    //getting the supplies
+                    vendorSupplies = hit.transform.GetComponent<VendorSupplies>();
                 }
             }
         }
@@ -82,6 +96,16 @@ public class currency : MonoBehaviour
         transactionScreen = false;
         transactionUI.SetActive(false);
         buyingScreen.SetActive(true);
+        //setting the correct text for each of the items in the buttons
+        for (int i = 0; i < 4; i++)
+        {
+            //checking if an item has been set in the vendor supplies
+            if (vendorSupplies.supplies[i] > -1)
+            {
+                itemRef = database.items[vendorSupplies.supplies[i]];
+                itemButtons[i].text = itemRef.itemName;
+            }
+        }
     }
 
     public void ReturnToGame()
@@ -91,7 +115,7 @@ public class currency : MonoBehaviour
         clicked = false;
         //re-enabling time and returning cursor
         Time.timeScale = 1f;
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
