@@ -25,10 +25,6 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        //Hides the phone as it hasn't been found at the start of the game.
-        playerPhone = GameObject.FindGameObjectWithTag("Phone");
-        playerPhone.SetActive(false);
-
         database = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>();
     }
 
@@ -62,11 +58,71 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public bool ItemSearch(int ID)
+    {
+        //Pass in an item and the function will return true if the player possesses it or false if not.
+
+        string type = database.items[ID].itemType.ToString();
+        switch (type)
+        {
+            case "Food":
+                {
+                    for(int i = 0; i < foodList.Count; i++)
+                    {
+                        if (foodList[i].itemID == ID)
+                            return true;
+                    }
+                    return false;
+                }
+            case "Drink":
+                {
+                    for (int i = 0; i < drinkList.Count; i++)
+                    {
+                        if (drinkList[i].itemID == ID)
+                            return true;
+                    }
+                    return false;
+                }
+            case "Clothes":
+                {
+                    for (int i = 0; i < clothesList.Count; i++)
+                    {
+                        if (clothesList[i].itemID == ID)
+                            return true;
+                    }
+                    return false;
+                }
+            case "Quest":
+                {
+                    for (int i = 0; i < questList.Count; i++)
+                    {
+                        if (questList[i].itemID == ID)
+                            return true;
+                    }
+                    return false;
+                }
+            case "Misc":
+                {
+                    for (int i = 0; i < miscList.Count; i++)
+                    {
+                        if (miscList[i].itemID == ID)
+                            return true;
+                    }
+                    return false;
+                }
+            default:
+                {
+                    print("Error: Unknown item type.");
+                    return false;
+                }
+        }
+    }
+
     //Shows/hides the phone
     public void updatePhone()
     {
         phoneOut = !phoneOut;
-        playerPhone.SetActive(phoneOut);
+        GameObject.FindWithTag("Phone").transform.GetChild(0).gameObject.SetActive(phoneOut);
     }
 
     //Adds or removes items into the system based on bool (true = add)
@@ -171,8 +227,11 @@ public class Inventory : MonoBehaviour
             //Add ID's and bools for collectable items eg. wallet, shirt etc.
             case 3:
                 {
+                    Instantiate(playerPhone, Vector3.zero, Quaternion.identity);
+
                     hasPhone = true;
-                    phoneOut = false;
+                    phoneOut = true;
+
                     print("You found your phone!!");
                     break;
                     //Display message to user saying they found phone here

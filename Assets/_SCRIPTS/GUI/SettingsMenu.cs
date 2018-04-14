@@ -8,15 +8,35 @@ public class SettingsMenu : MonoBehaviour {
 
     public AudioMixer audioMixer;
 
+    public AudioSource musicSource;
+
     public Dropdown resolutionDropdown;
+
+    public Dropdown qualityDropdown;
 
     Resolution[] resolutions;
 
+    string[] qualityNames;
+
     private void Start()
     {
+
+        
+        qualityNames = QualitySettings.names;
         resolutions = Screen.resolutions;
 
+        qualityDropdown.ClearOptions();
         resolutionDropdown.ClearOptions();
+
+        List<string> qualities = new List<string>();
+
+        foreach(string s in qualityNames)
+        {
+            qualities.Add(s);
+        }
+
+        qualityDropdown.AddOptions(qualities);
+        qualityDropdown.value = QualitySettings.GetQualityLevel();
 
         List<string> options = new List<string>();
 
@@ -35,12 +55,15 @@ public class SettingsMenu : MonoBehaviour {
 
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
-
-        Debug.Log(resolutions.Length);
+        
     }
     public void SetVolume(float volume)
     {
         audioMixer.SetFloat("volume", volume);
+    }
+    public void SetMusicVolume(float volume)
+    {
+        musicSource.volume = volume * 0.60f;
     }
 
     public void SetQuality(int index)

@@ -79,9 +79,55 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\CrossPlatformInput\Scripts\AxisTouchButton.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\CrossPlatformInput\Scripts\ButtonHandler.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\CrossPlatformInput\Scripts\CrossPlatformInputManager.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\CrossPlatformInput\Scripts\InputAxisScrollbar.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\CrossPlatformInput\Scripts\Joystick.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\CrossPlatformInput\Scripts\MobileControlRig.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\CrossPlatformInput\Scripts\PlatformSpecific\MobileInput.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\CrossPlatformInput\Scripts\PlatformSpecific\StandaloneInput.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\CrossPlatformInput\Scripts\TiltInput.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\CrossPlatformInput\Scripts\TouchPad.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\CrossPlatformInput\Scripts\VirtualInput.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Environment\Water (Basic)\Scripts\WaterBasic.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Environment\Water\Water\Scripts\Displace.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Environment\Water\Water\Scripts\GerstnerDisplace.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Environment\Water\Water\Scripts\MeshContainer.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Environment\Water\Water\Scripts\PlanarReflection.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Environment\Water\Water\Scripts\SpecularLighting.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Environment\Water\Water\Scripts\Water.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Environment\Water\Water\Scripts\WaterBase.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Environment\Water\Water\Scripts\WaterTile.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\ActivateTrigger.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\AlphaButtonClickMask.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\AutoMobileShaderSwitch.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\AutoMoveAndRotate.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\CameraRefocus.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\CurveControlledBob.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\DragRigidbody.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\DynamicShadowSettings.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\EventSystemChecker.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\FOVKick.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\FPSCounter.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\FollowTarget.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\ForcedReset.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\LerpControlledBob.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\ObjectResetter.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\ParticleSystemDestroyer.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\PlatformSpecificContent.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\SimpleActivatorMenu.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\SimpleMouseRotator.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\SmoothFollow.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\TimedObjectActivator.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\TimedObjectDestructor.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\WaypointCircuit.cs" />
+     <Compile Include="Assets\_ASSET_STORE\Standard Assets\Utility\WaypointProgressTracker.cs" />
      <Compile Include="Assets\_ASSET_STORE\Water_Stuff\MakeSomeNoise.cs" />
      <Compile Include="Assets\_ASSET_STORE\Water_Stuff\WaterPlaneGen.cs" />
      <Compile Include="Assets\_SCRIPTS\CamMouseLook.cs" />
+     <Compile Include="Assets\_SCRIPTS\Custom_AI\AIHub.cs" />
+     <Compile Include="Assets\_SCRIPTS\Custom_AI\BasicAI.cs" />
      <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\DayNightCycle.cs" />
      <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\MoonSystem.cs" />
      <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\StarSystem.cs" />
@@ -100,15 +146,14 @@
      <Compile Include="Assets\_SCRIPTS\Item Storage\ItemHeldBool.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\ItemID.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\PickupDrop.cs" />
-     <Compile Include="Assets\_SCRIPTS\KnockedOut.cs" />
      <Compile Include="Assets\_SCRIPTS\Phone\Apps\InventoryApp.cs" />
      <Compile Include="Assets\_SCRIPTS\Phone\MobilePhone.cs" />
      <Compile Include="Assets\_SCRIPTS\PlayerController.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\BasicQuestLocation.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\ItemQuestPickup.cs" />
+     <Compile Include="Assets\_SCRIPTS\Quests\QuestSettings.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\RotateTowardsPlayer.cs" />
-     <Compile Include="Assets\_SCRIPTS\Respawn.cs" />
-     <Compile Include="Assets\_SCRIPTS\Vitals.cs" />
+     <Compile Include="Assets\_SCRIPTS\npcInteraction.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
@@ -168,7 +213,9 @@
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Editor Resources\UI\CurveBackground.shader" />
+     <None Include="Assets\_ASSET_STORE\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\ScreenSpaceReflection.shader" />
+     <None Include="Assets\_ASSET_STORE\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
      <None Include="Assets\_UTILITIES\PostProcessing\Utilities\CustomMotionTexture\Shaders\CustomMotionVectorTexture.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\ACES.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
@@ -177,13 +224,14 @@
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\Tonemapping.cginc" />
      <None Include="Assets\_UTILITIES\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\Uber.shader" />
-     <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />
+     <None Include="Assets\_ASSET_STORE\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Advanced.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\Blit.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Editor Resources\Monitors\WaveformRender.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Editor Resources\Monitors\VectorscopeCompute.compute" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\FXAA3.cginc" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\MotionBlur.shader" />
+     <None Include="Assets\_ASSET_STORE\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\AmbientOcclusion.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
@@ -199,10 +247,8 @@
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Bluenoise64\COPYING.txt" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\NotoSans - License.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
-     <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Editor Resources\UI\Trackball.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
-     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
      <None Include="Assets\_SHADERS\ToonShading\Shaders\ToonLitOutline.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\_SHADERS\ToonShading\Shaders\ToonLit.shader" />
@@ -212,19 +258,18 @@
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\EyeHistogram.compute" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\TAA.cginc" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\EyeAdaptation.cginc" />
-     <None Include="Assets\Standard Assets\Environment\Water\Water\Shaders\FXWaterPro.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\GrainGen.shader" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\FXAA.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\DiskKernels.cginc" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\DepthOfField.cginc" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\ScreenSpaceRaytrace.cginc" />
+     <None Include="Assets\_ASSET_STORE\Standard Assets\Environment\Water\Water\Shaders\FXWaterPro.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\Bloom.shader" />
+     <None Include="Assets\_ASSET_STORE\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />
      <None Include="Assets\_UTILITIES\PostProcessing\Editor Resources\Monitors\VectorscopeRender.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\EyeAdaptation.shader" />
-     <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\ColorGrading.cginc" />
-     <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Advanced.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\AmbientOcclusion.cginc" />
      <None Include="Assets\water.shader.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Editor Resources\Monitors\WaveformCompute.compute" />
@@ -261,10 +306,6 @@
  <Reference Include="TextMeshPro-5.6-1.0.56-Runtime">
  <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Runtime.dll</HintPath>
  </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{6347FF1A-F6B5-E273-BE86-66F7AC26CADB}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

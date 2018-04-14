@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown("escape"))
+        if (Input.GetButtonDown("Pause"))
         {
             if (!MenuSystem.activeSelf)
             {

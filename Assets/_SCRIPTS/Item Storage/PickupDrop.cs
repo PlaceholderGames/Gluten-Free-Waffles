@@ -37,11 +37,11 @@ public class PickupDrop : MonoBehaviour
         //player input to try and pick up an item
         if (Input.GetButtonDown("Interact"))
         {
-            
+
             if (holdingItem)
             {
                 dropItem();
-                
+
             }
             else if (!holdingItem)
             {
@@ -59,7 +59,7 @@ public class PickupDrop : MonoBehaviour
             GUI.DrawTexture(dropPromt, Resources.Load<Texture2D>("KeyPrompts/" + "R"));
 
             GUI.Label(new Rect((Screen.width - 250), Screen.height - 20, 1, 20), "Press Q to Store", style);
-            Rect storePromt = new Rect((Screen.width -270), Screen.height - 70, 40, 40);
+            Rect storePromt = new Rect((Screen.width - 270), Screen.height - 70, 40, 40);
             GUI.DrawTexture(storePromt, Resources.Load<Texture2D>("KeyPrompts/" + "Q"));
 
             GUI.Label(new Rect((Screen.width - 400), Screen.height - 20, 1, 20), "Press E to Drop", style);

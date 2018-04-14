@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MobilePhone : MonoBehaviour {
+public class MobilePhone : MonoBehaviour
+{
 
     public DayNightCycle dayNightCycle;
     public Transform player;
@@ -15,29 +16,38 @@ public class MobilePhone : MonoBehaviour {
     private bool errorMessage = false;
     private bool inApp = false;
 
-    // Use this for initialization
-    void Start () {
+    private Transform HourHand, MinuteHand, SecondHand;
+    private float hourTime, minuteTime, secondsTime, day;
 
+    // Use this for initialization
+    void Start()
+    {
         Vector3 phoneDimentions = this.GetComponent<Renderer>().bounds.size;
-        transform.SetParent(GameObject.FindGameObjectWithTag("MainCamera").transform);
+
         dayNightCycle = GameObject.Find("DayAndNightSystem").GetComponent<DayNightCycle>();
 
-        Vector3 worldPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width * 0.8f, Screen.height * 0.12f, 3));
-        transform.position = worldPoint;
+        transform.parent.GetComponent<Canvas>().worldCamera = GameObject.FindGameObjectWithTag("Player").transform.Find("Phone Camera").GetComponent<Camera>();
+        transform.parent.GetComponent<Canvas>().planeDistance = 1;
 
-        //transform.Rotate(Vector3.right, -90);
-        transform.Rotate(Vector3.up, -120);
+        HourHand = transform.Find("Home Screen").Find("Clock").Find("Clock Hands").Find("Hours");
+        MinuteHand = transform.Find("Home Screen").Find("Clock").Find("Clock Hands").Find("Minutes");
+        SecondHand = transform.Find("Home Screen").Find("Clock").Find("Clock Hands").Find("Seconds");
+        hourTime = (dayNightCycle.getTime() / 3600) - 1;
+        minuteTime = dayNightCycle.getTime() / 60;
+        secondsTime = dayNightCycle.getTime();
+        day = dayNightCycle.getDay();
     }
 
     private void Update()
     {
         if (errorMessage == false)
             HomeScreenSelection();
+
         else
         {
             if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
             {
-                transform.GetChild(6).GetChild(0).gameObject.SetActive(false);
+                transform.Find("Notifications").Find("Update Message").gameObject.SetActive(false);
                 errorMessage = false;
             }
         }
@@ -47,32 +57,93 @@ public class MobilePhone : MonoBehaviour {
             if (appClosed == true)
                 openHome();
         }
-           
 
-            
+        UpdateClock();
     }
 
     void OnGUI()
     {
-        transform.GetChild(1).GetComponent<Text>().text = formatHours(dayNightCycle.getTime());
-        transform.GetChild(2).GetComponent<Text>().text = formatMins(dayNightCycle.getTime());
-        transform.GetChild(3).GetComponent<Text>().text = dayNightCycle.getDay().ToString();
+        transform.GetChild(1).GetComponent<TextMesh>().text = formatHours(dayNightCycle.getTime());
+        transform.GetChild(2).GetComponent<TextMesh>().text = formatMins(dayNightCycle.getTime());
+        transform.GetChild(3).GetComponent<TextMesh>().text = dayNightCycle.getDay().ToString();
     }
 
-    void HomeScreenSelection ()
+    void HomeScreenSelection()
     {
         if (!inApp)
         {
             oldSelection = selection;
 
-            if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.UpArrow))
-                selection = selection - 4;
+     
             if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.LeftArrow))
                 selection--;
             if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.RightArrow))
                 selection++;
+            
+            if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                switch (selection)
+                {
+                    case 18:
+                        {
+                            selection = 16;
+                            break;
+                        }
+                    case 19:
+                        {
+                            selection = 17;
+                            break;
+                        }
+                    case 20:
+                        {
+                            selection = 17;
+                            break;
+                        }
+                    case 21:
+                        {
+                            selection = 17;
+                            break;
+                        }
+
+                    default:
+                        {
+                            selection -= 4;
+                            break;
+                        }
+                }
+            }
+
             if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.DownArrow))
-                selection = selection + 4;
+            {
+                switch(selection)
+                {
+                     case 14:
+                        {
+                            selection = 17;
+                            break;
+                        }
+                    case 15:
+                        {
+                            selection = 17;
+                            break;
+                        }
+                    case 16:
+                        {
+                            selection = 18;
+                            break;
+                        }
+                    case 17:
+                        {
+                            selection = 19;
+                            break;
+                        }
+                default:
+                    {
+                            selection += 4;
+                            break;
+                    }
+                }
+            }
 
             if (selection < 0)
                 selection = 0;
@@ -92,7 +163,7 @@ public class MobilePhone : MonoBehaviour {
 
     private void Launch(int selection)
     {
-        switch(selection)
+        switch (selection)
         {
 
             case 0:
@@ -152,7 +223,7 @@ public class MobilePhone : MonoBehaviour {
             case 9:
                 {
                     //Inventory
-                    transform.GetChild(7).GetChild(9).gameObject.SetActive(true);
+                    transform.Find("Applications").Find("Inventory").gameObject.SetActive(true);
                     hideHome();
                     inApp = true;
                     break;
@@ -232,7 +303,7 @@ public class MobilePhone : MonoBehaviour {
         }
     }
 
-    private void hideHome ()
+    private void hideHome()
     {
         //transform.GetChild(0)... change background here
         transform.GetChild(1).gameObject.SetActive(false);
@@ -267,7 +338,7 @@ public class MobilePhone : MonoBehaviour {
         mins = currentTime / 60;
 
         string minuteUpdate;
-       
+
         if (mins < 10)
             minuteUpdate = "0" + mins.ToString();
         else
@@ -290,4 +361,52 @@ public class MobilePhone : MonoBehaviour {
 
         return newTime;
     }
+
+    private void UpdateClock()
+    {
+        float hour, min, sec;
+
+        hour = dayNightCycle.getTime();
+        hour = hour / 3600;
+
+        min = dayNightCycle.getTime();
+        min = min / 60;
+
+        sec = dayNightCycle.getTime();
+
+        if (hour > hourTime + 1)
+        {
+            float temp = hour;
+            hour -= hourTime;
+            HourHand.Rotate(0, 0, 30 * hour);
+            hourTime = temp;
+        }
+
+        if (min > minuteTime + 1)
+        {
+            float temp = min;
+            min -= minuteTime;
+            MinuteHand.Rotate(0, 0, 6 * min);
+            minuteTime = temp;
+        }
+
+        if (sec > secondsTime + 1)
+        {
+            float temp = sec;
+            sec -= secondsTime;
+            SecondHand.Rotate(0, 0, 6 * sec);
+            secondsTime = temp;
+
+        }
+
+        if (dayNightCycle.getDay() > day)
+        {
+            hourTime = dayNightCycle.getTime() / 3600;
+            minuteTime = dayNightCycle.getTime() / 60;
+            secondsTime = dayNightCycle.getTime();
+            HourHand.Rotate(0, 0, 30);
+            day++;
+        }
+    }
+
 }
