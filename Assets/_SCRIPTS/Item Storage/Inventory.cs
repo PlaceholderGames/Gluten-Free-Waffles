@@ -6,6 +6,7 @@ using System.Linq;
 public class Inventory : MonoBehaviour
 {
     private ItemDatabase database;
+    private Vitals vitals;
 
     public GameObject playerPhone;
 
@@ -26,6 +27,9 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         database = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>();
+
+        //gets a reference to the vitals class
+        vitals = GameObject.Find("Character").GetComponent<Vitals>();
     }
 
     private void Update()
@@ -249,12 +253,16 @@ public class Inventory : MonoBehaviour
                 {
                     print("Drunk dat drink");
                     //Add stat increases here
+                    vitals.setEnergy(30); //increases energy levels by 30
+
                     break;
                 }
             case 1:
                 {
                     print("Drunk dat slush");
                     //Add stat increases here
+                    vitals.setSoberness(-30); //lowers your soberness levels by 30
+
                     break;
                 }
             case 2:

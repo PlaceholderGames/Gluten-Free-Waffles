@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class DayNightCycle : MonoBehaviour 
 {
+    [Header("Length of day/night in actual minutes")]
     public float dayLengthInMins = 1;
     public float nightLengthInMins = 1;
+
+    [Header("Start time as a 24-hour clock")]
+    [Range(0,24)]
     public float startTimeInHours = 7;
 
     //total seconds in 1 day
