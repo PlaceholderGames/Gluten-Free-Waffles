@@ -44,7 +44,7 @@ public class KnockedOut : MonoBehaviour
         print("The current mode is " + CurrentMode);
 
         //slightly rotates the player's z angle so that they can fall over
-        player.transform.rotation = Quaternion.Euler(0, 0, -10.0f);
+        player.transform.rotation = Quaternion.Euler(player.transform.eulerAngles.x, player.transform.eulerAngles.y, -10.0f);
 
         //disbales the player controller script
         playerController = player.GetComponent<PlayerController>();
