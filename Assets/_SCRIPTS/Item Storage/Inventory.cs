@@ -236,7 +236,6 @@ public class Inventory : MonoBehaviour
                     hasPhone = true;
                     phoneOut = true;
 
-                    print("You found your phone!!");
                     break;
                     //Display message to user saying they found phone here
 

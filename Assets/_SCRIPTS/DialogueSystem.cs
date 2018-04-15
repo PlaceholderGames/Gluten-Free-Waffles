@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+
 using UnityEngine;
 using UnityEngine.UI;
 using Mono.Data.Sqlite;
 using System.Data;
 using System;
 
+#if UNITY_EDITOR
+using UnityEditor;
 [CustomEditor(typeof(DialogueSystem))]
 public class DialogueSystemHandle : Editor
 {
@@ -30,6 +32,7 @@ public class DialogueSystemHandle : Editor
         Handles.Label(npc.transform.position + new Vector3(npc.npcRange * 2, 0, 0), "NPC Exit Range", style);
     }
 }
+#endif
 
 public class DialogueSystem : MonoBehaviour
 {

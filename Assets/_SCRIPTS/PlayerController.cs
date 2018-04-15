@@ -81,7 +81,6 @@ public class PlayerController : MonoBehaviour {
         }
         if (Input.GetAxis("Sprint") !=0 )
         {
-            Debug.Log("Sprinting!");
             canSprint = true;
         }
         else
