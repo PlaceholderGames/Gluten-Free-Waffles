@@ -44,7 +44,8 @@ public class KnockedOut : MonoBehaviour
         print("The current mode is " + CurrentMode);
 
         //slightly rotates the player's z angle so that they can fall over
-        player.transform.rotation = Quaternion.Euler(player.transform.eulerAngles.x, player.transform.eulerAngles.y, -10.0f);
+        
+        //player.transform.rotation = Quaternion.Euler(player.transform.eulerAngles.x, player.transform.eulerAngles.y, -10.0f);
 
         //disbales the player controller script
         playerController = player.GetComponent<PlayerController>();
@@ -56,6 +57,10 @@ public class KnockedOut : MonoBehaviour
 
         //unlocks the Z axis so that the player can fall over
         player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+
+        //Random force applied to the body provides a more natural fall.
+        Vector3 forceLocation = Random.onUnitSphere * 20;
+        player.GetComponent<Rigidbody>().AddForce(forceLocation, ForceMode.Impulse);
     }
 	
 	// Update is called once per frame
@@ -63,6 +68,8 @@ public class KnockedOut : MonoBehaviour
     {
         if (!knockedOutFinished)
         {
+            playerController.enabled = false;
+            CamMouseLook.enabled = false;
             Transform fadeTopPos = fadeTop.transform;
             Transform fadeBottomPos = fadeBottom.transform;
 
