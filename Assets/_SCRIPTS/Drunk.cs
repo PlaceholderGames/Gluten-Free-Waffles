@@ -45,6 +45,7 @@ public class Drunk : MonoBehaviour
 
         //get the initial fov
         initialFOV = FPPCamera.fieldOfView;
+        
     }
 
     private void Update()
@@ -108,14 +109,15 @@ public class Drunk : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
-        //lerp the x and y pos of the mouse as the player moves the mouse
-        smoothXAxis = Mathf.Lerp(smoothXAxis, Input.GetAxis("Mouse X"), Time.deltaTime * smooth);
-        smoothYAxis = Mathf.Lerp(smoothYAxis, Input.GetAxis("Mouse Y"), Time.deltaTime * smooth);
+        ////lerp the x and y pos of the mouse as the player moves the mouse
+        //smoothXAxis = Mathf.Lerp(smoothXAxis, Input.GetAxis("Mouse X"), Time.deltaTime * smooth);
+        //smoothYAxis = Mathf.Lerp(smoothYAxis, Input.GetAxis("Mouse Y"), Time.deltaTime * smooth);
 
-        rotationX += smoothXAxis * sensitivityX;
-        rotationY += smoothYAxis * sensitivityY;
+        //rotationX += smoothXAxis * sensitivityX;
+        //rotationY += smoothYAxis * sensitivityY;
 
-        FPPCamera.transform.localEulerAngles = new Vector3(-rotationY, rotationX, transform.localEulerAngles.z);
+        //FPPCamera.transform.localRotation = Quaternion.AngleAxis(rotationY, Vector3.right);
+        //FPPCamera.transform.parent.localRotation = Quaternion.AngleAxis(rotationX, FPPCamera.transform.parent.up);
     }
 
     private void destroyScript()
