@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemQuestPickup_NOMARKER : MonoBehaviour {
+public class ItemQuestPickup_NOMARKER : MonoBehaviour
+{
+    public GameObject itemToPickup;
 
     public bool isFirst;
 
@@ -15,9 +17,17 @@ public class ItemQuestPickup_NOMARKER : MonoBehaviour {
 
     public GameObject nextQuestPoint;
 
+    private ItemHeldBool objectheld;
+
     // Use this for initialization
     void Start()
     {
+        objectheld = itemToPickup.GetComponent<ItemHeldBool>();
+
+        if (objectheld == null)
+        {
+            objectheld = itemToPickup.AddComponent<ItemHeldBool>();
+        }
         if (isFirst)
         {
             gameObject.SetActive(true);
@@ -34,7 +44,7 @@ public class ItemQuestPickup_NOMARKER : MonoBehaviour {
     {
         if (gameObject.activeSelf)
         {
-            if (GetComponent<ItemHeldBool>().beingHeld)
+            if (objectheld.beingHeld)
             {
                 Debug.Log("Item being held");
                 if (nextQuestPoint != null)

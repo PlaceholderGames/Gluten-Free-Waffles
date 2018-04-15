@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemQuestPickup : MonoBehaviour
 {
+    public GameObject itemToPickup;
 
     public bool isFirst;
 
@@ -16,9 +17,17 @@ public class ItemQuestPickup : MonoBehaviour
 
     public GameObject nextQuestPoint;
 
+    private ItemHeldBool objectheld;
+
     // Use this for initialization
     void Start()
     {
+        objectheld = itemToPickup.GetComponent<ItemHeldBool>();
+
+        if(objectheld == null)
+        {
+            objectheld = itemToPickup.AddComponent<ItemHeldBool>();
+        }
         if (isFirst)
         {
             gameObject.SetActive(true);
@@ -38,7 +47,7 @@ public class ItemQuestPickup : MonoBehaviour
     {
         if (gameObject.activeSelf)
         {
-            if (GetComponent<ItemHeldBool>().beingHeld)
+            if (objectheld.beingHeld)
             {
                 Debug.Log("Item being held");
                 if (nextQuestPoint != null)
