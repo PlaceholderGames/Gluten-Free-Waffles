@@ -22,6 +22,11 @@ public class Vitals : MonoBehaviour
         playerIsKnockedOut = KnockedOutArg;
     }
 
+    public bool getKnockedOutState()
+    {
+        return playerIsKnockedOut;
+    }
+
     public void setDrunkState(bool drunkArg)
     {
         playerIsDrunk = drunkArg;
