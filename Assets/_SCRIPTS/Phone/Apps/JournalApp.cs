@@ -12,6 +12,7 @@ public class JournalApp : MonoBehaviour {
 
     int questSelection = 0;
     int oldSelection = 1;
+    int pageNumber = 1;
 
     Transform listPage;
     Transform fullPage;
@@ -49,26 +50,34 @@ public class JournalApp : MonoBehaviour {
             OpenFull(questSelection);
         }
 
-        LoadQuests();
+        LoadQuests(pageNumber);
 
     }
 
-    void LoadQuests()
+    void LoadQuests(int pageNumber)
     {
         List<Quest> quests = handler.getActiveQuestList();
 
-        int questCount = quests.Count;
+        int numberOfQuests = quests.Count;
+        int pages = (numberOfQuests / 4);
 
-
-
-
+        int questCount = pages * 4;
 
         for (int i = 1; i < 5; i++)
         {
-            current.Find("Header").GetComponent<TextMesh>().text = "";
-            current.Find("Setter").GetComponent<TextMesh>().text = "";
-            current.Find("Current Instruction").GetComponent<TextMesh>().text = "";
+            Transform current = listPage.Find("Quest (" + i.ToString() + ")");
+
+            current.Find("Heading").GetComponent<TextMesh>().text = quests[questCount].title;
+            current.Find("Setter").GetComponent<TextMesh>().text = quests[questCount].giverName;
+            current.Find("Current Instruction").GetComponent<TextMesh>().text = quests[questCount].directions;
+
+            if (questCount < numberOfQuests)
+                questCount++;
+            if (numberOfQuests == 0)
+                break;
         }
+
+        listPage.Find("Page Number").GetComponent<TextMesh>().text = pageNumber.ToString();
     }
 
 
@@ -83,7 +92,7 @@ public class JournalApp : MonoBehaviour {
         {
             Transform current = listPage.Find("Quest (" + i.ToString() + ")");
 
-            current.Find("Header").GetComponent<TextMesh>().text = "";
+            current.Find("Heading").GetComponent<TextMesh>().text = "";
             current.Find("Setter").GetComponent<TextMesh>().text = "";
             current.Find("Current Instruction").GetComponent<TextMesh>().text = "";
         }
