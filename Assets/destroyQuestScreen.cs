@@ -18,14 +18,17 @@ public class destroyQuestScreen : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (Input.GetAxis("Pause") != 0 && transform.GetChild(0).gameObject.activeSelf)
+        {
+            removeQuestScreenCanvas();
+        }
 	}
 
     public void removeQuestScreenCanvas()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        gameObject.SetActive(false);
+        transform.GetChild(0).gameObject.SetActive(false);
         cml.enabled = true;
         pc.enabled = true;
         Time.timeScale = 1.0f;

@@ -19,7 +19,7 @@ public class InputQuest : BaseQuest
         {
             if (Input.GetAxis(axis) != 0)
             {
-                if (nextQuestPoint != null)
+                if (nextQuestPoint.Length != 0)
                 {
                     continueQuest();
 

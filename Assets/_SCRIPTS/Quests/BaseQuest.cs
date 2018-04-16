@@ -15,15 +15,20 @@ public class BaseQuest : MonoBehaviour {
     public GameObject[] nextQuestPoint;
     // Use this for initialization
 
-	
+    private float startTime;
+
+    private float endTime;
+
 	// Update is called once per frame
 	void Update () {
 		
 	}
     public void setup()
     {
+        startTime = Time.time;
         if (isFirst)
         {
+            this.transform.parent.GetComponent<QuestSettings>().startTimeQuest = startTime;
             gameObject.SetActive(true);
             gameObject.transform.GetChild(0).gameObject.SetActive(true);
         }
@@ -38,12 +43,14 @@ public class BaseQuest : MonoBehaviour {
     }
     public void endQuest()
     {
+        endTime = Time.time;
+        this.transform.parent.GetComponent<QuestSettings>().endTimeQuest = endTime;
         this.transform.parent.GetComponent<QuestSettings>().questCompleted = true;
-        Debug.Log("Quest is Over!");
     }
 
     public void continueQuest()
     {
+        endTime = Time.time;
         foreach (GameObject g in nextQuestPoint)
         {
             if (!g.activeSelf)
@@ -52,5 +59,15 @@ public class BaseQuest : MonoBehaviour {
                 g.transform.GetChild(0).gameObject.SetActive(true);
             }
         }
+    }
+
+    public float getStartTime()
+    {
+        return startTime;
+    }
+
+    public float getEndTime()
+    {
+        return endTime;
     }
 }

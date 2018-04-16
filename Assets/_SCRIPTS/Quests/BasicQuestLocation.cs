@@ -25,7 +25,8 @@ public class BasicQuestLocation : BaseQuest
             Collider[] col = Physics.OverlapSphere(transform.position, questRadius, 1 << LayerMask.NameToLayer("Player"));
             if (col.Length != 0)
             {
-                if (nextQuestPoint != null)
+                Debug.Log(this.name);
+                if (nextQuestPoint.Length != 0)
                 {
                     continueQuest();
 
@@ -33,6 +34,7 @@ public class BasicQuestLocation : BaseQuest
                 }
                 else
                 {
+                    Debug.Log("Ending Quest");
                     endQuest();
                 }
                 this.gameObject.SetActive(false);

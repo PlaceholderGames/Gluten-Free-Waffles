@@ -24,6 +24,9 @@ public class QuestSettings : MonoBehaviour {
     PlayerController pc;
     CamMouseLook cml;
 
+    public float startTimeQuest;
+    public float endTimeQuest;
+
     // Use this for initialization
     void Start () {
         if (gameManager == null)
@@ -64,13 +67,15 @@ public class QuestSettings : MonoBehaviour {
 
     void initializeQuestScreen()
     {
+        float totalQuestTime = endTimeQuest - startTimeQuest;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         cml.enabled = false;
         pc.enabled = false;
         Time.timeScale = 0f;
         QuestScreen.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = this.questTitle;
-        QuestScreen.SetActive(true);
+        QuestScreen.transform.GetChild(0).GetChild(2).GetComponent<TextMeshProUGUI>().text = ("Time: " + totalQuestTime);
+        QuestScreen.transform.GetChild(0).gameObject.SetActive(true);
     }
 
     

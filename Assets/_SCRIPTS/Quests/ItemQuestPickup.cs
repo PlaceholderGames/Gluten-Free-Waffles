@@ -28,7 +28,7 @@ public class ItemQuestPickup : BaseQuest
         {
             if (objectheld.beingHeld)
             {
-                if (nextQuestPoint != null)
+                if (nextQuestPoint.Length != 0)
                 {
                     continueQuest();
                 }
