@@ -28,10 +28,10 @@ public class BaseQuest : MonoBehaviour {
         startTime = Time.time;
         if (isFirst)
         {
-            hasBeenActivated = true;
-            updateQuest();
-            this.transform.parent.GetComponent<QuestSettings>().startTimeQuest = startTime;
             gameObject.SetActive(true);
+            this.transform.parent.GetComponent<QuestSettings>().startTimeQuest = startTime;
+            activateBool();
+            updateQuest();
         }
         else
         {
@@ -76,7 +76,6 @@ public class BaseQuest : MonoBehaviour {
     }
     public void activateBool()
     {
-        Debug.Log("Activating");
         hasBeenActivated = true;
     }
 

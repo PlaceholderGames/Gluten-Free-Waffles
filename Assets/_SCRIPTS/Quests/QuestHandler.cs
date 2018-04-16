@@ -5,17 +5,14 @@ using UnityEngine;
 public class QuestHandler : MonoBehaviour {
 
 
-    List<Quest> activeQuestList;
-    List<Quest> inactiveQuestList;
-	// Use this for initialization
-	void Start () {
-        activeQuestList = new List<Quest>();
-        inactiveQuestList = new List<Quest>();
+    List<Quest> activeQuestList = new List<Quest>();
+    List<Quest> inactiveQuestList = new List<Quest>();
+    // Use this for initialization
+    void Start () {
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
 	}
 
     public void addQuest(string title, Color colour, string giverName, string text, string directions)
