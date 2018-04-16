@@ -74,7 +74,7 @@ public class QuestSettings : MonoBehaviour {
         pc.enabled = false;
         Time.timeScale = 0f;
         QuestScreen.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = this.questTitle;
-        QuestScreen.transform.GetChild(0).GetChild(2).GetComponent<TextMeshProUGUI>().text = ("Time: " + totalQuestTime);
+        QuestScreen.transform.GetChild(0).GetChild(2).GetComponent<TextMeshProUGUI>().text = ("Time: " + totalQuestTime.ToString("n1"));
         QuestScreen.transform.GetChild(0).gameObject.SetActive(true);
     }
 
