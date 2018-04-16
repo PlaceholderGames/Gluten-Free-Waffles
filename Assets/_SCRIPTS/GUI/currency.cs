@@ -56,7 +56,7 @@ public class currency : MonoBehaviour
         if (!clicked)
         {
             //lmb click
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetAxis("Interact") != 0)
             {
                 //checking if a vendor was selected
                 RaycastHit hit;
