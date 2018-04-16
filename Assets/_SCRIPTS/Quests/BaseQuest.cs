@@ -9,15 +9,15 @@ public class BaseQuest : MonoBehaviour {
 
     public string questDirections;
 
-    [TextArea]
-    public string questText;
-
     public GameObject[] nextQuestPoint;
     // Use this for initialization
 
     private float startTime;
 
     private float endTime;
+
+    private bool hasBeenActivated = false;
+    
 
 	// Update is called once per frame
 	void Update () {
@@ -28,17 +28,17 @@ public class BaseQuest : MonoBehaviour {
         startTime = Time.time;
         if (isFirst)
         {
+            hasBeenActivated = true;
+            updateQuest();
             this.transform.parent.GetComponent<QuestSettings>().startTimeQuest = startTime;
             gameObject.SetActive(true);
-            gameObject.transform.GetChild(0).gameObject.SetActive(true);
         }
         else
         {
-            this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             gameObject.SetActive(false);
             
         }
-
+        
         this.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMesh>().text = questDirections;
     }
     public void endQuest()
@@ -56,7 +56,6 @@ public class BaseQuest : MonoBehaviour {
             if (!g.activeSelf)
             {
                 g.SetActive(true);
-                g.transform.GetChild(0).gameObject.SetActive(true);
             }
         }
     }
@@ -69,5 +68,21 @@ public class BaseQuest : MonoBehaviour {
     public float getEndTime()
     {
         return endTime;
+    }
+
+    public bool getActivateBool()
+    {
+        return hasBeenActivated;
+    }
+    public void activateBool()
+    {
+        Debug.Log("Activating");
+        hasBeenActivated = true;
+    }
+
+    public void updateQuest()
+    {
+        Debug.Log("Attempting update");
+        this.transform.parent.GetComponent<QuestSettings>().updateQuestHandler(questGiverName, questDirections);
     }
 }

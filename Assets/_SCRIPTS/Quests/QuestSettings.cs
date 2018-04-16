@@ -21,16 +21,25 @@ public class QuestSettings : MonoBehaviour {
     [SerializeField]
     GameManager gameManager;
 
+    [SerializeField]
+    QuestHandler questHandler;
+
     PlayerController pc;
     CamMouseLook cml;
 
     public float startTimeQuest;
     public float endTimeQuest;
 
+
+    [TextArea]
+    public string questText;
+
     // Use this for initialization
     void Start () {
         if (gameManager == null)
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        if (questHandler == null)
+            questHandler = GameObject.Find("GameManager").GetComponent<QuestHandler>();
         if (QuestScreen == null)
             QuestScreen = GameObject.Find("QuestCompletedScreen");
         childrenIndex = transform.childCount;
@@ -61,9 +70,15 @@ public class QuestSettings : MonoBehaviour {
         if (questCompleted)
         {
             initializeQuestScreen();
+            questHandler.switchQuest(questTitle);
             questCompleted = false;
         }
 	}
+
+    public void updateQuestHandler(string nGivername, string nDirections)
+    {
+        questHandler.addQuest(questTitle, questColor, nGivername, questText, nDirections);
+    }
 
     void initializeQuestScreen()
     {

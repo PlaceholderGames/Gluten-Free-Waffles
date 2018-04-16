@@ -26,6 +26,11 @@ public class ItemQuestPickup : BaseQuest
     {
         if (gameObject.activeSelf)
         {
+            if (!getActivateBool())
+            {
+                activateBool();
+                updateQuest();
+            }
             if (objectheld.beingHeld)
             {
                 if (nextQuestPoint.Length != 0)
@@ -36,8 +41,7 @@ public class ItemQuestPickup : BaseQuest
                 {
                     endQuest();
                 }
-                gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                gameObject.GetComponent<ItemQuestPickup>().enabled = false;
+                this.gameObject.SetActive(false);
             }
         }
     }

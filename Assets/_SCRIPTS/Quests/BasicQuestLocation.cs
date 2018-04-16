@@ -22,6 +22,11 @@ public class BasicQuestLocation : BaseQuest
 	void Update () {
         if (gameObject.activeSelf)
         {
+            if (!getActivateBool())
+            {
+                activateBool();
+                updateQuest();
+            }
             Collider[] col = Physics.OverlapSphere(transform.position, questRadius, 1 << LayerMask.NameToLayer("Player"));
             if (col.Length != 0)
             {
@@ -34,11 +39,9 @@ public class BasicQuestLocation : BaseQuest
                 }
                 else
                 {
-                    Debug.Log("Ending Quest");
                     endQuest();
                 }
                 this.gameObject.SetActive(false);
-                gameObject.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
     }

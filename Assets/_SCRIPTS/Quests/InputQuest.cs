@@ -17,6 +17,12 @@ public class InputQuest : BaseQuest
 	void Update () {
         if (gameObject.activeSelf)
         {
+            if (!getActivateBool())
+            {
+
+                activateBool();
+                updateQuest();
+            }
             if (Input.GetAxis(axis) != 0)
             {
                 if (nextQuestPoint.Length != 0)
@@ -29,7 +35,6 @@ public class InputQuest : BaseQuest
                     endQuest();
                 }
                 this.gameObject.SetActive(false);
-                gameObject.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
     }
