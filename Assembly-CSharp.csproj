@@ -150,13 +150,17 @@
      <Compile Include="Assets\_SCRIPTS\Item Storage\PickupDrop.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\VendorSupplies.cs" />
      <Compile Include="Assets\_SCRIPTS\KnockedOut.cs" />
+     <Compile Include="Assets\_SCRIPTS\Phone\Apps\HealthApp.cs" />
      <Compile Include="Assets\_SCRIPTS\Phone\Apps\InventoryApp.cs" />
+     <Compile Include="Assets\_SCRIPTS\Phone\Apps\JournalApp.cs" />
      <Compile Include="Assets\_SCRIPTS\Phone\MobilePhone.cs" />
      <Compile Include="Assets\_SCRIPTS\PlayerController.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\BaseQuest.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\BasicQuestLocation.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\InputQuest.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\ItemQuestPickup.cs" />
+     <Compile Include="Assets\_SCRIPTS\Quests\Quest.cs" />
+     <Compile Include="Assets\_SCRIPTS\Quests\QuestHandler.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\QuestSettings.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\RotateTowardsPlayer.cs" />
      <Compile Include="Assets\_SCRIPTS\Respawn.cs" />
@@ -207,6 +211,7 @@
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
+     <Compile Include="Assets\destroyQuestScreen.cs" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\DepthOfField.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\_SHADERS\ToonShading\Shaders\ToonBasic.shader" />
@@ -303,16 +308,16 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="Mono.Data.Sqlite">
- <HintPath>C:/Users/Sean Brennan/Documents/GitHub/Gluten-Free-Waffles/Assets/Plugins/SQLite/Mono.Data.Sqlite.dll</HintPath>
+ <HintPath>C:/Users/Lencea/Documents/GitHub/Gluten-Free-Waffles/Assets/Plugins/SQLite/Mono.Data.Sqlite.dll</HintPath>
  </Reference>
  <Reference Include="System.Data">
- <HintPath>C:/Users/Sean Brennan/Documents/GitHub/Gluten-Free-Waffles/Assets/Plugins/SQLite/System.Data.dll</HintPath>
+ <HintPath>C:/Users/Lencea/Documents/GitHub/Gluten-Free-Waffles/Assets/Plugins/SQLite/System.Data.dll</HintPath>
  </Reference>
  <Reference Include="TextMeshPro-5.6-1.0.56-Editor">
- <HintPath>C:/Users/Sean Brennan/Documents/GitHub/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Editor.dll</HintPath>
+ <HintPath>C:/Users/Lencea/Documents/GitHub/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Editor.dll</HintPath>
  </Reference>
  <Reference Include="TextMeshPro-5.6-1.0.56-Runtime">
- <HintPath>C:/Users/Sean Brennan/Documents/GitHub/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Runtime.dll</HintPath>
+ <HintPath>C:/Users/Lencea/Documents/GitHub/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Runtime.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
