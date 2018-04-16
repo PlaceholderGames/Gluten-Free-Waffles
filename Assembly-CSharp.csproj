@@ -144,12 +144,9 @@
      <Compile Include="Assets\_SCRIPTS\Item Storage\ItemHeldBool.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\ItemID.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\PickupDrop.cs" />
-<<<<<<< HEAD
      <Compile Include="Assets\_SCRIPTS\Item Storage\VendorSupplies.cs" />
      <Compile Include="Assets\_SCRIPTS\KnockedOut.cs" />
      <Compile Include="Assets\_SCRIPTS\Phone\Apps\HealthApp.cs" />
-=======
->>>>>>> MapDevelopment
      <Compile Include="Assets\_SCRIPTS\Phone\Apps\InventoryApp.cs" />
      <Compile Include="Assets\_SCRIPTS\Phone\Apps\JournalApp.cs" />
      <Compile Include="Assets\_SCRIPTS\Phone\MobilePhone.cs" />
@@ -162,13 +159,9 @@
      <Compile Include="Assets\_SCRIPTS\Quests\QuestHandler.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\QuestSettings.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\RotateTowardsPlayer.cs" />
-<<<<<<< HEAD
-     <Compile Include="Assets\_SCRIPTS\Respawn.cs" />
      <Compile Include="Assets\_SCRIPTS\Vitals.cs" />
      <Compile Include="Assets\_SCRIPTS\funds.cs" />
-=======
      <Compile Include="Assets\_SCRIPTS\npcInteraction.cs" />
->>>>>>> MapDevelopment
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
