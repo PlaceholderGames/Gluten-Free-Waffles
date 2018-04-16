@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour {
             jumpTimer = false;
             Invoke("resetJumpTimer", jumpTime);
         }
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetAxis("Sprint") !=0 )
         {
             canSprint = true;
         }

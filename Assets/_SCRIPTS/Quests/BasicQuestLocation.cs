@@ -2,20 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicQuestLocation : MonoBehaviour {
-
-    public bool isFirst;
+public class BasicQuestLocation : BaseQuest
+{
 
     public float questRadius = 10;
-
-    public string questGiverName;
-
-    public string questDirections;
-
-    [TextArea]
-    public string questText;
-
-    public GameObject nextQuestPoint;
 
     private void OnDrawGizmos()
     {
@@ -25,19 +15,7 @@ public class BasicQuestLocation : MonoBehaviour {
     }
     // Use this for initialization
     void Start () {
-        if (isFirst)
-        {
-            gameObject.SetActive(true);
-            gameObject.transform.GetChild(0).gameObject.SetActive(true);
-        }
-        else {
-            gameObject.SetActive(false);
-
-            gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        }
-
-        this.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMesh>().text = questDirections;
-
+        setup();
     }
 	
 	// Update is called once per frame
@@ -51,13 +29,16 @@ public class BasicQuestLocation : MonoBehaviour {
                 {
                     if (!nextQuestPoint.activeSelf)
                     {
-                        Debug.Log("The Quest Continues!!!");
                         nextQuestPoint.SetActive(true);
                         nextQuestPoint.transform.GetChild(0).gameObject.SetActive(true);
 
                         
                     }
                     
+                }
+                else
+                {
+                    endQuest();
                 }
                 this.gameObject.SetActive(false);
                 gameObject.transform.GetChild(0).gameObject.SetActive(false);

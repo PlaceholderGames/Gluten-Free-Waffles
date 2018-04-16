@@ -67,7 +67,7 @@ public class AudioArea : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "Character")
+        if (other.gameObject.name == "Character" && source.clip != song)
         {
             StartCoroutine(AudioChange());
         }

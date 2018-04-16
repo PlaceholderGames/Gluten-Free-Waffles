@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+
 using UnityEngine;
 using UnityEngine.UI;
 using Mono.Data.Sqlite;
 using System.Data;
 using System;
 
+#if UNITY_EDITOR
+using UnityEditor;
 [CustomEditor(typeof(DialogueSystem))]
 public class DialogueSystemHandle : Editor
 {
@@ -30,6 +32,7 @@ public class DialogueSystemHandle : Editor
         Handles.Label(npc.transform.position + new Vector3(npc.npcRange * 2, 0, 0), "NPC Exit Range", style);
     }
 }
+#endif
 
 public class DialogueSystem : MonoBehaviour
 {
@@ -60,20 +63,6 @@ public class DialogueSystem : MonoBehaviour
     private GameObject question;
     private GameObject[] option = new GameObject[4];
 
-    //protected virtual void OnSceneGUI() {
-    //   // Gizmos.color = Color.magenta;
-    //    //Gizmos.DrawWireCube(transform.position, new Vector3(npcRange, 0, npcRange));
-
-    //    //Gizmos.color = Color.cyan;
-    //    //Gizmos.DrawWireCube(transform.position, new Vector3(npcRange * 2, 0, npcRange * 2));
-
-    //    Handles.color = Color.magenta;
-    //    Handles.DrawWireCube(transform.position, new Vector3(npcRange, 0, npcRange));
-    //    Handles.Label(transform.position, "Left");
-
-    //    Handles.DrawWireDisc(transform.position, new Vector3(0, 0, 0), npcRange);
-    //}
-
     // Use this for initialization
     void Start()
     {
@@ -86,6 +75,7 @@ public class DialogueSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (Input.GetButtonDown("Interact") && !GUIShowing)
         {
             RaycastHit hit;

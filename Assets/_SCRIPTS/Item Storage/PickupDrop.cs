@@ -88,7 +88,8 @@ public class PickupDrop : MonoBehaviour
             if (hit.transform.GetComponent<ItemID>().itemID == 3)
             {
                 daInventoryMan.GetComponent<Inventory>().CollectedCollectable(hit.transform.GetComponent<ItemID>().itemID);
-                Destroy(hit.rigidbody.gameObject);
+                hit.rigidbody.GetComponent<ItemHeldBool>().beingHeld = true;
+                StartCoroutine(turnOffPhone(hit));
             }
             else
             {
@@ -117,5 +118,16 @@ public class PickupDrop : MonoBehaviour
             }
 
         }
+    }
+
+    IEnumerator turnOffPhone(RaycastHit hit)
+    {
+        Renderer[] children = hit.rigidbody.gameObject.GetComponentsInChildren<Renderer>();
+        foreach(Renderer r in children)
+        {
+            r.enabled = false;
+        }
+        yield return new WaitForSeconds(2f);
+        Destroy(hit.rigidbody.gameObject);
     }
 }
