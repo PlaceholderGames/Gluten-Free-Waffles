@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoonSystem : MonoBehaviour
+public class moonSystem : MonoBehaviour
 {
     private Transform player;
 
     // Use this for initialization
-    private void Start ()
+    void Start ()
     {
         //gets the transform of the player
         player = GameObject.Find("Character").transform;
     }
 	
 	// Update is called once per frame
-	private void Update ()
+	void Update ()
     {
         //rotates the moon so that it always faces the player
         transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward, player.position - transform.position, 180.0f, 0.0f));

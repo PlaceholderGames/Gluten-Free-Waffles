@@ -47,14 +47,11 @@ public class QuestSettings : MonoBehaviour {
         for(int i = 0; i < childrenIndex; i++)
         {
             Transform child = transform.GetChild(i).GetChild(0);
-            if(child != null)
+            if(child.name == "Quad")
             {
-                if (child.name == "Quad")
-                {
-                    Renderer rend = child.GetComponent<Renderer>();
-                    rend.material.color = questColor;
-                    rend.material.SetColor("_EmissionColor", questColor);
-                }
+                Renderer rend = child.GetComponent<Renderer>();
+                rend.material.color = questColor;
+                rend.material.SetColor("_EmissionColor", questColor);
             }
         }
 

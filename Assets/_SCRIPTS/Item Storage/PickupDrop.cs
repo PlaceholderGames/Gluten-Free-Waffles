@@ -37,11 +37,11 @@ public class PickupDrop : MonoBehaviour
         //player input to try and pick up an item
         if (Input.GetButtonDown("Interact"))
         {
-
+            
             if (holdingItem)
             {
                 dropItem();
-
+                
             }
             else if (!holdingItem)
             {
@@ -59,7 +59,7 @@ public class PickupDrop : MonoBehaviour
             GUI.DrawTexture(dropPromt, Resources.Load<Texture2D>("KeyPrompts/" + "R"));
 
             GUI.Label(new Rect((Screen.width - 250), Screen.height - 20, 1, 20), "Press Q to Store", style);
-            Rect storePromt = new Rect((Screen.width - 270), Screen.height - 70, 40, 40);
+            Rect storePromt = new Rect((Screen.width -270), Screen.height - 70, 40, 40);
             GUI.DrawTexture(storePromt, Resources.Load<Texture2D>("KeyPrompts/" + "Q"));
 
             GUI.Label(new Rect((Screen.width - 400), Screen.height - 20, 1, 20), "Press E to Drop", style);
@@ -88,8 +88,7 @@ public class PickupDrop : MonoBehaviour
             if (hit.transform.GetComponent<ItemID>().itemID == 3)
             {
                 daInventoryMan.GetComponent<Inventory>().CollectedCollectable(hit.transform.GetComponent<ItemID>().itemID);
-                hit.rigidbody.GetComponent<ItemHeldBool>().beingHeld = true;
-                StartCoroutine(turnOffPhone(hit));
+                Destroy(hit.rigidbody.gameObject);
             }
             else
             {
@@ -118,16 +117,5 @@ public class PickupDrop : MonoBehaviour
             }
 
         }
-    }
-
-    IEnumerator turnOffPhone(RaycastHit hit)
-    {
-        Renderer[] children = hit.rigidbody.gameObject.GetComponentsInChildren<Renderer>();
-        foreach(Renderer r in children)
-        {
-            r.enabled = false;
-        }
-        yield return new WaitForSeconds(2f);
-        Destroy(hit.rigidbody.gameObject);
     }
 }

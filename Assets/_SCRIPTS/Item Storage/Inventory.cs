@@ -6,7 +6,6 @@ using System.Linq;
 public class Inventory : MonoBehaviour
 {
     private ItemDatabase database;
-    private Vitals vitals;
 
     public GameObject playerPhone;
 
@@ -27,9 +26,6 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         database = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>();
-
-        //gets a reference to the vitals class
-        vitals = GameObject.Find("Character").GetComponent<Vitals>();
     }
 
     private void Update()
@@ -59,66 +55,6 @@ public class Inventory : MonoBehaviour
                 GameObject.Find("FPPCamera").GetComponent<PickupDrop>().holdingItem = false;
             }
 
-        }
-    }
-
-    public bool ItemSearch(int ID)
-    {
-        //Pass in an item and the function will return true if the player possesses it or false if not.
-
-        string type = database.items[ID].itemType.ToString();
-        switch (type)
-        {
-            case "Food":
-                {
-                    for(int i = 0; i < foodList.Count; i++)
-                    {
-                        if (foodList[i].itemID == ID)
-                            return true;
-                    }
-                    return false;
-                }
-            case "Drink":
-                {
-                    for (int i = 0; i < drinkList.Count; i++)
-                    {
-                        if (drinkList[i].itemID == ID)
-                            return true;
-                    }
-                    return false;
-                }
-            case "Clothes":
-                {
-                    for (int i = 0; i < clothesList.Count; i++)
-                    {
-                        if (clothesList[i].itemID == ID)
-                            return true;
-                    }
-                    return false;
-                }
-            case "Quest":
-                {
-                    for (int i = 0; i < questList.Count; i++)
-                    {
-                        if (questList[i].itemID == ID)
-                            return true;
-                    }
-                    return false;
-                }
-            case "Misc":
-                {
-                    for (int i = 0; i < miscList.Count; i++)
-                    {
-                        if (miscList[i].itemID == ID)
-                            return true;
-                    }
-                    return false;
-                }
-            default:
-                {
-                    print("Error: Unknown item type.");
-                    return false;
-                }
         }
     }
 
@@ -236,6 +172,7 @@ public class Inventory : MonoBehaviour
                     hasPhone = true;
                     phoneOut = true;
 
+                    print("You found your phone!!");
                     break;
                     //Display message to user saying they found phone here
 
@@ -252,16 +189,12 @@ public class Inventory : MonoBehaviour
                 {
                     print("Drunk dat drink");
                     //Add stat increases here
-                    vitals.setEnergy(30); //increases energy levels by 30
-
                     break;
                 }
             case 1:
                 {
                     print("Drunk dat slush");
                     //Add stat increases here
-                    vitals.setSoberness(-30); //lowers your soberness levels by 30
-
                     break;
                 }
             case 2:

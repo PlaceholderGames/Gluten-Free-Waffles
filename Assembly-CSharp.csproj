@@ -46,7 +46,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\AudioArea.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
@@ -132,9 +131,6 @@
      <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\DayNightCycle.cs" />
      <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\StarSystem.cs" />
      <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\moonSystem.cs" />
-     <Compile Include="Assets\_SCRIPTS\DialogueSystem.cs" />
-     <Compile Include="Assets\_SCRIPTS\Drunk.cs" />
-     <Compile Include="Assets\_SCRIPTS\Energy.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\MainMenu.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\RotateCameraMainMenu.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\SetRotation.cs" />
@@ -148,9 +144,12 @@
      <Compile Include="Assets\_SCRIPTS\Item Storage\ItemHeldBool.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\ItemID.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\PickupDrop.cs" />
+<<<<<<< HEAD
      <Compile Include="Assets\_SCRIPTS\Item Storage\VendorSupplies.cs" />
      <Compile Include="Assets\_SCRIPTS\KnockedOut.cs" />
      <Compile Include="Assets\_SCRIPTS\Phone\Apps\HealthApp.cs" />
+=======
+>>>>>>> MapDevelopment
      <Compile Include="Assets\_SCRIPTS\Phone\Apps\InventoryApp.cs" />
      <Compile Include="Assets\_SCRIPTS\Phone\Apps\JournalApp.cs" />
      <Compile Include="Assets\_SCRIPTS\Phone\MobilePhone.cs" />
@@ -163,9 +162,13 @@
      <Compile Include="Assets\_SCRIPTS\Quests\QuestHandler.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\QuestSettings.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\RotateTowardsPlayer.cs" />
+<<<<<<< HEAD
      <Compile Include="Assets\_SCRIPTS\Respawn.cs" />
      <Compile Include="Assets\_SCRIPTS\Vitals.cs" />
      <Compile Include="Assets\_SCRIPTS\funds.cs" />
+=======
+     <Compile Include="Assets\_SCRIPTS\npcInteraction.cs" />
+>>>>>>> MapDevelopment
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
