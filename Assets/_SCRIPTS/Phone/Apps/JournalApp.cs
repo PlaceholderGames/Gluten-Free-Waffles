@@ -10,10 +10,22 @@ public class JournalApp : MonoBehaviour {
     public Material backgroundFull;
     public Material homescreen;
 
+    int questSelection = 0;
+    int oldSelection = 1;
+
+    Transform listPage;
+    Transform fullPage;
+    Transform completedPage;
+
+    QuestHandler handler;
+
     // Use this for initialization
     void Start()
     {
         phone = GameObject.FindGameObjectWithTag("Phone").transform.GetChild(0).gameObject;
+        listPage = transform.Find("List Screen");
+        fullPage = transform.Find("Full Screen Quest");
+        handler = GameObject.Find("GameManager").GetComponent<QuestHandler>();
     }
 
     // Update is called once per frame
@@ -30,7 +42,37 @@ public class JournalApp : MonoBehaviour {
         {
             close();
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
+        {
+            OpenFull(questSelection);
+        }
+
+        LoadQuests();
+
+    }
+
+    void LoadQuests()
+    {
+        List<Quest> quests = handler.getActiveQuestList();
+
+        int questCount = quests.Count;
+        print(questCount);
+
+
+
+
+
+        for (int i = 1; i < 5; i++)
+        {
+
+        }
+    }
+
+
+    void OpenFull(int selection)
+    {
+
     }
 
     void close()
