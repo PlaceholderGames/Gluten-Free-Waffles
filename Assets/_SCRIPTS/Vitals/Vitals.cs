@@ -12,10 +12,13 @@ public class Vitals : MonoBehaviour
     [Header("More than that is hyper & less is tired.")]
     [Range(0, 100)]
     public float energy = 50.0f;
+    [Range(0, 100)]
+    public float bladder = 100.0f; //100 = not needing a pee, 0 = player will pee
 
     private bool playerIsKnockedOut = false;
     private bool playerIsDrunk = false;
     private bool playerEnergyNotNeutral = false;
+    private bool playerIsPeeing = false;
 
     public void setKnockedOutState(bool KnockedOutArg)
     {
@@ -30,6 +33,11 @@ public class Vitals : MonoBehaviour
     public void setEnergyState(bool energyArg)
     {
         playerEnergyNotNeutral = energyArg;
+    }
+
+    public void setBladderState(bool bladderArg)
+    {
+        playerIsPeeing = bladderArg;
     }
 
     public void setHealth(int newHealth)
@@ -65,8 +73,8 @@ public class Vitals : MonoBehaviour
                 energy = 100.0f;
             else
                 energy += newEnergy;
-        } else
-            if (energy <= 100.0f)
+        } 
+        else if (energy <= 100.0f)
             energy = newEnergy;
         else
             energy = 100.0f;
@@ -75,6 +83,16 @@ public class Vitals : MonoBehaviour
     public float getEnergy()
     {
         return energy;
+    }
+
+    public void setBladder(float newBladder)
+    {
+        bladder = newBladder;
+    }
+
+    public float getBladder()
+    {
+        return bladder;
     }
 
     // Update is called once per frame
@@ -87,7 +105,10 @@ public class Vitals : MonoBehaviour
         debugSetSoberness();
 
         //debug command to instantly change the players energy levels
-        debugsetEnergy();
+        debugSetEnergy();
+
+        //debug command to instantly make the player pee
+        debugSetBladder();
 
         //knock the player out
         if ((health == 0 || soberness == 0.0f || energy == 0.0f) && !playerIsKnockedOut)
@@ -113,6 +134,20 @@ public class Vitals : MonoBehaviour
         {
             GameObject energyObj = Instantiate(Resources.Load("Prefabs/Energy"), Vector3.zero, Quaternion.identity) as GameObject;
         }
+
+        //make the player pee
+        if (bladder <= 0.0f && !playerIsPeeing) {
+            GameObject peeObj = Instantiate(Resources.Load("Prefabs/Pee"), Vector3.zero, Quaternion.identity) as GameObject;
+        }
+    }
+
+    private void debugSetSoberness() {
+        if (Input.GetKey(KeyCode.LeftShift)) {
+            if (Input.GetKeyDown(KeyCode.E)) {
+                setSoberness(-10.0f);
+                print("Player is now " + (100 - getSoberness()) + "% drunk.");
+            }
+        }
     }
 
     private void debugSetHP()
@@ -127,19 +162,7 @@ public class Vitals : MonoBehaviour
         }
     }
 
-    private void debugSetSoberness()
-    {
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                setSoberness(-10.0f);
-                print("Player is now " + getSoberness() + "% drunk.");
-            }
-        }
-    }
-
-    private void debugsetEnergy()
+    private void debugSetEnergy()
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -147,6 +170,15 @@ public class Vitals : MonoBehaviour
             {
                 setEnergy(10.0f);
                 print("Player now has " + getEnergy() + " energy.");
+            }
+        }
+    }
+
+    private void debugSetBladder() {
+        if (Input.GetKey(KeyCode.LeftShift)) {
+            if (Input.GetKeyDown(KeyCode.Y)) {
+                setBladder(0.0f);
+                print("Player now has " + getBladder() + " bladder.");
             }
         }
     }

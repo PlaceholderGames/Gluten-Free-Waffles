@@ -12,15 +12,15 @@ public class Drunk : MonoBehaviour
     private Image drunkOverlay;
     private Image drunkFade;
 
-    private float sensitivityX = 15.0f;
-    private float sensitivityY = 15.0f;
+    //private float sensitivityX = 15.0f;
+    //private float sensitivityY = 15.0f;
 
-    private float smooth = 1.0f;
-    private float smoothXAxis;
-    private float smoothYAxis;
+    //private float smooth = 1.0f;
+    //private float smoothXAxis;
+    //private float smoothYAxis;
 
-    private float rotationX = 0.0f;
-    private float rotationY = 0.0f;
+    //private float rotationX = 0.0f;
+    //private float rotationY = 0.0f;
 
     private bool fovIncrease = true;
     private bool drunkEnding = false;
@@ -73,7 +73,7 @@ public class Drunk : MonoBehaviour
         vitals.setSoberness((100.0f / reduceDrunkSpeed) * Time.deltaTime);
 
         //slowly change the smooth value for the camera lerp each frame
-        smooth = vitals.getSoberness() / 10.0f;
+        //smooth = vitals.getSoberness() / 10.0f;
 
         //slowly lower the fov modifer each frame
         fovModifier -= ((10.0f / reduceDrunkSpeed) * Time.deltaTime);
