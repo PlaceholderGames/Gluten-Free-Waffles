@@ -12,7 +12,7 @@ public class BaseQuest : MonoBehaviour {
     [TextArea]
     public string questText;
 
-    public GameObject nextQuestPoint;
+    public GameObject[] nextQuestPoint;
     // Use this for initialization
 
 	
@@ -38,6 +38,19 @@ public class BaseQuest : MonoBehaviour {
     }
     public void endQuest()
     {
+        this.transform.parent.GetComponent<QuestSettings>().questCompleted = true;
         Debug.Log("Quest is Over!");
+    }
+
+    public void continueQuest()
+    {
+        foreach (GameObject g in nextQuestPoint)
+        {
+            if (!g.activeSelf)
+            {
+                g.SetActive(true);
+                g.transform.GetChild(0).gameObject.SetActive(true);
+            }
+        }
     }
 }

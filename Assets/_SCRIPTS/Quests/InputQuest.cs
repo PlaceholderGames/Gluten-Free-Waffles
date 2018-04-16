@@ -21,13 +21,7 @@ public class InputQuest : BaseQuest
             {
                 if (nextQuestPoint != null)
                 {
-                    if (!nextQuestPoint.activeSelf)
-                    {
-                        nextQuestPoint.SetActive(true);
-                        nextQuestPoint.transform.GetChild(0).gameObject.SetActive(true);
-
-
-                    }
+                    continueQuest();
 
                 }
                 else
