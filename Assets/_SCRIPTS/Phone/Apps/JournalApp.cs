@@ -26,6 +26,7 @@ public class JournalApp : MonoBehaviour {
         listPage = transform.Find("List Screen");
         fullPage = transform.Find("Full Screen Quest");
         handler = GameObject.Find("GameManager").GetComponent<QuestHandler>();
+        Clear();
     }
 
     // Update is called once per frame
@@ -57,7 +58,6 @@ public class JournalApp : MonoBehaviour {
         List<Quest> quests = handler.getActiveQuestList();
 
         int questCount = quests.Count;
-        print(questCount);
 
 
 
@@ -65,7 +65,9 @@ public class JournalApp : MonoBehaviour {
 
         for (int i = 1; i < 5; i++)
         {
-
+            current.Find("Header").GetComponent<TextMesh>().text = "";
+            current.Find("Setter").GetComponent<TextMesh>().text = "";
+            current.Find("Current Instruction").GetComponent<TextMesh>().text = "";
         }
     }
 
@@ -73,6 +75,18 @@ public class JournalApp : MonoBehaviour {
     void OpenFull(int selection)
     {
 
+    }
+
+    void Clear()
+    {
+        for (int i = 1; i < 5; i++)
+        {
+            Transform current = listPage.Find("Quest (" + i.ToString() + ")");
+
+            current.Find("Header").GetComponent<TextMesh>().text = "";
+            current.Find("Setter").GetComponent<TextMesh>().text = "";
+            current.Find("Current Instruction").GetComponent<TextMesh>().text = "";
+        }
     }
 
     void close()
