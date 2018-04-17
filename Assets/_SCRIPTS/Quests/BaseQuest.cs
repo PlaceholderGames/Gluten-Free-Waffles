@@ -46,18 +46,32 @@ public class BaseQuest : MonoBehaviour {
         endTime = Time.time;
         this.transform.parent.GetComponent<QuestSettings>().endTimeQuest = endTime;
         this.transform.parent.GetComponent<QuestSettings>().questCompleted = true;
+        if (nextQuestPoint.Length != 0)
+        {
+            foreach (GameObject g in nextQuestPoint)
+            {
+                if (!g.activeSelf)
+                {
+                    g.SetActive(true);
+                }
+            }
+        }
     }
 
     public void continueQuest()
     {
         endTime = Time.time;
-        foreach (GameObject g in nextQuestPoint)
+        if(nextQuestPoint.Length != 0)
         {
-            if (!g.activeSelf)
+            foreach (GameObject g in nextQuestPoint)
             {
-                g.SetActive(true);
+                if (!g.activeSelf)
+                {
+                    g.SetActive(true);
+                }
             }
         }
+        
     }
 
     public float getStartTime()
@@ -81,7 +95,6 @@ public class BaseQuest : MonoBehaviour {
 
     public void updateQuest()
     {
-        Debug.Log("Attempting update");
         this.transform.parent.GetComponent<QuestSettings>().updateQuestHandler(questGiverName, questDirections);
     }
 }

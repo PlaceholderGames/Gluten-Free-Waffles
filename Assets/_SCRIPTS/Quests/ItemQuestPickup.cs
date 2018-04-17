@@ -33,7 +33,7 @@ public class ItemQuestPickup : BaseQuest
             }
             if (objectheld.beingHeld)
             {
-                if (nextQuestPoint.Length != 0)
+                if (transform.parent.GetChild(transform.parent.childCount - 1) != this.transform)
                 {
                     continueQuest();
                 }
