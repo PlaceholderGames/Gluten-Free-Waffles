@@ -2,18 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicQuestLocation : MonoBehaviour {
-
-    public bool isFirst;
+public class BasicQuestLocation : BaseQuest
+{
 
     public float questRadius = 10;
-
-    public string questGiverName;
-
-    [TextArea]
-    public string questText;
-
-    public GameObject nextQuestPoint;
 
     private void OnDrawGizmos()
     {
@@ -22,21 +14,14 @@ public class BasicQuestLocation : MonoBehaviour {
 
     }
     // Use this for initialization
-    void Start () {
-        if (isFirst)
-        {
-            gameObject.SetActive(true);
-            gameObject.transform.GetChild(0).gameObject.SetActive(true);
-        }
-        else {
-            gameObject.SetActive(false);
+    void Start()
+    {
+        setup();
+    }
 
-            gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        }
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update()
+    {
         if (gameObject.activeSelf)
         {
             if (!getActivateBool())
@@ -47,20 +32,13 @@ public class BasicQuestLocation : MonoBehaviour {
             Collider[] col = Physics.OverlapSphere(transform.position, questRadius, 1 << LayerMask.NameToLayer("Player"));
             if (col.Length != 0)
             {
-                Debug.Log(this.name);
-                if (nextQuestPoint.Length != 0)
+                if (transform.parent.GetChild(transform.parent.childCount - 1) != this.transform)
                 {
-<<<<<<< HEAD
                     continueQuest();
-
-=======
-                    if (!nextQuestPoint.activeSelf)
-                    {
-                        Debug.Log("The Quest Continues!!!");
-                        nextQuestPoint.SetActive(true);
-                        nextQuestPoint.transform.GetChild(0).gameObject.SetActive(true);
->>>>>>> MapDevelopment
-
+                }
+                else
+                {
+                    endQuest();
                 }
                 this.gameObject.SetActive(false);
             }
