@@ -14,6 +14,7 @@ public class JournalApp : MonoBehaviour {
     int pageNumber = 1;
     int questsOnPage = 0;
     int lineWidth = 23;
+    int pages = 1;
 
     bool listBackgroundUpdate = true;
     bool fullBackgroundUpdate = true;
@@ -55,6 +56,26 @@ public class JournalApp : MonoBehaviour {
             bigScreen = true;
         }
 
+        if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            Clear();
+            pageNumber--;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            Clear();
+            pageNumber++;
+        }
+
+
+        if (pageNumber < 1)
+            pageNumber = pages;
+        if (pageNumber > pages)
+            pageNumber = 1;
+
+
+
         if (bigScreen && questSelection != 0)
             OpenFull(questSelection);
 
@@ -80,7 +101,7 @@ public class JournalApp : MonoBehaviour {
                 questSelection = 1;
 
             //How many pages of quests are there (+1 as <4 quests needs 1 page not 0)
-            int pages = (numberOfQuests / 4) + 1;
+            pages = (numberOfQuests / 4) + 1;
 
             //Which 4 quests should be loaded onto the current page (Will be multiples of 4 starting with 0)
             int questCount = (pageNumber - 1) * 4;
