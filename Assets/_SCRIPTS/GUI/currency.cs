@@ -36,6 +36,7 @@ public class currency : MonoBehaviour
     //references to other game objects required
     private GameObject player;
     private funds playerMoney;
+    private GameObject inventorySystem;
     private Inventory inventory;
     private VendorSupplies vendorSupplies;
     private ItemDatabase database;
@@ -44,9 +45,10 @@ public class currency : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        inventorySystem = GameObject.Find("InventorySystem");
         player = GameObject.Find("Character");
         playerMoney = player.GetComponent<funds>();
-        inventory = player.GetComponent<Inventory>();
+        inventory = inventorySystem.GetComponentInChildren<Inventory>();
         database = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>();
     }
 
@@ -140,6 +142,7 @@ public class currency : MonoBehaviour
         transactionUI.SetActive(false);
         transaction = false;
         clicked = false;
+        inventorySystem = null;
         //re-enabling time and returning cursor
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
@@ -211,12 +214,12 @@ public class currency : MonoBehaviour
         confirm = false;
         if (itemRef.price <= playerMoney.money)
         {
-            congratsScreen.SetActive(true);
-            congrats = true;
             //adding item to inventory
             inventory.updateItems(itemRef.itemID, true);
             playerMoney.removingFunds(itemRef.price);
             accepted();
+            congratsScreen.SetActive(true);
+            congrats = true;
         }
         else if(itemRef.price > playerMoney.money)
         {
