@@ -56,28 +56,59 @@ public class JournalApp : MonoBehaviour {
 
     void LoadQuests(int pageNumber)
     {
+        listPage.Find("Page Number").GetComponent<TextMesh>().text = pageNumber.ToString();
+
         List<Quest> quests = handler.getActiveQuestList();
 
+        //Gets the number of quests stored in the quest list
         int numberOfQuests = quests.Count;
-        int pages = (numberOfQuests / 4);
 
-        int questCount = pages * 4;
-
-        for (int i = 1; i < 5; i++)
+        if (numberOfQuests != 0)
         {
-            Transform current = listPage.Find("Quest (" + i.ToString() + ")");
+            //How many pages of quests are there (+1 as <4 quests needs 1 page not 0)
+            int pages = (numberOfQuests / 4) + 1;
 
-            current.Find("Heading").GetComponent<TextMesh>().text = quests[questCount].title;
-            current.Find("Setter").GetComponent<TextMesh>().text = quests[questCount].giverName;
-            current.Find("Current Instruction").GetComponent<TextMesh>().text = quests[questCount].directions;
+            //Which 4 quests should be loaded onto the current page (Will be multiples of 4 starting with 0)
+            int questCount = (pageNumber - 1) * 4;
 
-            if (questCount < numberOfQuests)
-                questCount++;
-            if (numberOfQuests == 0)
-                break;
+            //Cycles through Quest (1-4) game objects on phone screen 
+            for (int i = 1; i < 5; i++)
+            {
+                //Gets the current game object
+                Transform current = listPage.Find("Quest (" + i.ToString() + ")");
+
+                //Reformats colour so that textmesh will display it
+                Color colour = quests[questCount].colour;
+                Color colourOutput = new Color(colour.r, colour.g, colour.b);
+
+                //Sets heading text and colour
+                current.Find("Heading").GetComponent<TextMesh>().text = quests[questCount].title;
+                current.Find("Heading").GetComponent<TextMesh>().color = colourOutput;
+
+                //Sets quest giver text
+                current.Find("Setter").GetComponent<TextMesh>().text = quests[questCount].giverName;
+
+                //Ensures text doesn't go off the edge of the screen
+                string instruction = quests[questCount].directions;
+                if (instruction.Length > 23)
+                    instruction = instruction.Substring(0, 23) + "...";
+
+                current.Find("Current Instruction").GetComponent<TextMesh>().text = instruction;
+
+                //If there are still quests to be displayed
+                if (questCount < numberOfQuests)
+                    questCount++;
+
+                //If all the quests have been shown
+                if (questCount == numberOfQuests)
+                    break;
+            }
         }
-
-        listPage.Find("Page Number").GetComponent<TextMesh>().text = pageNumber.ToString();
+        else
+        {
+            Clear();
+        }
+        
     }
 
 
