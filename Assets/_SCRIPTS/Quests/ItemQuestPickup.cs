@@ -2,31 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemQuestPickup : MonoBehaviour
+public class ItemQuestPickup : BaseQuest
 {
+    public GameObject itemToPickup;
 
-    public bool isFirst;
-
-    public string questGiverName;
-
-    [TextArea]
-    public string questText;
-
-    public GameObject nextQuestPoint;
+    private ItemHeldBool objectheld;
 
     // Use this for initialization
     void Start()
     {
-        if (isFirst)
+        objectheld = itemToPickup.GetComponent<ItemHeldBool>();
+
+        if (objectheld == null)
         {
-            gameObject.SetActive(true);
-            gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            objectheld = itemToPickup.AddComponent<ItemHeldBool>();
         }
-        else
-        {
-            gameObject.SetActive(false);
-            gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        }
+
+        setup();
     }
 
     // Update is called once per frame
@@ -34,7 +26,6 @@ public class ItemQuestPickup : MonoBehaviour
     {
         if (gameObject.activeSelf)
         {
-<<<<<<< HEAD
             if (!getActivateBool())
             {
                 activateBool();
@@ -42,7 +33,7 @@ public class ItemQuestPickup : MonoBehaviour
             }
             if (objectheld.beingHeld)
             {
-                if (nextQuestPoint.Length != 0)
+                if (transform.parent.GetChild(transform.parent.childCount - 1) != this.transform)
                 {
                     continueQuest();
                 }
@@ -51,22 +42,6 @@ public class ItemQuestPickup : MonoBehaviour
                     endQuest();
                 }
                 this.gameObject.SetActive(false);
-=======
-            if (GetComponent<ItemHeldBool>().beingHeld)
-            {
-                Debug.Log("Item being held");
-                if (nextQuestPoint != null)
-                {
-                    Debug.Log("Next Quest is not null!");
-                    if (!nextQuestPoint.activeSelf)
-                    {
-                        nextQuestPoint.SetActive(true);
-                        nextQuestPoint.transform.GetChild(0).gameObject.SetActive(true);
-                    }
-                }
-                gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                gameObject.GetComponent<ItemQuestPickup>().enabled = false;
->>>>>>> MapDevelopment
             }
         }
     }
