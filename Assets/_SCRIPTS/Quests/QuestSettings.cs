@@ -35,7 +35,7 @@ public class QuestSettings : MonoBehaviour {
     public string questText;
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         if (gameManager == null)
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         if (questHandler == null)
