@@ -5,14 +5,19 @@ using UnityEngine;
 public class JournalApp : MonoBehaviour {
 
     private GameObject phone;
-    private bool backgroundUpdate = true;
     public Material backgroundList;
     public Material backgroundFull;
     public Material homescreen;
 
-    int questSelection = 0;
-    int oldSelection = 1;
+    int questSelection = 1;
+    int oldSelection = 2;
     int pageNumber = 1;
+    int questsOnPage = 0;
+    int lineWidth = 23;
+
+    bool listBackgroundUpdate = true;
+    bool fullBackgroundUpdate = true;
+    bool bigScreen = false;
 
     Transform listPage;
     Transform fullPage;
@@ -34,24 +39,30 @@ public class JournalApp : MonoBehaviour {
     void Update()
     {
         //Updates the background if it is still the home screen.
-        if (backgroundUpdate == true)
+        if (listBackgroundUpdate == true)
         {
             phone.transform.GetChild(0).GetComponent<MeshRenderer>().material = backgroundList;
-            backgroundUpdate = false;
+            listBackgroundUpdate = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.Backspace))
+        if ((Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.Backspace)) && !bigScreen)
         {
             close();
         }
 
         if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
         {
-            OpenFull(questSelection);
+            bigScreen = true;
         }
 
-        LoadQuests(pageNumber);
+        if (bigScreen && questSelection != 0)
+            OpenFull(questSelection);
 
+        if (!bigScreen)
+        {
+            LoadQuests(pageNumber);
+            MakeSelection();
+        }
     }
 
     void LoadQuests(int pageNumber)
@@ -65,11 +76,17 @@ public class JournalApp : MonoBehaviour {
 
         if (numberOfQuests != 0)
         {
+            if (questSelection == 0)
+                questSelection = 1;
+
             //How many pages of quests are there (+1 as <4 quests needs 1 page not 0)
             int pages = (numberOfQuests / 4) + 1;
 
             //Which 4 quests should be loaded onto the current page (Will be multiples of 4 starting with 0)
             int questCount = (pageNumber - 1) * 4;
+
+            //Updates questsOnPage for selection purposes
+            questsOnPage = numberOfQuests - questCount;
 
             //Cycles through Quest (1-4) game objects on phone screen 
             for (int i = 1; i < 5; i++)
@@ -90,8 +107,8 @@ public class JournalApp : MonoBehaviour {
 
                 //Ensures text doesn't go off the edge of the screen
                 string instruction = quests[questCount].directions;
-                if (instruction.Length > 23)
-                    instruction = instruction.Substring(0, 23) + "...";
+                if (instruction.Length > lineWidth)
+                    instruction = instruction.Substring(0, lineWidth) + "...";
 
                 current.Find("Current Instruction").GetComponent<TextMesh>().text = instruction;
 
@@ -106,15 +123,101 @@ public class JournalApp : MonoBehaviour {
         }
         else
         {
+            questSelection = 0;
             Clear();
         }
         
     }
 
+    void MakeSelection()
+    {
+        if (questsOnPage > 1)
+        {
+            if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                oldSelection = questSelection;
+                questSelection++;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                oldSelection = questSelection;
+                questSelection--;
+            }
+
+            if (questSelection < 1)
+                questSelection = questsOnPage;
+            if (questSelection > questsOnPage)
+                questSelection = 1;
+        }
+
+        transform.Find("List Screen").Find("Quest (" + questSelection.ToString() + ")").Find("Heading").GetComponent<TextMesh>().fontSize = 150;
+        transform.Find("List Screen").Find("Quest (" + oldSelection.ToString() + ")").Find("Heading").GetComponent<TextMesh>().fontSize = 120;
+    }
 
     void OpenFull(int selection)
     {
+        if(fullBackgroundUpdate)
+        {
+            phone.transform.GetChild(0).GetComponent<MeshRenderer>().material = backgroundFull;
+            listPage.gameObject.SetActive(false);
+            fullPage.gameObject.SetActive(true);
 
+            List<Quest> quests = handler.getActiveQuestList();
+
+            int questSelection = ((pageNumber - 1)*4) + selection;
+            questSelection--;
+
+            //Reformats colour so that textmesh will display it
+            Color colour = quests[questSelection].colour;
+            Color colourOutput = new Color(colour.r, colour.g, colour.b);
+
+            //Sets heading text and colour
+            fullPage.Find("Heading").GetComponent<TextMesh>().text = quests[questSelection].title;
+            fullPage.Find("Heading").GetComponent<TextMesh>().color = colourOutput;
+
+            //Sets quest giver text
+            fullPage.Find("Setter").GetComponent<TextMesh>().text = quests[questSelection].giverName;
+
+            //Ensures text doesn't go off the edge of the screen
+            string instruction = quests[questSelection].directions;
+            string output = instruction;
+
+            if (instruction.Length > lineWidth)
+                output = instruction.Insert(lineWidth, "-\n");
+
+            fullPage.Find("Current Instruction").GetComponent<TextMesh>().text = output;
+
+            string description = quests[questSelection].text;
+
+            int descriptionLength = description.Length;
+            int numOfLines = descriptionLength / lineWidth;
+            int count = lineWidth;
+
+            for (int i = 0; i < numOfLines; i++)
+            {
+                description = description.Insert(count, "-\n");
+                count = count + lineWidth + 3;
+            }
+
+            description.TrimEnd('-');
+
+            fullPage.Find("Description").GetComponent<TextMesh>().text = description;
+
+        }
+
+
+
+
+        if ((Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.Backspace)))
+        {
+            phone.transform.GetChild(0).GetComponent<MeshRenderer>().material = backgroundList;
+            fullBackgroundUpdate = true;
+            listBackgroundUpdate = true;
+            bigScreen = false;
+            listPage.gameObject.SetActive(true);
+            fullPage.gameObject.SetActive(false);
+        }
     }
 
     void Clear()
@@ -134,7 +237,7 @@ public class JournalApp : MonoBehaviour {
         //Resets phone to home screen to close the app
         phone.transform.GetChild(0).GetComponent<MeshRenderer>().material = homescreen;
         phone.GetComponent<MobilePhone>().appClosed = true;
-        backgroundUpdate = true;
+        listBackgroundUpdate = true;
         gameObject.SetActive(false);
     }
 }

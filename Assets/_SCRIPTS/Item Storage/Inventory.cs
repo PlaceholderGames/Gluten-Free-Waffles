@@ -258,7 +258,7 @@ public class Inventory : MonoBehaviour
                 }
             case 1:
                 {
-                    print("Drunk dat slush");
+                    print("Drunk dat alc");
                     //Add stat increases here
                     vitals.setSoberness(-30); //lowers your soberness levels by 30
 
