@@ -12,8 +12,8 @@ public class Item
     public Texture2D itemIcon;
     public ItemType itemType;
     public bool destroyWhenUsed;
+    public int price;
     public int itemQuantity;
-
 
     public enum ItemType
     {
@@ -29,7 +29,7 @@ public class Item
         //Used to create empty inventory slots.
     }
 
-    public Item(string name, int id, string desc, ItemType type, bool destroy, int quantity) //If equipable or consumable effects are added, create new constructor.
+    public Item(string name, int id, string desc, ItemType type, bool destroy, int quantity, int cost) //If equipable or consumable effects are added, create new constructor.
     {
         itemName = name;
         itemID = id;
@@ -38,6 +38,7 @@ public class Item
         itemIcon = Resources.Load<Texture2D>("ItemIcons/" + itemName);
         destroyWhenUsed = destroy;
         itemQuantity = quantity;
+        price = cost;
     }
 
     public bool getDestroy()

@@ -39,10 +39,10 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +137,7 @@
      <Compile Include="Assets\_SCRIPTS\GUI\RotateCameraMainMenu.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\SetRotation.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\SettingsMenu.cs" />
+     <Compile Include="Assets\_SCRIPTS\GUI\currency.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\playerGUI.cs" />
      <Compile Include="Assets\_SCRIPTS\GameManager.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\Inventory.cs" />
@@ -145,21 +146,24 @@
      <Compile Include="Assets\_SCRIPTS\Item Storage\ItemHeldBool.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\ItemID.cs" />
      <Compile Include="Assets\_SCRIPTS\Item Storage\PickupDrop.cs" />
+     <Compile Include="Assets\_SCRIPTS\Item Storage\VendorSupplies.cs" />
+     <Compile Include="Assets\_SCRIPTS\KnockedOut.cs" />
+     <Compile Include="Assets\_SCRIPTS\Phone\Apps\HealthApp.cs" />
      <Compile Include="Assets\_SCRIPTS\Phone\Apps\InventoryApp.cs" />
+     <Compile Include="Assets\_SCRIPTS\Phone\Apps\JournalApp.cs" />
      <Compile Include="Assets\_SCRIPTS\Phone\MobilePhone.cs" />
      <Compile Include="Assets\_SCRIPTS\PlayerController.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\BaseQuest.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\BasicQuestLocation.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\InputQuest.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\ItemQuestPickup.cs" />
+     <Compile Include="Assets\_SCRIPTS\Quests\Quest.cs" />
+     <Compile Include="Assets\_SCRIPTS\Quests\QuestHandler.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\QuestSettings.cs" />
      <Compile Include="Assets\_SCRIPTS\Quests\RotateTowardsPlayer.cs" />
-     <Compile Include="Assets\_SCRIPTS\Vitals\Drunk.cs" />
-     <Compile Include="Assets\_SCRIPTS\Vitals\Energy.cs" />
-     <Compile Include="Assets\_SCRIPTS\Vitals\KnockedOut.cs" />
-     <Compile Include="Assets\_SCRIPTS\Vitals\Pee.cs" />
-     <Compile Include="Assets\_SCRIPTS\Vitals\Respawn.cs" />
-     <Compile Include="Assets\_SCRIPTS\Vitals\Vitals.cs" />
+     <Compile Include="Assets\_SCRIPTS\Respawn.cs" />
+     <Compile Include="Assets\_SCRIPTS\Vitals.cs" />
+     <Compile Include="Assets\_SCRIPTS\funds.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
@@ -205,6 +209,7 @@
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
+     <Compile Include="Assets\destroyQuestScreen.cs" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\DepthOfField.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\_SHADERS\ToonShading\Shaders\ToonBasic.shader" />
@@ -280,37 +285,37 @@
      <None Include="Assets\water.shader.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Editor Resources\Monitors\WaveformCompute.compute" />
  <Reference Include="UnityEngine.UI">
- <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
- <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.TestRunner">
- <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
- <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Analytics">
- <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
- <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
- <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="Mono.Data.Sqlite">
- <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/Plugins/SQLite/Mono.Data.Sqlite.dll</HintPath>
+ <HintPath>C:/Users/Sean Brennan/Documents/GitHub/Gluten-Free-Waffles/Assets/Plugins/SQLite/Mono.Data.Sqlite.dll</HintPath>
  </Reference>
  <Reference Include="System.Data">
- <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/Plugins/SQLite/System.Data.dll</HintPath>
+ <HintPath>C:/Users/Sean Brennan/Documents/GitHub/Gluten-Free-Waffles/Assets/Plugins/SQLite/System.Data.dll</HintPath>
  </Reference>
  <Reference Include="TextMeshPro-5.6-1.0.56-Editor">
- <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Editor.dll</HintPath>
+ <HintPath>C:/Users/Sean Brennan/Documents/GitHub/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Editor.dll</HintPath>
  </Reference>
  <Reference Include="TextMeshPro-5.6-1.0.56-Runtime">
- <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Runtime.dll</HintPath>
+ <HintPath>C:/Users/Sean Brennan/Documents/GitHub/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Runtime.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

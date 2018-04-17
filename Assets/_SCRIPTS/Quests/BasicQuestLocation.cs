@@ -22,26 +22,23 @@ public class BasicQuestLocation : BaseQuest
 	void Update () {
         if (gameObject.activeSelf)
         {
+            if (!getActivateBool())
+            {
+                activateBool();
+                updateQuest();
+            }
             Collider[] col = Physics.OverlapSphere(transform.position, questRadius, 1 << LayerMask.NameToLayer("Player"));
             if (col.Length != 0)
             {
-                if (nextQuestPoint != null)
+                if(transform.parent.GetChild(transform.parent.childCount-1) != this.transform)
                 {
-                    if (!nextQuestPoint.activeSelf)
-                    {
-                        nextQuestPoint.SetActive(true);
-                        nextQuestPoint.transform.GetChild(0).gameObject.SetActive(true);
-
-                        
-                    }
-                    
+                    continueQuest();
                 }
                 else
                 {
                     endQuest();
                 }
                 this.gameObject.SetActive(false);
-                gameObject.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
     }

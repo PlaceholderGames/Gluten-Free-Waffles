@@ -26,22 +26,22 @@ public class ItemQuestPickup : BaseQuest
     {
         if (gameObject.activeSelf)
         {
+            if (!getActivateBool())
+            {
+                activateBool();
+                updateQuest();
+            }
             if (objectheld.beingHeld)
             {
-                if (nextQuestPoint != null)
+                if (transform.parent.GetChild(transform.parent.childCount - 1) != this.transform)
                 {
-                    if (!nextQuestPoint.activeSelf)
-                    {
-                        nextQuestPoint.SetActive(true);
-                        nextQuestPoint.transform.GetChild(0).gameObject.SetActive(true);
-                    }
+                    continueQuest();
                 }
                 else
                 {
                     endQuest();
                 }
-                gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                gameObject.GetComponent<ItemQuestPickup>().enabled = false;
+                this.gameObject.SetActive(false);
             }
         }
     }

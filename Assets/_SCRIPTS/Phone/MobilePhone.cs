@@ -237,7 +237,9 @@ public class MobilePhone : MonoBehaviour
             case 11:
                 {
                     //Journal
-                    AppUnavailable();
+                    transform.Find("Applications").Find("Journal").gameObject.SetActive(true);
+                    hideHome();
+                    inApp = true;
                     break;
                 }
             case 12:
@@ -267,7 +269,9 @@ public class MobilePhone : MonoBehaviour
             case 16:
                 {
                     //Health
-                    AppUnavailable();
+                    transform.Find("Applications").Find("Health").gameObject.SetActive(true);
+                    hideHome();
+                    inApp = true;
                     break;
                 }
             case 17:
