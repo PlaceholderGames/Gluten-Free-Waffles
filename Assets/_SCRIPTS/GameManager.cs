@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour {
 
     public GameObject MenuSystem;
     public GameObject character;
+    public GameObject currency;
     
     PlayerController pc;
     CamMouseLook cml;
@@ -41,6 +42,36 @@ public class GameManager : MonoBehaviour {
                 pc.enabled = true;
                 Time.timeScale = 1.0f;
             }
+        }
+        if(Input.GetButtonDown("Interact"))
+        {
+            //turning on shop
+            if (!currency.activeSelf)
+            {
+                //checking if a vendor was selected
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit, 5) && hit.transform.tag == "vendor")
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    cml.enabled = false;
+                    pc.enabled = false;
+                    currency.SetActive(true);
+                    Time.timeScale = 0f;
+                    currency.GetComponent<currency>().readVendor(hit);
+                }
+            }      
+        }
+        if (currency.GetComponent<currency>().close)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            currency.SetActive(false);
+            cml.enabled = true;
+            pc.enabled = true;
+            Time.timeScale = 1.0f;
+            currency.GetComponent<currency>().resetAllBools();
         }
     }
 }
