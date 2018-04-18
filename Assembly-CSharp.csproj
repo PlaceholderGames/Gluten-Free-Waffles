@@ -309,10 +309,10 @@
  <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="Mono.Data.Sqlite">
- <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/Plugins/SQLite/Mono.Data.Sqlite.dll</HintPath>
+ <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/Plugins/Mono.Data.Sqlite.dll</HintPath>
  </Reference>
  <Reference Include="System.Data">
- <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/Plugins/SQLite/System.Data.dll</HintPath>
+ <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/Plugins/System.Data.dll</HintPath>
  </Reference>
  <Reference Include="TextMeshPro-5.6-1.0.56-Editor">
  <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Editor.dll</HintPath>

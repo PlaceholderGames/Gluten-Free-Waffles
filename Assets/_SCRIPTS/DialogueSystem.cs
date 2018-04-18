@@ -272,7 +272,10 @@ public class DialogueSystem : MonoBehaviour
     void dbConnect()
     {
         //Path to database
-        string conn = "URI=file:" + Application.dataPath + "/Resources/DialogueSystem/dialogueDB.db";
+        string path = Application.dataPath + "/StreamingAssets";
+        string conn = "URI=file:" + path + "/dialogueDB.db";
+
+        //string conn = "URI=file:" + Application.dataPath + "/Resources/DialogueSystem/dialogueDB.db";
         IDbConnection dbconn;
         dbconn = (IDbConnection) new SqliteConnection(conn);
 
@@ -341,7 +344,9 @@ public class DialogueSystem : MonoBehaviour
         string updatedPlayerHasSaid = "\"" + playerHasSaid[0] + "," + playerHasSaid[1] + "," + playerHasSaid[2] + "\"";
 
         //Path to database
-        string conn = "URI=file:" + Application.dataPath + "/Resources/DialogueSystem/dialogueDB.db";
+        string path = Application.dataPath + "/StreamingAssets";
+        string conn = "URI=file:" + path + "/dialogueDB.db";
+
         IDbConnection dbconn;
         dbconn = (IDbConnection)new SqliteConnection(conn);
 
@@ -368,7 +373,9 @@ public class DialogueSystem : MonoBehaviour
     void resetDB()
     {
         //Path to database
-        string conn = "URI=file:" + Application.dataPath + "/Resources/DialogueSystem/dialogueDB.db";
+        string path = Application.dataPath + "/StreamingAssets";
+        string conn = "URI=file:" + path + "/dialogueDB.db";
+
         IDbConnection dbconn;
         dbconn = (IDbConnection)new SqliteConnection(conn);
 
