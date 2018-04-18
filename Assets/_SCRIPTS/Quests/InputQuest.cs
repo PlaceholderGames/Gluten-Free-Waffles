@@ -25,10 +25,9 @@ public class InputQuest : BaseQuest
             }
             if (Input.GetAxis(axis) != 0)
             {
-                if (nextQuestPoint.Length != 0)
+                if (transform.parent.GetChild(transform.parent.childCount - 1) != this.transform)
                 {
                     continueQuest();
-
                 }
                 else
                 {

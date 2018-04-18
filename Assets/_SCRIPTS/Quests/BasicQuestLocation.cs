@@ -32,7 +32,11 @@ public class BasicQuestLocation : BaseQuest
             Collider[] col = Physics.OverlapSphere(transform.position, questRadius, 1 << LayerMask.NameToLayer("Player"));
             if (col.Length != 0)
             {
+<<<<<<< HEAD
                 if (transform.parent.GetChild(transform.parent.childCount - 1) != this.transform)
+=======
+                if(transform.parent.GetChild(transform.parent.childCount-1) != this.transform)
+>>>>>>> master
                 {
                     continueQuest();
                 }

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Quest: MonoBehaviour {
+public class Quest : ScriptableObject
+{
     public string title;
     public Color colour;
     public string giverName;

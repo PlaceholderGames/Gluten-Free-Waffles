@@ -17,7 +17,6 @@ public class QuestHandler : MonoBehaviour {
 
     public void addQuest(string title, Color colour, string giverName, string text, string directions)
     {
-        Debug.Log("Adding Quest: " + title);
         bool alreadyExists = false;
         Quest questToAdd = new Quest(title, colour, giverName, text, directions);
         if(activeQuestList.Count != 0)
@@ -44,17 +43,20 @@ public class QuestHandler : MonoBehaviour {
 
     public void switchQuest(string title)
     {
+        int index = 0;
         if(activeQuestList.Count != 0)
         {
-            foreach (Quest q in activeQuestList)
+            for (int i = 0; i < activeQuestList.Count; i++)
             {
-                if (q.title == title)
+                if (activeQuestList[i].title == title)
                 {
-                    inactiveQuestList.Add(q);
-                    activeQuestList.Remove(q);
+                    index = i;
+                    
 
                 }
             }
+            inactiveQuestList.Add(activeQuestList[index]);
+            activeQuestList.Remove(activeQuestList[index]);
         }
     }
 

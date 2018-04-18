@@ -1,5 +1,6 @@
 fileFormatVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
 guid: 50db1e45e6916dc4aa98f8b426f47ca1
 folderAsset: yes
 timeCreated: 1523838702
@@ -8,6 +9,11 @@ guid: 60914d68fdcc4874c81c8bbacd531e76
 folderAsset: yes
 timeCreated: 1523642292
 >>>>>>> MapDevelopment
+=======
+guid: 606651f9c67da1d41a09becea4aab457
+folderAsset: yes
+timeCreated: 1523924894
+>>>>>>> master
 licenseType: Free
 DefaultImporter:
   userData: 
