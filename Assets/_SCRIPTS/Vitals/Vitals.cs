@@ -20,6 +20,9 @@ public class Vitals : MonoBehaviour
     private bool playerEnergyNotNeutral = false;
     private bool playerIsPeeing = false;
 
+    //set to true if the player decides they wish to pee not automatically
+    private bool forcedPee = false;
+
     public void setKnockedOutState(bool KnockedOutArg)
     {
         playerIsKnockedOut = KnockedOutArg;
@@ -73,7 +76,8 @@ public class Vitals : MonoBehaviour
 
     public void setEnergy(float newEnergy, bool energyOverride = false)
     {
-        if (!energyOverride) {
+        if (!energyOverride)
+        {
             if ((energy + newEnergy) > 100.0f)
                 energy = 100.0f;
             else
@@ -90,9 +94,12 @@ public class Vitals : MonoBehaviour
         return energy;
     }
 
-    public void setBladder(float newBladder)
+    public void setBladder(float newBladder, bool bladderOverride = false)
     {
-        bladder = newBladder;
+        if (!bladderOverride)
+            bladder += newBladder;
+        else
+            bladder = newBladder;
     }
 
     public float getBladder()
@@ -141,11 +148,41 @@ public class Vitals : MonoBehaviour
         }
 
         //make the player pee
-        if (bladder <= 0.0f && !playerIsPeeing) {
+        if ((bladder <= 0.0f || forcedPee) && !playerIsPeeing) {
+            forcedPee = false;
+
             GameObject peeObj = Instantiate(Resources.Load("Prefabs/Pee"), Vector3.zero, Quaternion.identity) as GameObject;
+        }
+
+        //slowly lower the player's bladder value over time
+        if (!playerIsPeeing)
+            lowerPeeValue();
+
+        startPlayerPeeing();
+    }
+
+    private void lowerPeeValue()
+    {
+        float bladderDelta = (0.5f * Time.deltaTime) * -1;
+        setBladder(bladderDelta);
+    }
+
+    private void startPlayerPeeing()
+    {
+        if (Input.GetButtonDown("Pee"))
+        {
+            if (getBladder() <= 90) {
+                forcedPee = true;
+                print("player will now pee.");
+            }
+            else
+            {
+                print("boi, you don't need a pee yet!");
+            }
         }
     }
 
+    //DEBUG COMMANDS BELOW | NOT FOR RELEASE
     private void debugSetSoberness() {
         if (Input.GetKey(KeyCode.LeftShift)) {
             if (Input.GetKeyDown(KeyCode.E)) {
@@ -179,12 +216,16 @@ public class Vitals : MonoBehaviour
         }
     }
 
-    private void debugSetBladder() {
-        if (Input.GetKey(KeyCode.LeftShift)) {
-            if (Input.GetKeyDown(KeyCode.Y)) {
-                setBladder(0.0f);
+    private void debugSetBladder()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                setBladder(0.0f, true);
                 print("Player now has " + getBladder() + " bladder.");
             }
         }
     }
+    //END DEBUG COMMANDS
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Drunk : MonoBehaviour
 {
-    public float reduceDrunkSpeed = 30.0f; //In seconds, going from 0 - 100 soberness
+    public float reduceDrunkSpeed = 60.0f; //In seconds, going from 0 - 100 soberness
 
     private Vitals vitals;
     private Camera FPPCamera;
