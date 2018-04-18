@@ -58,6 +58,7 @@ public class DialogueSystem : MonoBehaviour
 
     private GameObject dialoguePopup;
     private GameObject dialogueOverlay;
+    private GameObject namePopup;
 
     //stores a reference to the question and response text lines for the dialogue overlay
     private GameObject question;
@@ -70,12 +71,18 @@ public class DialogueSystem : MonoBehaviour
 
         //Stores a reference to the actual player transformation
         player = GameObject.Find("Character").transform;
+
+        //show the npc name above their head
+        showName();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //Updates the npc name to that it always faces the player
+        namePopup.transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward, player.position - transform.position, 10.0f, 0.0f));
+        namePopup.transform.rotation = Quaternion.Euler(0.0f, namePopup.transform.eulerAngles.y + 180, namePopup.transform.eulerAngles.z);
+
         if (Input.GetButtonDown("Interact") && !GUIShowing)
         {
             RaycastHit hit;
@@ -86,6 +93,9 @@ public class DialogueSystem : MonoBehaviour
             if (Physics.Raycast(ray, out hit, npcRange) && hit.transform.tag == "npc")
             {
                 print("Player is talking to the NPC...");
+
+                //set the nap popup to not active, so it's hidden while player is talking to them
+                namePopup.SetActive(false);
 
                 //establish a connection to the database and find the correct data
                 dbConnect();
@@ -115,6 +125,9 @@ public class DialogueSystem : MonoBehaviour
 
                 //sets the dialogueID to character phase
                 nextDialogue = Int32.Parse(dbDialogue[9]);
+
+                //if playe is no longer talking to the npc then show the npc name
+                namePopup.SetActive(true);
             }
 
             //check if the player clicked on the mouse which means they confirmed their dialogue option
@@ -184,7 +197,7 @@ public class DialogueSystem : MonoBehaviour
     {
         //sets the dialogue text for both the popup above the npc head and the dialogue overlay panel
         dialoguePopup.GetComponent<TextMesh>().text = dbDialogue[0];
-        question.GetComponent<Text>().text = dbDialogue[0];
+        question.GetComponent<Text>().text = dbDialogue[8] + ": " + dbDialogue[0];
 
         for (int i = 1; i <= 3; i++)
         {
@@ -396,6 +409,46 @@ public class DialogueSystem : MonoBehaviour
         dbcmd = null;
         dbconn.Close();
         dbconn = null;
+    }
+
+    private void showName()
+    {
+
+        string npcName = "placeholder name";
+
+        //Path to database
+        string path = Application.dataPath + "/StreamingAssets";
+        string conn = "URI=file:" + path + "/dialogueDB.db";
+
+        IDbConnection dbconn;
+        dbconn = (IDbConnection)new SqliteConnection(conn);
+
+        //Open connection to the database
+        dbconn.Open();
+        IDbCommand dbcmd = dbconn.CreateCommand();
+
+        string sqlQuery = "SELECT C.Name " +
+                          "FROM Character AS C " +
+                          "WHERE C.CharacterID = " + npcID;
+
+        dbcmd.CommandText = sqlQuery;
+        IDataReader reader = dbcmd.ExecuteReader();
+
+        while (reader.Read())
+        {
+            npcName = reader.GetString(0); //Dialogue
+        }
+
+        //close the connection to the database once done
+        reader.Close();
+        reader = null;
+        dbcmd.Dispose();
+        dbcmd = null;
+        dbconn.Close();
+        dbconn = null;
+
+        namePopup = Instantiate(Resources.Load("DialogueSystem/NamePopup"), new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity) as GameObject;
+        namePopup.GetComponent<TextMesh>().text = npcName;
     }
 
     void debugCommands()
