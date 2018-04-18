@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour {
     public GameObject MenuSystem;
     public GameObject character;
     public GameObject currency;
+
+    private bool menuOpen = false;
     
     PlayerController pc;
     CamMouseLook cml;
@@ -21,11 +23,11 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetButtonDown("Pause"))
+        if (Input.GetButtonDown("Pause") && !menuOpen)
         {
             if (!MenuSystem.activeSelf)
             {
-                
+                menuOpen = true;
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
                 cml.enabled = false;
@@ -43,7 +45,13 @@ public class GameManager : MonoBehaviour {
                 Time.timeScale = 1.0f;
             }
         }
-        if(Input.GetButtonDown("Interact"))
+
+        if(menuOpen && MenuSystem.activeSelf)
+        {
+            menuOpen = false;
+        }
+
+        if(Input.GetButtonDown("Interact") && !menuOpen)
         {
             //turning on shop
             if (!currency.activeSelf)
@@ -53,6 +61,7 @@ public class GameManager : MonoBehaviour {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out hit, 5) && hit.transform.tag == "vendor")
                 {
+                    menuOpen = true;
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
                     cml.enabled = false;
@@ -63,7 +72,7 @@ public class GameManager : MonoBehaviour {
                 }
             }      
         }
-        if (currency.GetComponent<currency>().close)
+        if (currency.GetComponent<currency>().close && menuOpen)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -72,6 +81,7 @@ public class GameManager : MonoBehaviour {
             pc.enabled = true;
             Time.timeScale = 1.0f;
             currency.GetComponent<currency>().resetAllBools();
+            menuOpen = false;
         }
     }
 }
