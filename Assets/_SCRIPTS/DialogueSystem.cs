@@ -39,6 +39,9 @@ public class DialogueSystem : MonoBehaviour
     //stores values to reference against the dialogue database
     public int npcID = 2;
 
+    //says whether the npc has a quest to give
+    public bool questGiver = false;
+
     //stores the range at which the npc can interact with the player
     public float npcRange = 7.0f;
 
@@ -48,7 +51,7 @@ public class DialogueSystem : MonoBehaviour
     private Transform player;
 
     //stores the various dialogue text that will be displayed
-    private string[] dbDialogue = new string[10];
+    private string[] dbDialogue = new string[12];
 
     //stores the values that states whether the player has already said the responses to the current dialogue text
     private char[] playerHasSaid = new char[3];
@@ -74,6 +77,10 @@ public class DialogueSystem : MonoBehaviour
 
         //show the npc name above their head
         showName();
+
+        //if the player is a quest giver then display the quest icon
+        if (questGiver)
+            displayQuestIcon();
     }
 
     // Update is called once per frame
@@ -124,7 +131,7 @@ public class DialogueSystem : MonoBehaviour
                 destroyGUI();
 
                 //sets the dialogueID to character phase
-                nextDialogue = Int32.Parse(dbDialogue[9]);
+                nextDialogue = Int32.Parse(dbDialogue[11]);
 
                 //if playe is no longer talking to the npc then show the npc name
                 namePopup.SetActive(true);
@@ -197,7 +204,7 @@ public class DialogueSystem : MonoBehaviour
     {
         //sets the dialogue text for both the popup above the npc head and the dialogue overlay panel
         dialoguePopup.GetComponent<TextMesh>().text = dbDialogue[0];
-        question.GetComponent<Text>().text = dbDialogue[8] + ": " + dbDialogue[0];
+        question.GetComponent<Text>().text = dbDialogue[10] + ": " + dbDialogue[0];
 
         for (int i = 1; i <= 3; i++)
         {
@@ -296,7 +303,7 @@ public class DialogueSystem : MonoBehaviour
         dbconn.Open();
         IDbCommand dbcmd = dbconn.CreateCommand();
 
-        string sqlQuery = "SELECT D.Dialogue, D.ResponseTop, D.ResponseMiddle, D.ResponseBottom, D.ResponseTopGoTo, D.ResponseMiddleGoTo, D.ResponseBottomGoTo, D.PlayerHasSaid, C.Name, C.Phase " +
+        string sqlQuery = "SELECT D.Dialogue, D.ResponseTop, D.ResponseMiddle, D.ResponseBottom, D.ResponseTopGoTo, D.ResponseMiddleGoTo, D.ResponseBottomGoTo, D.PlayerHasSaid, D.OutcomeType, D.OutcomeVal, C.Name, C.Phase " +
                           "FROM Dialogue AS D " +
                           "INNER JOIN Character AS C " +
                           "ON D.CharacterID = C.CharacterID " +
@@ -329,8 +336,10 @@ public class DialogueSystem : MonoBehaviour
             dbDialogue[5] = reader.GetInt32(5).ToString(); //ResponseMiddleGoTo
             dbDialogue[6] = reader.GetInt32(6).ToString(); //ResponseBottomGoTo
             dbDialogue[7] = reader.GetString(7); //PlayerHasSaid
-            dbDialogue[8] = reader.GetString(8); //NPC Name
-            dbDialogue[9] = reader.GetInt32(9).ToString(); //NPC Phase
+            dbDialogue[8] = reader.GetInt32(8).ToString(); //OutcomeType
+            dbDialogue[9] = reader.GetInt32(9).ToString(); //OutcomeVal
+            dbDialogue[10] = reader.GetString(10); //NPC Name
+            dbDialogue[11] = reader.GetInt32(11).ToString(); //NPC Phase
         }
 
         //Loop through each character in the PlayerHasSaid string, looking for the values and inserting them into a char array
@@ -451,7 +460,11 @@ public class DialogueSystem : MonoBehaviour
         namePopup.GetComponent<TextMesh>().text = npcName;
     }
 
-    void debugCommands()
+    private void displayQuestIcon() {
+        GameObject marker = Instantiate(Resources.Load("Marker"), new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z), Quaternion.identity) as GameObject;
+    }
+
+    private void debugCommands()
     {
         //This function should be displayed or removed on release, it's only for testing...
         if (Input.GetKey(KeyCode.LeftControl))
