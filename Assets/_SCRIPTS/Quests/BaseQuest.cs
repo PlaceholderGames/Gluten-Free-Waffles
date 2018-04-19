@@ -17,12 +17,10 @@ public class BaseQuest : MonoBehaviour {
     private float endTime;
 
     private bool hasBeenActivated = false;
-    
 
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    [SerializeField]
+    private bool has3DText = true;
+    
     public void setup()
     {
         startTime = Time.time;
@@ -39,7 +37,7 @@ public class BaseQuest : MonoBehaviour {
             
         }
         
-        this.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMesh>().text = questDirections;
+        if(has3DText)this.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMesh>().text = questDirections;
     }
     public void endQuest()
     {

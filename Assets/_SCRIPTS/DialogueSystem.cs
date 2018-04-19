@@ -67,6 +67,9 @@ public class DialogueSystem : MonoBehaviour
     private GameObject question;
     private GameObject[] option = new GameObject[4];
 
+    [SerializeField]
+    private GameObject[] questsToActivate;
+
     // Use this for initialization
     void Start()
     {
@@ -340,6 +343,9 @@ public class DialogueSystem : MonoBehaviour
             dbDialogue[9] = reader.GetInt32(9).ToString(); //OutcomeVal
             dbDialogue[10] = reader.GetString(10); //NPC Name
             dbDialogue[11] = reader.GetInt32(11).ToString(); //NPC Phase
+
+            //check if an outcome type was met
+            selectOutcomeType();
         }
 
         //Loop through each character in the PlayerHasSaid string, looking for the values and inserting them into a char array
@@ -464,12 +470,79 @@ public class DialogueSystem : MonoBehaviour
         GameObject marker = Instantiate(Resources.Load("Marker"), new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z), Quaternion.identity) as GameObject;
     }
 
+    private void selectOutcomeType()
+    {
+        switch (Int32.Parse(dbDialogue[8]))
+        {
+            case 0:
+                dialogueStartQuest();
+                break;
+            case 1:
+                dialogueEndQuest();
+                break;
+            case 2:
+                dialogueGiveItem();
+                break;
+            case 3:
+                dialogueRecieveItem();
+                break;
+            case 4:
+                dialogueVendor();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void dialogueStartQuest()
+    {
+        //OutcomeType = 0
+        print("starting a quest from an NPC!");
+
+        if (questsToActivate.Length != 0)
+        {
+            foreach (GameObject g in questsToActivate)
+            {
+                if (!g.activeSelf)
+                {
+                    g.SetActive(true);
+                }
+            }
+        }
+    }
+
+    private void dialogueEndQuest()
+    {
+        //OutcomeType = 1
+        if (GetComponent<ItemHeldBool>() != null) GetComponent<ItemHeldBool>().beingHeld = true;
+        print("ending a quest with an NPC!");
+    }
+
+    private void dialogueGiveItem()
+    {
+        //OutcomeType = 2
+        print("give the player an item from an NPC!");
+    }
+
+    private void dialogueRecieveItem()
+    {
+        //OutcomeType = 3
+        print("give the NPC an item from the player!");
+    }
+
+    private void dialogueVendor()
+    {
+        //OutcomeType = 4
+        print("starting the vendor with an NPC!");
+    }
+
     private void debugCommands()
     {
         //This function should be displayed or removed on release, it's only for testing...
         if (Input.GetKey(KeyCode.LeftControl))
         {
             if (Input.GetKeyDown(KeyCode.X))
+
             {
                 print("RESETTING THE DATABASE | This is a debug command, please delete on release.");
                 resetDB();
