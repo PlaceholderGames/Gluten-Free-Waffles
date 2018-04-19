@@ -64,9 +64,20 @@ public class playerGUI : MonoBehaviour
         {
             if (playerCamera.GetComponent<PickupDrop>().holdingItem == false)
             {
-                GUI.Label(new Rect(halfW, halfH + 30, 1, 20), "Press E to Interact", style);
-                Rect keyPromt = new Rect(halfW - 20, halfH + 50, 40, 40);
-                GUI.DrawTexture(keyPromt, Resources.Load<Texture2D>("KeyPrompts/" + "E"));
+                if (Input.GetJoystickNames() != null)
+                {
+                    GUI.Label(new Rect(halfW, halfH + 30, 1, 20), "Press X to Interact", style);
+                    Rect keyPromt = new Rect(halfW - 20, halfH + 50, 40, 40);
+                    GUI.DrawTexture(keyPromt, Resources.Load<Texture2D>("KeyPrompts/" + "X"));
+                }
+                else
+                {
+                    GUI.Label(new Rect(halfW, halfH + 30, 1, 20), "Press E to Interact", style);
+                    Rect keyPromt = new Rect(halfW - 20, halfH + 50, 40, 40);
+                    GUI.DrawTexture(keyPromt, Resources.Load<Texture2D>("KeyPrompts/" + "E"));
+                }
+
+                
             }
         }
     }
