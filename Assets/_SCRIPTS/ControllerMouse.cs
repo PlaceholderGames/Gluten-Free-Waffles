@@ -36,6 +36,19 @@ public class ControllerMouse : MonoBehaviour {
                 Debug.Log("Pressed button!");
                 CursorControl.SimulateLeftClick();
             }
+
+            if(Input.GetAxisRaw("DPadVertical") != 0)
+            {
+                sensitivity += Input.GetAxisRaw("DPadVertical");
+                if(sensitivity <= 0)
+                {
+                    sensitivity = 1;
+                }
+                if (sensitivity >= 100)
+                {
+                    sensitivity = 100f;
+                }
+            }
         }
 	}
     IEnumerator resetClick(float click)
