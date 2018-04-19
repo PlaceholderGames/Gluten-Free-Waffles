@@ -14,6 +14,8 @@ public class SettingsMenu : MonoBehaviour {
 
     public Dropdown qualityDropdown;
 
+    public Toggle fullscreenToggle;
+
     Resolution[] resolutions;
 
     string[] qualityNames;
@@ -23,7 +25,7 @@ public class SettingsMenu : MonoBehaviour {
     private void Start()
     {
 
-        
+        fullscreenToggle.isOn = Screen.fullScreen;
         qualityNames = QualitySettings.names;
         resolutions = Screen.resolutions;
 
