@@ -54,9 +54,9 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        translation = Input.GetAxis("Vertical") * speed * Time.deltaTime;
-        strafe = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+	void FixedUpdate () {
+        translation = Input.GetAxis("Vertical") * speed * Time.fixedDeltaTime;
+        strafe = Input.GetAxis("Horizontal") * speed * Time.fixedDeltaTime;
 
         if (canJump)
         {
