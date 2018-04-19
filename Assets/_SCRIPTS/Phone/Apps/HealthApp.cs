@@ -49,6 +49,7 @@ public class HealthApp : MonoBehaviour {
 
         transform.Find("HP").GetComponent<TextMesh>().text = vitals.health.ToString();
         transform.Find("Energy").GetComponent<TextMesh>().text = ((int)Mathf.Round(vitals.energy)).ToString();
+        transform.Find("Bladder").GetComponent<TextMesh>().text = ((int)Mathf.Round(vitals.bladder)).ToString();
 
         drunkLevel = (int)Mathf.Round(vitals.soberness) / 10;
         soberLevel = 10 - drunkLevel;
