@@ -16,6 +16,7 @@ public class currency : MonoBehaviour
     public static bool refuse = false;
     //bool to prevent multiply vendor screens from being opened
     public static bool clicked = false;
+    public bool close = false;
 
     public GameObject confirmationScreen;
     public GameObject sellingScreen;
@@ -42,6 +43,8 @@ public class currency : MonoBehaviour
     private ItemDatabase database;
     private Item itemRef;
 
+    private RaycastHit vendorRef;
+
     // Use this for initialization
     void Start()
     {
@@ -57,21 +60,10 @@ public class currency : MonoBehaviour
     {
         if (!clicked)
         {
-            //lmb click
-            if (Input.GetAxis("Interact") != 0)
-            {
-                //checking if a vendor was selected
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out hit, 5) && hit.transform.tag == "vendor")
-                {
-                    transactionScreen = true;
-                    transaction = true;
-                    clicked = true;
-                    //getting the supplies
-                    vendorSupplies = hit.transform.GetComponent<VendorSupplies>();
-                }
-            }
+            transactionScreen = true;
+            transaction = true;
+            clicked = true;
+            vendorSupplies = vendorRef.transform.GetComponent<VendorSupplies>();
         }
         if (transaction)
         {
@@ -143,10 +135,7 @@ public class currency : MonoBehaviour
         transaction = false;
         clicked = false;
         inventorySystem = null;
-        //re-enabling time and returning cursor
-        Time.timeScale = 1f;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        close = true;
     }
 
     public void exitBuyingPanel()
@@ -254,5 +243,23 @@ public class currency : MonoBehaviour
         refusedScreen.SetActive(false);
         buying = true;
         refuse = false;
+    }
+
+    public void readVendor(RaycastHit hit)
+    {
+        vendorRef = hit;
+    }
+
+    public void resetAllBools()
+    {
+        transaction = false;
+        transactionScreen = false;
+        buying = false;
+        selling = false;
+        confirm = false;
+        congrats = false;
+        refuse = false;
+        clicked = false;
+        close = false;
     }
 }

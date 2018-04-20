@@ -19,16 +19,19 @@ public class PickupDrop : MonoBehaviour
     private GUIStyle style = new GUIStyle();
     bool showMessage = false;
     private GameObject playerCamera;
+    private GameManager gm;
+    private GameObject character;
 
     void Start()
     {
-
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerCamera = GameObject.Find("Character/FPPCamera").gameObject;
         int h = Screen.height;
         style.alignment = TextAnchor.MiddleCenter;
         style.fontSize = h * 2 / 100;
         style.normal.textColor = Color.white;
         style.font = font;
+        character = GameObject.Find("Character").gameObject;
     }
 
     // Update is called once per frame
@@ -54,17 +57,35 @@ public class PickupDrop : MonoBehaviour
     {
         if (holdingItem && !daInventoryMan.GetComponent<Inventory>().phoneOut)
         {
-            GUI.Label(new Rect((Screen.width - 100), Screen.height - 20, 1, 20), "Press R to Use", style);
-            Rect dropPromt = new Rect((Screen.width - 120), Screen.height - 70, 40, 40);
-            GUI.DrawTexture(dropPromt, Resources.Load<Texture2D>("KeyPrompts/" + "R"));
+            if (gm.ControllerCheck())
+            {
+                GUI.Label(new Rect((Screen.width - 100), Screen.height - 20, 1, 20), "Press X to Use", style);
+                Rect dropPromt = new Rect((Screen.width - 120), Screen.height - 70, 40, 40);
+                GUI.DrawTexture(dropPromt, Resources.Load<Texture2D>("KeyPrompts/" + "X"));
 
-            GUI.Label(new Rect((Screen.width - 250), Screen.height - 20, 1, 20), "Press Q to Store", style);
-            Rect storePromt = new Rect((Screen.width - 270), Screen.height - 70, 40, 40);
-            GUI.DrawTexture(storePromt, Resources.Load<Texture2D>("KeyPrompts/" + "Q"));
+                GUI.Label(new Rect((Screen.width - 250), Screen.height - 20, 1, 20), "Press Y to Store", style);
+                Rect storePromt = new Rect((Screen.width - 270), Screen.height - 70, 40, 40);
+                GUI.DrawTexture(storePromt, Resources.Load<Texture2D>("KeyPrompts/" + "Y"));
 
-            GUI.Label(new Rect((Screen.width - 400), Screen.height - 20, 1, 20), "Press E to Drop", style);
-            Rect usePromt = new Rect((Screen.width - 420), Screen.height - 70, 40, 40);
-            GUI.DrawTexture(usePromt, Resources.Load<Texture2D>("KeyPrompts/" + "E"));
+                GUI.Label(new Rect((Screen.width - 440), Screen.height - 20, 1, 20), "Press Right Stick to Drop", style);
+                Rect usePromt = new Rect((Screen.width - 460), Screen.height - 70, 40, 40);
+                GUI.DrawTexture(usePromt, Resources.Load<Texture2D>("KeyPrompts/" + "R_C"));
+            }
+            else
+            {
+                GUI.Label(new Rect((Screen.width - 100), Screen.height - 20, 1, 20), "Press R to Use", style);
+                Rect dropPromt = new Rect((Screen.width - 120), Screen.height - 70, 40, 40);
+                GUI.DrawTexture(dropPromt, Resources.Load<Texture2D>("KeyPrompts/" + "R"));
+
+                GUI.Label(new Rect((Screen.width - 250), Screen.height - 20, 1, 20), "Press Q to Store", style);
+                Rect storePromt = new Rect((Screen.width - 270), Screen.height - 70, 40, 40);
+                GUI.DrawTexture(storePromt, Resources.Load<Texture2D>("KeyPrompts/" + "Q"));
+
+                GUI.Label(new Rect((Screen.width - 400), Screen.height - 20, 1, 20), "Press E to Drop", style);
+                Rect usePromt = new Rect((Screen.width - 420), Screen.height - 70, 40, 40);
+                GUI.DrawTexture(usePromt, Resources.Load<Texture2D>("KeyPrompts/" + "E"));
+            }
+            
         }
 
     }
@@ -85,11 +106,18 @@ public class PickupDrop : MonoBehaviour
         Ray ray = playerCamera.GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         if (Physics.Raycast(ray, out hit, itemRange) && hit.transform.tag == "item")    //checking that item trying to be picked up is tagged to be held
         {
+            //checking if phone was selected
             if (hit.transform.GetComponent<ItemID>().itemID == 3)
             {
                 daInventoryMan.GetComponent<Inventory>().CollectedCollectable(hit.transform.GetComponent<ItemID>().itemID);
                 hit.rigidbody.GetComponent<ItemHeldBool>().beingHeld = true;
                 StartCoroutine(turnOffPhone(hit));
+            }
+            //checking if money has been selected
+            else if(hit.transform.GetComponent<ItemID>().itemID == 5)
+            {
+                character.GetComponent<funds>().addingFunds(hit.transform.GetComponent<value>().worth);
+                Destroy(hit.transform.gameObject);
             }
             else
             {

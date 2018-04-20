@@ -36,6 +36,10 @@ public class MobilePhone : MonoBehaviour
         minuteTime = dayNightCycle.getTime() / 60;
         secondsTime = dayNightCycle.getTime();
         day = dayNightCycle.getDay();
+
+        HourHand.transform.eulerAngles.Set(0, 0, 30 * hourTime);
+
+
     }
 
     private void Update()

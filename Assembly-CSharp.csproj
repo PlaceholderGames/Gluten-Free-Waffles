@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\AudioArea.cs" />
+     <Compile Include="Assets\CursorControl\Examples\CursorControlExample.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
@@ -127,6 +128,7 @@
      <Compile Include="Assets\_ASSET_STORE\Water_Stuff\MakeSomeNoise.cs" />
      <Compile Include="Assets\_ASSET_STORE\Water_Stuff\WaterPlaneGen.cs" />
      <Compile Include="Assets\_SCRIPTS\CamMouseLook.cs" />
+     <Compile Include="Assets\_SCRIPTS\ControllerMouse.cs" />
      <Compile Include="Assets\_SCRIPTS\Custom_AI\AIHub.cs" />
      <Compile Include="Assets\_SCRIPTS\Custom_AI\BasicAI.cs" />
      <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\DayNightCycle.cs" />
@@ -215,6 +217,7 @@
      <Compile Include="Assets\_UTILITIES\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
      <Compile Include="Assets\_UTILITIES\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
      <Compile Include="Assets\destroyQuestScreen.cs" />
+     <Compile Include="Assets\value.cs" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\DepthOfField.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\_SHADERS\ToonShading\Shaders\ToonBasic.shader" />
@@ -271,6 +274,7 @@
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\LiberationSans - OFL.txt" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\Bloom.cginc" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\TAA.shader" />
+     <None Include="Assets\CursorControl\LICENSE.txt" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\EyeHistogram.compute" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\TAA.cginc" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\EyeAdaptation.cginc" />
@@ -279,6 +283,7 @@
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\FXAA.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\DiskKernels.cginc" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\DepthOfField.cginc" />
+     <None Include="Assets\CursorControl\README.txt" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\ScreenSpaceRaytrace.cginc" />
      <None Include="Assets\_ASSET_STORE\Standard Assets\Environment\Water\Water\Shaders\FXWaterPro.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Resources\Shaders\Bloom.shader" />
@@ -310,17 +315,20 @@
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
+ <Reference Include="CursorControl">
+ <HintPath>C:/Users/Sean Brennan/Documents/GitHub/Gluten-Free-Waffles/Assets/CursorControl/Scripts/CursorControl.dll</HintPath>
+ </Reference>
  <Reference Include="Mono.Data.Sqlite">
- <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/Plugins/Mono.Data.Sqlite.dll</HintPath>
+ <HintPath>C:/Users/Sean Brennan/Documents/GitHub/Gluten-Free-Waffles/Assets/Plugins/Mono.Data.Sqlite.dll</HintPath>
  </Reference>
  <Reference Include="System.Data">
- <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/Plugins/System.Data.dll</HintPath>
+ <HintPath>C:/Users/Sean Brennan/Documents/GitHub/Gluten-Free-Waffles/Assets/Plugins/System.Data.dll</HintPath>
  </Reference>
  <Reference Include="TextMeshPro-5.6-1.0.56-Editor">
- <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Editor.dll</HintPath>
+ <HintPath>C:/Users/Sean Brennan/Documents/GitHub/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Editor.dll</HintPath>
  </Reference>
  <Reference Include="TextMeshPro-5.6-1.0.56-Runtime">
- <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Runtime.dll</HintPath>
+ <HintPath>C:/Users/Sean Brennan/Documents/GitHub/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Runtime.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
