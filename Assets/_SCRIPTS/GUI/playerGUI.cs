@@ -15,12 +15,11 @@ public class playerGUI : MonoBehaviour
     private Texture2D crosshair;
 
     private GameManager gm;
+    private DialogueSystem dialogueSystem;
 
     // Use this for initialization
     void Start()
     {
-
-        
         //Finds the FPP camera in a fairly efficient way, privately that is...
         playerCamera = GameObject.Find("Character/FPPCamera").gameObject;
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -84,6 +83,20 @@ public class playerGUI : MonoBehaviour
                 }
 
                 
+            }
+        }
+
+        //check if the player has their cursor hoving over an npc they can interact with
+        Ray checkForNPC = playerCamera.GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        RaycastHit npcFound;
+        if (Physics.Raycast(checkForNPC, out npcFound, 3.0f) && npcFound.transform.tag == "npc")
+        {
+            dialogueSystem = npcFound.transform.GetComponent<DialogueSystem>();
+
+            if (!dialogueSystem.guiIsShowing()) {
+                GUI.Label(new Rect(halfW, halfH + 30, 1, 20), "Press E to talk", style);
+                Rect keyPromt = new Rect(halfW - 20, halfH + 50, 40, 40);
+                GUI.DrawTexture(keyPromt, Resources.Load<Texture2D>("KeyPrompts/" + "E"));
             }
         }
     }
