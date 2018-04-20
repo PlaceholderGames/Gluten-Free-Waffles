@@ -29,6 +29,7 @@ public class npcQuestPickup : BaseQuest
             {
                 activateBool();
                 updateQuest();
+                
             }
             if (hasBeenSpokenTo.beingHeld)
             {
