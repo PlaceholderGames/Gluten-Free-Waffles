@@ -44,19 +44,23 @@ public class QuestSettings : MonoBehaviour {
             QuestScreen = GameObject.Find("QuestCompletedScreen");
         childrenIndex = transform.childCount;
         //sets the color for each quad of the children
-        for(int i = 0; i < childrenIndex; i++)
+        for (int i = 0; i < childrenIndex; i++)
         {
-            Transform child = transform.GetChild(i).GetChild(0);
-            if(child != null)
+            if (transform.GetChild(i).childCount != 0)
             {
-                if (child.name == "Quad")
+                Transform child = transform.GetChild(i).GetChild(0);
+                if (child != null)
                 {
-                    Renderer rend = child.GetComponent<Renderer>();
-                    rend.material.color = questColor;
-                    rend.material.SetColor("_EmissionColor", questColor);
+                    if (child.name == "Quad")
+                    {
+                        Renderer rend = child.GetComponent<Renderer>();
+                        rend.material.color = questColor;
+                        rend.material.SetColor("_EmissionColor", questColor);
+                    }
                 }
             }
         }
+        
 
 
         pc = gameManager.character.GetComponent<PlayerController>();

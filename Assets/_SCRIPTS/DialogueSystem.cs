@@ -39,8 +39,13 @@ public class DialogueSystem : MonoBehaviour
     //stores values to reference against the dialogue database
     public int npcID = 2;
 
+    //says whether the npc has a quest to give
+    public bool questGiver = false;
+
     //stores the range at which the npc can interact with the player
     public float npcRange = 7.0f;
+
+    private GameManager gameManager;
 
     private static bool GUIShowing = false;
     private byte optionSelected = 1;
@@ -48,7 +53,7 @@ public class DialogueSystem : MonoBehaviour
     private Transform player;
 
     //stores the various dialogue text that will be displayed
-    private string[] dbDialogue = new string[10];
+    private string[] dbDialogue = new string[12];
 
     //stores the values that states whether the player has already said the responses to the current dialogue text
     private char[] playerHasSaid = new char[3];
@@ -58,24 +63,47 @@ public class DialogueSystem : MonoBehaviour
 
     private GameObject dialoguePopup;
     private GameObject dialogueOverlay;
-
+    private GameObject namePopup;
+    private GameObject marker;
+   
     //stores a reference to the question and response text lines for the dialogue overlay
     private GameObject question;
     private GameObject[] option = new GameObject[4];
+
+    [SerializeField]
+    private GameObject[] questsToActivate;
+
+    public bool guiIsShowing()
+    {
+        return GUIShowing;
+    }
 
     // Use this for initialization
     void Start()
     {
         print("Dialogue system debugging commands are currently enabled. Disable them before release. (Ctrl + X to clear DB)");
 
+        //get the game manager script
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
         //Stores a reference to the actual player transformation
         player = GameObject.Find("Character").transform;
+
+        //show the npc name above their head
+        showName();
+
+        //if the player is a quest giver then display the quest icon
+        if (questGiver)
+            displayQuestIcon();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //Updates the npc name to that it always faces the player
+        namePopup.transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward, player.position - transform.position, 10.0f, 0.0f));
+        namePopup.transform.rotation = Quaternion.Euler(0.0f, namePopup.transform.eulerAngles.y + 180, namePopup.transform.eulerAngles.z);
+
         if (Input.GetButtonDown("Interact") && !GUIShowing)
         {
             RaycastHit hit;
@@ -86,6 +114,9 @@ public class DialogueSystem : MonoBehaviour
             if (Physics.Raycast(ray, out hit, npcRange) && hit.transform.tag == "npc")
             {
                 print("Player is talking to the NPC...");
+
+                //set the nap popup to not active, so it's hidden while player is talking to them
+                namePopup.SetActive(false);
 
                 //establish a connection to the database and find the correct data
                 dbConnect();
@@ -114,7 +145,7 @@ public class DialogueSystem : MonoBehaviour
                 destroyGUI();
 
                 //sets the dialogueID to character phase
-                nextDialogue = Int32.Parse(dbDialogue[9]);
+                nextDialogue = Int32.Parse(dbDialogue[11]);
             }
 
             //check if the player clicked on the mouse which means they confirmed their dialogue option
@@ -125,6 +156,17 @@ public class DialogueSystem : MonoBehaviour
 
                 //sets the next value to the corresponding next dialogue ID from the database
                 nextDialogue = Int32.Parse(dbDialogue[optionSelected + 3]);
+
+                //if the player chooses to end the conversation
+                if (nextDialogue == 0) {
+                    destroyGUI();
+
+                    //sets the dialogueID to character phase
+                    nextDialogue = Int32.Parse(dbDialogue[11]);
+                }
+
+                //check if an outcome type was met
+                selectOutcomeType();
 
                 //Establishes a new connection to the database with a different dialogueID
                 dbConnect();
@@ -178,13 +220,16 @@ public class DialogueSystem : MonoBehaviour
         //destory both the popup above the NPC head and the dialogue GUI
         Destroy(dialoguePopup);
         Destroy(dialogueOverlay);
+
+        //if playe is no longer talking to the npc then show the npc name
+        namePopup.SetActive(true);
     }
 
     void changeGUIText()
     {
         //sets the dialogue text for both the popup above the npc head and the dialogue overlay panel
         dialoguePopup.GetComponent<TextMesh>().text = dbDialogue[0];
-        question.GetComponent<Text>().text = dbDialogue[0];
+        question.GetComponent<Text>().text = dbDialogue[10] + ": " + dbDialogue[0];
 
         for (int i = 1; i <= 3; i++)
         {
@@ -283,7 +328,7 @@ public class DialogueSystem : MonoBehaviour
         dbconn.Open();
         IDbCommand dbcmd = dbconn.CreateCommand();
 
-        string sqlQuery = "SELECT D.Dialogue, D.ResponseTop, D.ResponseMiddle, D.ResponseBottom, D.ResponseTopGoTo, D.ResponseMiddleGoTo, D.ResponseBottomGoTo, D.PlayerHasSaid, C.Name, C.Phase " +
+        string sqlQuery = "SELECT D.Dialogue, D.ResponseTop, D.ResponseMiddle, D.ResponseBottom, D.ResponseTopGoTo, D.ResponseMiddleGoTo, D.ResponseBottomGoTo, D.PlayerHasSaid, D.OutcomeType, D.OutcomeVal, C.Name, C.Phase " +
                           "FROM Dialogue AS D " +
                           "INNER JOIN Character AS C " +
                           "ON D.CharacterID = C.CharacterID " +
@@ -316,8 +361,10 @@ public class DialogueSystem : MonoBehaviour
             dbDialogue[5] = reader.GetInt32(5).ToString(); //ResponseMiddleGoTo
             dbDialogue[6] = reader.GetInt32(6).ToString(); //ResponseBottomGoTo
             dbDialogue[7] = reader.GetString(7); //PlayerHasSaid
-            dbDialogue[8] = reader.GetString(8); //NPC Name
-            dbDialogue[9] = reader.GetInt32(9).ToString(); //NPC Phase
+            dbDialogue[8] = reader.GetInt32(8).ToString(); //OutcomeType
+            dbDialogue[9] = reader.GetInt32(9).ToString(); //OutcomeVal
+            dbDialogue[10] = reader.GetString(10); //NPC Name
+            dbDialogue[11] = reader.GetInt32(11).ToString(); //NPC Phase
         }
 
         //Loop through each character in the PlayerHasSaid string, looking for the values and inserting them into a char array
@@ -398,12 +445,127 @@ public class DialogueSystem : MonoBehaviour
         dbconn = null;
     }
 
-    void debugCommands()
+    private void showName()
+    {
+
+        string npcName = "placeholder name";
+
+        //Path to database
+        string path = Application.dataPath + "/StreamingAssets";
+        string conn = "URI=file:" + path + "/dialogueDB.db";
+
+        IDbConnection dbconn;
+        dbconn = (IDbConnection)new SqliteConnection(conn);
+
+        //Open connection to the database
+        dbconn.Open();
+        IDbCommand dbcmd = dbconn.CreateCommand();
+
+        string sqlQuery = "SELECT C.Name " +
+                          "FROM Character AS C " +
+                          "WHERE C.CharacterID = " + npcID;
+
+        dbcmd.CommandText = sqlQuery;
+        IDataReader reader = dbcmd.ExecuteReader();
+
+        while (reader.Read())
+        {
+            npcName = reader.GetString(0); //Dialogue
+        }
+
+        //close the connection to the database once done
+        reader.Close();
+        reader = null;
+        dbcmd.Dispose();
+        dbcmd = null;
+        dbconn.Close();
+        dbconn = null;
+
+        namePopup = Instantiate(Resources.Load("DialogueSystem/NamePopup"), new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity) as GameObject;
+        namePopup.GetComponent<TextMesh>().text = npcName;
+    }
+
+    private void displayQuestIcon() {
+        marker = Instantiate(Resources.Load("Marker"), new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z), Quaternion.identity) as GameObject;
+    }
+
+    private void selectOutcomeType()
+    {
+        switch (Int32.Parse(dbDialogue[8]))
+        {
+            case 0:
+                dialogueStartQuest();
+                break;
+            case 1:
+                dialogueEndQuest();
+                break;
+            case 2:
+                dialogueGiveItem();
+                break;
+            case 3:
+                dialogueRecieveItem();
+                break;
+            case 4:
+                dialogueVendor();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void dialogueStartQuest()
+    {
+        if (questsToActivate.Length != 0)
+        {
+            foreach (GameObject g in questsToActivate)
+            {
+                if (!g.activeSelf)
+                {
+                    //OutcomeType = 0
+                    print("starting a quest from an NPC!");
+
+                    g.SetActive(true);
+
+                    Destroy(marker);
+                }
+            }
+        }
+    }
+
+    private void dialogueEndQuest()
+    {
+        //OutcomeType = 1
+        if (GetComponent<ItemHeldBool>() != null) GetComponent<ItemHeldBool>().beingHeld = true;
+        print("ending a quest with an NPC!");
+    }
+
+    private void dialogueGiveItem()
+    {
+        //OutcomeType = 2
+        print("give the player an item from an NPC!");
+    }
+
+    private void dialogueRecieveItem()
+    {
+        //OutcomeType = 3
+        print("give the NPC an item from the player!");
+    }
+
+    private void dialogueVendor()
+    {
+        //OutcomeType = 4
+        print("starting the vendor with an NPC!");
+
+        gameManager.startNPCVendor(true);
+    }
+
+    private void debugCommands()
     {
         //This function should be displayed or removed on release, it's only for testing...
         if (Input.GetKey(KeyCode.LeftControl))
         {
             if (Input.GetKeyDown(KeyCode.X))
+
             {
                 print("RESETTING THE DATABASE | This is a debug command, please delete on release.");
                 resetDB();

@@ -9,15 +9,23 @@ public class GameManager : MonoBehaviour {
     public GameObject currency;
 
     private bool menuOpen = false;
+    private bool npcVendor = false;
     
     PlayerController pc;
     CamMouseLook cml;
-    public 
-	// Use this for initialization
-	void Start () {
+    private destroyQuestScreen destroyQuestScreen;
+
+    public void startNPCVendor(bool npcVendorVal)
+    {
+        npcVendor = npcVendorVal;
+    }
+
+    // Use this for initialization
+    void Start () {
         Cursor.lockState = CursorLockMode.Locked;
         pc = character.GetComponent<PlayerController>();
         cml = character.GetComponentInChildren<CamMouseLook>();
+        destroyQuestScreen = GameObject.Find("QuestCompletedScreen").GetComponent<destroyQuestScreen>();
 
     }
 	
@@ -27,6 +35,7 @@ public class GameManager : MonoBehaviour {
         {
             if (!MenuSystem.activeSelf)
             {
+                if (destroyQuestScreen.transform.GetChild(0).gameObject.activeSelf) destroyQuestScreen.removeQuestScreenCanvas();
                 menuOpen = true;
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
@@ -61,17 +70,24 @@ public class GameManager : MonoBehaviour {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out hit, 5) && hit.transform.tag == "vendor")
                 {
-                    menuOpen = true;
-                    Cursor.lockState = CursorLockMode.None;
-                    Cursor.visible = true;
-                    cml.enabled = false;
-                    pc.enabled = false;
-                    currency.SetActive(true);
-                    Time.timeScale = 0f;
+                    startVendor();
                     currency.GetComponent<currency>().readVendor(hit);
                 }
             }      
         }
+        else if(npcVendor && !menuOpen)
+        {
+            //second raycast for use only want talking to an npc vendor
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, 5) && hit.transform.tag == "npc") {
+                startVendor();
+                currency.GetComponent<currency>().readVendor(hit);
+            }
+
+            startVendor();
+        }
+
         if (currency.GetComponent<currency>().close && menuOpen)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -105,5 +121,18 @@ public class GameManager : MonoBehaviour {
             }
         }
         return false;
+    }
+
+    private void startVendor()
+    {
+        menuOpen = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        cml.enabled = false;
+        pc.enabled = false;
+        currency.SetActive(true);
+        Time.timeScale = 0f;
+
+        npcVendor = false;
     }
 }
