@@ -154,6 +154,9 @@ public class JournalApp : MonoBehaviour {
     {
         if (questsOnPage > 1)
         {
+            if (questsOnPage > 4)
+                questsOnPage = 4;
+
             if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.DownArrow))
             {
                 oldSelection = questSelection;
@@ -167,9 +170,17 @@ public class JournalApp : MonoBehaviour {
             }
 
             if (questSelection < 1)
+            {
                 questSelection = questsOnPage;
+                oldSelection = 1;
+            }
+                
             if (questSelection > questsOnPage)
+            {
                 questSelection = 1;
+                oldSelection = questsOnPage;
+            }
+           
         }
 
         transform.Find("List Screen").Find("Quest (" + questSelection.ToString() + ")").Find("Heading").GetComponent<TextMesh>().fontSize = 150;
