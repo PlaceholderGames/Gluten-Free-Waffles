@@ -20,6 +20,7 @@ public class PickupDrop : MonoBehaviour
     bool showMessage = false;
     private GameObject playerCamera;
     private GameManager gm;
+    private GameObject character;
 
     void Start()
     {
@@ -30,6 +31,7 @@ public class PickupDrop : MonoBehaviour
         style.fontSize = h * 2 / 100;
         style.normal.textColor = Color.white;
         style.font = font;
+        character = GameObject.Find("Character").gameObject;
     }
 
     // Update is called once per frame
@@ -104,11 +106,18 @@ public class PickupDrop : MonoBehaviour
         Ray ray = playerCamera.GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         if (Physics.Raycast(ray, out hit, itemRange) && hit.transform.tag == "item")    //checking that item trying to be picked up is tagged to be held
         {
+            //checking if phone was selected
             if (hit.transform.GetComponent<ItemID>().itemID == 3)
             {
                 daInventoryMan.GetComponent<Inventory>().CollectedCollectable(hit.transform.GetComponent<ItemID>().itemID);
                 hit.rigidbody.GetComponent<ItemHeldBool>().beingHeld = true;
                 StartCoroutine(turnOffPhone(hit));
+            }
+            //checking if money has been selected
+            else if(hit.transform.GetComponent<ItemID>().itemID == 5)
+            {
+                character.GetComponent<funds>().addingFunds(hit.transform.GetComponent<value>().worth);
+                Destroy(hit.transform.gameObject);
             }
             else
             {

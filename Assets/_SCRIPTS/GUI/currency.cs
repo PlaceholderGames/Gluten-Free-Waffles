@@ -60,21 +60,6 @@ public class currency : MonoBehaviour
     {
         if (!clicked)
         {
-            //lmb click
-            //if (Input.GetAxis("Interact") != 0)
-            //{
-            //    //checking if a vendor was selected
-            //    RaycastHit hit;
-            //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            //    if (Physics.Raycast(ray, out hit, 5) && hit.transform.tag == "vendor")
-            //    {
-            //        transactionScreen = true;
-            //        transaction = true;
-            //        clicked = true;
-            //        //getting the supplies
-            //        vendorSupplies = hit.transform.GetComponent<VendorSupplies>();
-            //    }
-            //}
             transactionScreen = true;
             transaction = true;
             clicked = true;
@@ -151,10 +136,6 @@ public class currency : MonoBehaviour
         clicked = false;
         inventorySystem = null;
         close = true;
-        //re-enabling time and returning cursor
-        //Time.timeScale = 1f;
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
     }
 
     public void exitBuyingPanel()
