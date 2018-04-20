@@ -56,7 +56,7 @@ public class BasicAI : MonoBehaviour {
             if (Vector3.Distance(target.position, this.transform.position) <= pauseDistance)
             {
                 nav.SetDestination(this.transform.position);
-                nav.enabled = false;
+                nav.isStopped = true;
 
                 atLocation = true;
 
@@ -74,11 +74,11 @@ public class BasicAI : MonoBehaviour {
         }
         if(Vector3.Distance(this.transform.position, player.position) <= pauseDistance)
         {
-            nav.isStopped = true;
+            if (!nav.isStopped) nav.isStopped = true;
         }
         else
         {
-            nav.isStopped = false;
+            if(nav.isStopped)nav.isStopped = false;
         }
 	}
 
