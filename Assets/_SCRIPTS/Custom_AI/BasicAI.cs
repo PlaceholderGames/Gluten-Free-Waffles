@@ -28,12 +28,11 @@ public class BasicAI : MonoBehaviour {
 
     bool atLocation = false;
 
-    List<Vector3> previousTargets;
+    List<Vector3> previousTargets = new List<Vector3>();
 
 
 	// Use this for initialization
 	void Start () {
-        previousTargets = new List<Vector3>();
         hub = GameObject.Find("AIHub").GetComponent<AIHub>();
         nav = this.GetComponent<NavMeshAgent>();
 
@@ -52,7 +51,6 @@ public class BasicAI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
         if (!atLocation)
         {
             if (Vector3.Distance(target.position, this.transform.position) <= pauseDistance)
@@ -76,11 +74,11 @@ public class BasicAI : MonoBehaviour {
         }
         if(Vector3.Distance(this.transform.position, player.position) <= pauseDistance)
         {
-            if (nav.enabled) nav.enabled = false;
+            nav.isStopped = true;
         }
         else
         {
-            if (!nav.enabled) nav.enabled = true;
+            nav.isStopped = false;
         }
 	}
 
