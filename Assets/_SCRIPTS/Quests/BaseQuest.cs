@@ -37,7 +37,14 @@ public class BaseQuest : MonoBehaviour {
             
         }
         
-        if(has3DText)this.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMesh>().text = questDirections;
+
+        this.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMesh>().text = questDirections;
+
+        //stops the text mesh and coloured quad from showing if bool is false
+        if (!has3DText)
+        {
+            this.transform.GetChild(0).gameObject.SetActive(false);
+        }
     }
     public void endQuest()
     {

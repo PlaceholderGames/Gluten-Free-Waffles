@@ -45,6 +45,8 @@ public class DialogueSystem : MonoBehaviour
     //stores the range at which the npc can interact with the player
     public float npcRange = 7.0f;
 
+    private GameManager gameManager;
+
     private static bool GUIShowing = false;
     private byte optionSelected = 1;
     private byte maxOption = 0;
@@ -62,7 +64,8 @@ public class DialogueSystem : MonoBehaviour
     private GameObject dialoguePopup;
     private GameObject dialogueOverlay;
     private GameObject namePopup;
-
+    private GameObject marker;
+   
     //stores a reference to the question and response text lines for the dialogue overlay
     private GameObject question;
     private GameObject[] option = new GameObject[4];
@@ -70,10 +73,18 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField]
     private GameObject[] questsToActivate;
 
+    public bool guiIsShowing()
+    {
+        return GUIShowing;
+    }
+
     // Use this for initialization
     void Start()
     {
         print("Dialogue system debugging commands are currently enabled. Disable them before release. (Ctrl + X to clear DB)");
+
+        //get the game manager script
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         //Stores a reference to the actual player transformation
         player = GameObject.Find("Character").transform;
@@ -135,9 +146,6 @@ public class DialogueSystem : MonoBehaviour
 
                 //sets the dialogueID to character phase
                 nextDialogue = Int32.Parse(dbDialogue[11]);
-
-                //if playe is no longer talking to the npc then show the npc name
-                namePopup.SetActive(true);
             }
 
             //check if the player clicked on the mouse which means they confirmed their dialogue option
@@ -148,6 +156,17 @@ public class DialogueSystem : MonoBehaviour
 
                 //sets the next value to the corresponding next dialogue ID from the database
                 nextDialogue = Int32.Parse(dbDialogue[optionSelected + 3]);
+
+                //if the player chooses to end the conversation
+                if (nextDialogue == 0) {
+                    destroyGUI();
+
+                    //sets the dialogueID to character phase
+                    nextDialogue = Int32.Parse(dbDialogue[11]);
+                }
+
+                //check if an outcome type was met
+                selectOutcomeType();
 
                 //Establishes a new connection to the database with a different dialogueID
                 dbConnect();
@@ -201,6 +220,9 @@ public class DialogueSystem : MonoBehaviour
         //destory both the popup above the NPC head and the dialogue GUI
         Destroy(dialoguePopup);
         Destroy(dialogueOverlay);
+
+        //if playe is no longer talking to the npc then show the npc name
+        namePopup.SetActive(true);
     }
 
     void changeGUIText()
@@ -343,9 +365,6 @@ public class DialogueSystem : MonoBehaviour
             dbDialogue[9] = reader.GetInt32(9).ToString(); //OutcomeVal
             dbDialogue[10] = reader.GetString(10); //NPC Name
             dbDialogue[11] = reader.GetInt32(11).ToString(); //NPC Phase
-
-            //check if an outcome type was met
-            selectOutcomeType();
         }
 
         //Loop through each character in the PlayerHasSaid string, looking for the values and inserting them into a char array
@@ -467,7 +486,7 @@ public class DialogueSystem : MonoBehaviour
     }
 
     private void displayQuestIcon() {
-        GameObject marker = Instantiate(Resources.Load("Marker"), new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z), Quaternion.identity) as GameObject;
+        marker = Instantiate(Resources.Load("Marker"), new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z), Quaternion.identity) as GameObject;
     }
 
     private void selectOutcomeType()
@@ -496,16 +515,18 @@ public class DialogueSystem : MonoBehaviour
 
     private void dialogueStartQuest()
     {
-        //OutcomeType = 0
-        print("starting a quest from an NPC!");
-
         if (questsToActivate.Length != 0)
         {
             foreach (GameObject g in questsToActivate)
             {
                 if (!g.activeSelf)
                 {
+                    //OutcomeType = 0
+                    print("starting a quest from an NPC!");
+
                     g.SetActive(true);
+
+                    Destroy(marker);
                 }
             }
         }
@@ -534,6 +555,8 @@ public class DialogueSystem : MonoBehaviour
     {
         //OutcomeType = 4
         print("starting the vendor with an NPC!");
+
+        gameManager.startNPCVendor(true);
     }
 
     private void debugCommands()
