@@ -24,10 +24,31 @@ public class PlayerController : MonoBehaviour {
     private float jumpTime = 1f;
 
     private Rigidbody selfRigidBody;
-    
 
-	// Use this for initialization
-	void Start () {
+    public void modifyNormalSpeed(float newSpeed)
+    {
+        //used to modify the default speed at run time
+        normalSpeed = newSpeed;
+    }
+
+    public void modifySprintSpeed(float newSpeed)
+    {
+        //used to modify the default speed at run time
+        sprintSpeed = newSpeed;
+    }
+
+    public float getNormalSpeed()
+    {
+        return normalSpeed;
+    }
+
+    public float getSprintSpeed()
+    {
+        return sprintSpeed;
+    }
+
+    // Use this for initialization
+    void Start () {
         Cursor.lockState = CursorLockMode.Locked;
         selfRigidBody = GetComponent<Rigidbody>();
 	}
