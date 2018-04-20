@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoonSystem : MonoBehaviour
+public class moonSystem : MonoBehaviour
 {
     private Transform player;
 

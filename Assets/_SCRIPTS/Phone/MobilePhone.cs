@@ -16,6 +16,7 @@ public class MobilePhone : MonoBehaviour
     private bool errorMessage = false;
     private bool inApp = false;
 
+
     private Transform HourHand, MinuteHand, SecondHand;
     private float hourTime, minuteTime, secondsTime, day;
 
