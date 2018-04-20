@@ -113,6 +113,12 @@ public class PickupDrop : MonoBehaviour
                 hit.rigidbody.GetComponent<ItemHeldBool>().beingHeld = true;
                 StartCoroutine(turnOffPhone(hit));
             }
+            //checking if money has been selected
+            else if(hit.transform.GetComponent<ItemID>().itemID == 5)
+            {
+                character.GetComponent<funds>().addingFunds(hit.transform.GetComponent<value>().worth);
+                Destroy(hit.transform.gameObject);
+            }
             else
             {
                 //setting object as a child and giving new position

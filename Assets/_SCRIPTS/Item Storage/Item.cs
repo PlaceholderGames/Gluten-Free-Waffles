@@ -21,7 +21,8 @@ public class Item
         Drink,
         Clothes,
         Quest,
-        Misc
+        Misc,
+        Money
     }
 
     public Item()
