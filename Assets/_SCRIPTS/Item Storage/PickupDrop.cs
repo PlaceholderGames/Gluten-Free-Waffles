@@ -19,10 +19,11 @@ public class PickupDrop : MonoBehaviour
     private GUIStyle style = new GUIStyle();
     bool showMessage = false;
     private GameObject playerCamera;
+    private GameManager gm;
 
     void Start()
     {
-
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerCamera = GameObject.Find("Character/FPPCamera").gameObject;
         int h = Screen.height;
         style.alignment = TextAnchor.MiddleCenter;
@@ -54,17 +55,35 @@ public class PickupDrop : MonoBehaviour
     {
         if (holdingItem && !daInventoryMan.GetComponent<Inventory>().phoneOut)
         {
-            GUI.Label(new Rect((Screen.width - 100), Screen.height - 20, 1, 20), "Press R to Use", style);
-            Rect dropPromt = new Rect((Screen.width - 120), Screen.height - 70, 40, 40);
-            GUI.DrawTexture(dropPromt, Resources.Load<Texture2D>("KeyPrompts/" + "R"));
+            if (gm.ControllerCheck())
+            {
+                GUI.Label(new Rect((Screen.width - 100), Screen.height - 20, 1, 20), "Press X to Use", style);
+                Rect dropPromt = new Rect((Screen.width - 120), Screen.height - 70, 40, 40);
+                GUI.DrawTexture(dropPromt, Resources.Load<Texture2D>("KeyPrompts/" + "X"));
 
-            GUI.Label(new Rect((Screen.width - 250), Screen.height - 20, 1, 20), "Press Q to Store", style);
-            Rect storePromt = new Rect((Screen.width -270), Screen.height - 70, 40, 40);
-            GUI.DrawTexture(storePromt, Resources.Load<Texture2D>("KeyPrompts/" + "Q"));
+                GUI.Label(new Rect((Screen.width - 250), Screen.height - 20, 1, 20), "Press Y to Store", style);
+                Rect storePromt = new Rect((Screen.width - 270), Screen.height - 70, 40, 40);
+                GUI.DrawTexture(storePromt, Resources.Load<Texture2D>("KeyPrompts/" + "Y"));
 
-            GUI.Label(new Rect((Screen.width - 400), Screen.height - 20, 1, 20), "Press E to Drop", style);
-            Rect usePromt = new Rect((Screen.width - 420), Screen.height - 70, 40, 40);
-            GUI.DrawTexture(usePromt, Resources.Load<Texture2D>("KeyPrompts/" + "E"));
+                GUI.Label(new Rect((Screen.width - 440), Screen.height - 20, 1, 20), "Press Right Stick to Drop", style);
+                Rect usePromt = new Rect((Screen.width - 460), Screen.height - 70, 40, 40);
+                GUI.DrawTexture(usePromt, Resources.Load<Texture2D>("KeyPrompts/" + "R_C"));
+            }
+            else
+            {
+                GUI.Label(new Rect((Screen.width - 100), Screen.height - 20, 1, 20), "Press R to Use", style);
+                Rect dropPromt = new Rect((Screen.width - 120), Screen.height - 70, 40, 40);
+                GUI.DrawTexture(dropPromt, Resources.Load<Texture2D>("KeyPrompts/" + "R"));
+
+                GUI.Label(new Rect((Screen.width - 250), Screen.height - 20, 1, 20), "Press Q to Store", style);
+                Rect storePromt = new Rect((Screen.width - 270), Screen.height - 70, 40, 40);
+                GUI.DrawTexture(storePromt, Resources.Load<Texture2D>("KeyPrompts/" + "Q"));
+
+                GUI.Label(new Rect((Screen.width - 400), Screen.height - 20, 1, 20), "Press E to Drop", style);
+                Rect usePromt = new Rect((Screen.width - 420), Screen.height - 70, 40, 40);
+                GUI.DrawTexture(usePromt, Resources.Load<Texture2D>("KeyPrompts/" + "E"));
+            }
+            
         }
 
     }

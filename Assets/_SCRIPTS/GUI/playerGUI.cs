@@ -14,11 +14,16 @@ public class playerGUI : MonoBehaviour
     private float deltaTime = 0.0f;
     private Texture2D crosshair;
 
+    private GameManager gm;
+
     // Use this for initialization
     void Start()
     {
+
+        
         //Finds the FPP camera in a fairly efficient way, privately that is...
         playerCamera = GameObject.Find("Character/FPPCamera").gameObject;
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         //Load the crosshair texture
         crosshair = Resources.Load("Textures/crosshair", typeof(Texture2D)) as Texture2D;
@@ -34,6 +39,7 @@ public class playerGUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(Input.GetJoystickNames());
         deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
     }
 
@@ -64,9 +70,21 @@ public class playerGUI : MonoBehaviour
         {
             if (playerCamera.GetComponent<PickupDrop>().holdingItem == false)
             {
-                GUI.Label(new Rect(halfW, halfH + 30, 1, 20), "Press E to Interact", style);
-                Rect keyPromt = new Rect(halfW - 20, halfH + 50, 40, 40);
-                GUI.DrawTexture(keyPromt, Resources.Load<Texture2D>("KeyPrompts/" + "E"));
+                
+                if (gm.ControllerCheck())
+                {
+                    GUI.Label(new Rect(halfW, halfH + 30, 1, 20), "Press X to Interact", style);
+                    Rect keyPromt = new Rect(halfW - 20, halfH + 50, 40, 40);
+                    GUI.DrawTexture(keyPromt, Resources.Load<Texture2D>("KeyPrompts/" + "X"));
+                }
+                else
+                {
+                    GUI.Label(new Rect(halfW, halfH + 30, 1, 20), "Press E to Interact", style);
+                    Rect keyPromt = new Rect(halfW - 20, halfH + 50, 40, 40);
+                    GUI.DrawTexture(keyPromt, Resources.Load<Texture2D>("KeyPrompts/" + "E"));
+                }
+
+                
             }
         }
     }

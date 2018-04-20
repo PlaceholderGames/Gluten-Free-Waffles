@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
     
     PlayerController pc;
     CamMouseLook cml;
-
+    public 
 	// Use this for initialization
 	void Start () {
         Cursor.lockState = CursorLockMode.Locked;
@@ -83,5 +83,27 @@ public class GameManager : MonoBehaviour {
             currency.GetComponent<currency>().resetAllBools();
             menuOpen = false;
         }
+    }
+
+    public bool ControllerCheck()
+    {
+        //Get Joystick Names
+        string[] temp = Input.GetJoystickNames();
+
+        //Check whether array contains anything
+        if (temp.Length > 0)
+        {
+            //Iterate over every element
+            for (int i = 0; i < temp.Length; ++i)
+            {
+                //Check if the string is empty or not
+                if (!string.IsNullOrEmpty(temp[i]))
+                {
+                    //Not empty, controller temp[i] is connected
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
