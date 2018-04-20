@@ -39,7 +39,7 @@ public class playerGUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Input.GetJoystickNames());
+        //Debug.Log(Input.GetJoystickNames());
         deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
     }
 
