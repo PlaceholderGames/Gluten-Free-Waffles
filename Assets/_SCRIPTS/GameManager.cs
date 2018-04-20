@@ -12,12 +12,13 @@ public class GameManager : MonoBehaviour {
     
     PlayerController pc;
     CamMouseLook cml;
-    public 
+    private destroyQuestScreen destroyQuestScreen;
 	// Use this for initialization
 	void Start () {
         Cursor.lockState = CursorLockMode.Locked;
         pc = character.GetComponent<PlayerController>();
         cml = character.GetComponentInChildren<CamMouseLook>();
+        destroyQuestScreen = GameObject.Find("QuestCompletedScreen").GetComponent<destroyQuestScreen>();
 
     }
 	
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour {
         {
             if (!MenuSystem.activeSelf)
             {
+                if (destroyQuestScreen.transform.GetChild(0).gameObject.activeSelf) destroyQuestScreen.removeQuestScreenCanvas();
                 menuOpen = true;
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
