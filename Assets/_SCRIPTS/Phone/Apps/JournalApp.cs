@@ -26,6 +26,11 @@ public class JournalApp : MonoBehaviour {
 
     QuestHandler handler;
 
+    private bool left = false;
+    private bool right = false;
+    private bool up = false;
+    private bool down = false;
+
     // Use this for initialization
     void Start()
     {
@@ -46,23 +51,23 @@ public class JournalApp : MonoBehaviour {
             listBackgroundUpdate = false;
         }
 
-        if ((Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.Backspace)) && !bigScreen)
+        if ((Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Joystick1Button1)) && !bigScreen)
         {
             close();
         }
 
-        if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Joystick1Button5))
         {
             bigScreen = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.LeftArrow) || DpadLeft())
         {
             Clear();
             pageNumber--;
         }
 
-        if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.RightArrow) || DpadRight())
         {
             Clear();
             pageNumber++;
@@ -154,13 +159,13 @@ public class JournalApp : MonoBehaviour {
     {
         if (questsOnPage > 1)
         {
-            if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.DownArrow) || DpadDown())
             {
                 oldSelection = questSelection;
                 questSelection++;
             }
 
-            if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.UpArrow) || DpadUp())
             {
                 oldSelection = questSelection;
                 questSelection--;
@@ -230,7 +235,7 @@ public class JournalApp : MonoBehaviour {
 
 
 
-        if ((Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.Backspace)))
+        if (Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
             phone.transform.GetChild(0).GetComponent<MeshRenderer>().material = backgroundList;
             fullBackgroundUpdate = true;
@@ -261,4 +266,85 @@ public class JournalApp : MonoBehaviour {
         listBackgroundUpdate = true;
         gameObject.SetActive(false);
     }
+
+    //DPadController start
+    bool DpadUp()
+    {
+        if (Input.GetAxisRaw("DPadVertical") == 1 && !up)
+        {
+            StartCoroutine(resetUpBool(0.5f));
+            up = true;
+            return true;
+        }
+        return false;
+    }
+    bool DpadDown()
+    {
+        if (Input.GetAxisRaw("DPadVertical") == -1 && !down)
+        {
+            StartCoroutine(resetDownBool(0.5f));
+            down = true;
+            return true;
+        }
+        return false;
+    }
+    bool DpadLeft()
+    {
+        if (Input.GetAxisRaw("DPadHorizontal") == -1 && !left)
+        {
+            StartCoroutine(resetLeftBool(0.5f));
+            left = true;
+            return true;
+        }
+        return false;
+    }
+    bool DpadRight()
+    {
+        if (Input.GetAxisRaw("DPadHorizontal") == 1 && !right)
+        {
+            StartCoroutine(resetRightBool(0.5f));
+            right = true;
+            return true;
+        }
+        return false;
+    }
+
+    IEnumerator resetLeftBool(float seconds)
+    {
+        float ResumeTime = Time.realtimeSinceStartup + seconds;
+        while (Time.realtimeSinceStartup < ResumeTime)
+        {
+            yield return null;
+        }
+        left = false;
+    }
+    IEnumerator resetRightBool(float seconds)
+    {
+        float ResumeTime = Time.realtimeSinceStartup + seconds;
+        while (Time.realtimeSinceStartup < ResumeTime)
+        {
+            yield return null;
+        }
+        right = false;
+    }
+    IEnumerator resetUpBool(float seconds)
+    {
+        float ResumeTime = Time.realtimeSinceStartup + seconds;
+        while (Time.realtimeSinceStartup < ResumeTime)
+        {
+            yield return null;
+        }
+        up = false;
+    }
+    IEnumerator resetDownBool(float seconds)
+    {
+        float ResumeTime = Time.realtimeSinceStartup + seconds;
+        while (Time.realtimeSinceStartup < ResumeTime)
+        {
+            yield return null;
+        }
+        down = false;
+    }
+
+    //DPad Input end
 }

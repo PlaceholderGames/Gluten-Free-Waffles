@@ -15,9 +15,12 @@ public class MobilePhone : MonoBehaviour
     private int oldSelection = 0;
     private bool errorMessage = false;
     private bool inApp = false;
+    private bool showTut = true;
+    private bool tutShown = false;
 
     private Transform HourHand, MinuteHand, SecondHand;
     private float hourTime, minuteTime, secondsTime, day;
+    private GameManager gm;
 
     private bool left = false;
     private bool right = false;
@@ -27,6 +30,7 @@ public class MobilePhone : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         Vector3 phoneDimentions = this.GetComponent<Renderer>().bounds.size;
 
         dayNightCycle = GameObject.Find("DayAndNightSystem").GetComponent<DayNightCycle>();
@@ -43,8 +47,6 @@ public class MobilePhone : MonoBehaviour
         day = dayNightCycle.getDay();
 
         HourHand.transform.eulerAngles.Set(0, 0, 30 * hourTime);
-
-
     }
 
     private void Update()
@@ -54,7 +56,7 @@ public class MobilePhone : MonoBehaviour
 
         else
         {
-            if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Joystick1Button5))
             {
                 transform.Find("Notifications").Find("Update Message").gameObject.SetActive(false);
                 errorMessage = false;
@@ -65,6 +67,32 @@ public class MobilePhone : MonoBehaviour
         {
             if (appClosed == true)
                 openHome();
+        }
+
+
+        if(showTut == true)
+        {
+            if (gm.ControllerCheck())
+                transform.Find("Notifications").Find("Controller Tutorial").gameObject.SetActive(true);
+            else
+                transform.Find("Notifications").Find("Keyboard Tutorial").gameObject.SetActive(true);
+
+            showTut = false;
+            tutShown = true;
+        }
+
+        if (tutShown == true)
+        {
+            if (Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Joystick1Button1))
+            {
+                if (gm.ControllerCheck())
+                    transform.Find("Notifications").Find("Controller Tutorial").gameObject.SetActive(false);
+                else
+                    transform.Find("Notifications").Find("Keyboard Tutorial").gameObject.SetActive(false);
+
+                tutShown = false;
+            }
+
         }
 
         UpdateClock();
@@ -157,6 +185,8 @@ public class MobilePhone : MonoBehaviour
     }
 
     //DPad Input end
+
+
     void HomeScreenSelection()
     {
         if (!inApp)
@@ -245,7 +275,7 @@ public class MobilePhone : MonoBehaviour
             transform.GetChild(4).GetChild(selection).GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
             transform.GetChild(4).GetChild(selection).GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", Color.grey);
 
-            if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return) ||Input.GetKeyDown(KeyCode.Joystick1Button5) )
+            if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Joystick1Button5) )
                 Launch(selection);
         }
     }
@@ -419,8 +449,11 @@ public class MobilePhone : MonoBehaviour
 
     private void AppUnavailable()
     {
-        transform.GetChild(6).GetChild(0).gameObject.SetActive(true);
-        errorMessage = true;
+        if(tutShown == false)
+        {
+            transform.GetChild(6).GetChild(0).gameObject.SetActive(true);
+            errorMessage = true;
+        }
     }
 
     private string formatMins(int currentTime)

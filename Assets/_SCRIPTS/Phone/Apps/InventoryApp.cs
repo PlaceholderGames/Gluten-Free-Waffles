@@ -17,6 +17,12 @@ public class InventoryApp : MonoBehaviour {
     private int oldItemSelection = 1;
 
 
+    private bool left = false;
+    private bool right = false;
+    private bool up = false;
+    private bool down = false;
+
+
     // Use this for initialization
     void Start () {
         phone = GameObject.FindGameObjectWithTag("Phone").transform.GetChild(0).gameObject;
@@ -34,7 +40,7 @@ public class InventoryApp : MonoBehaviour {
         }
 
         //Closes the app
-        if (Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.Backspace))
+        if (Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
             close();
         }
@@ -47,9 +53,9 @@ public class InventoryApp : MonoBehaviour {
     {
 
         //Updates selection based on user input
-        if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.LeftArrow) || DpadLeft())
             categorySelection--;
-        if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.RightArrow) || DpadRight())
             categorySelection++;
 
         //Ensures the user doesn't exceed number of categories
@@ -115,9 +121,9 @@ public class InventoryApp : MonoBehaviour {
         if (itemList.Count != 0)
         {
             //Moves the list up and down
-            if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.UpArrow) || DpadUp())
                 itemSelection--;
-            if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.DownArrow) || DpadDown())
                 itemSelection++;
         
             //Prevents user from going out of the end of the list
@@ -185,11 +191,11 @@ public class InventoryApp : MonoBehaviour {
             inventory.GetComponent<Inventory>().useItem(itemList[itemSelection], false);
         }
 
-        if (Input.GetButtonDown("Interact"))
+        if (Input.GetButtonDown("Store"))
         {
             GameObject item = Instantiate(Resources.Load("ItemPrefabs/" + itemList[itemSelection].itemName)) as GameObject;
 
-            Debug.Log("Wow it spawned!");
+            Debug.Log("Spawned Item From Inventory");
             Transform player = GameObject.Find("Character/FPPCamera").transform;
             item.transform.SetParent(player);
             //changing the items position so that it is in a set position when picked up
@@ -225,4 +231,88 @@ public class InventoryApp : MonoBehaviour {
         backgroundUpdate = true;
         gameObject.SetActive(false);
     }
+
+    //DPadController start
+    bool DpadUp()
+    {
+        if (Input.GetAxisRaw("DPadVertical") == 1 && !up)
+        {
+            StartCoroutine(resetUpBool(0.5f));
+            up = true;
+            return true;
+        }
+        return false;
+    }
+    bool DpadDown()
+    {
+        if (Input.GetAxisRaw("DPadVertical") == -1 && !down)
+        {
+            StartCoroutine(resetDownBool(0.5f));
+            down = true;
+            return true;
+        }
+        return false;
+    }
+    bool DpadLeft()
+    {
+        if (Input.GetAxisRaw("DPadHorizontal") == -1 && !left)
+        {
+            StartCoroutine(resetLeftBool(0.5f));
+            left = true;
+            return true;
+        }
+        return false;
+    }
+    bool DpadRight()
+    {
+        if (Input.GetAxisRaw("DPadHorizontal") == 1 && !right)
+        {
+            StartCoroutine(resetRightBool(0.5f));
+            right = true;
+            return true;
+        }
+        return false;
+    }
+
+    IEnumerator resetLeftBool(float seconds)
+    {
+        float ResumeTime = Time.realtimeSinceStartup + seconds;
+        while (Time.realtimeSinceStartup < ResumeTime)
+        {
+            yield return null;
+        }
+        left = false;
+    }
+    IEnumerator resetRightBool(float seconds)
+    {
+        float ResumeTime = Time.realtimeSinceStartup + seconds;
+        while (Time.realtimeSinceStartup < ResumeTime)
+        {
+            yield return null;
+        }
+        right = false;
+    }
+    IEnumerator resetUpBool(float seconds)
+    {
+        float ResumeTime = Time.realtimeSinceStartup + seconds;
+        while (Time.realtimeSinceStartup < ResumeTime)
+        {
+            yield return null;
+        }
+        up = false;
+    }
+    IEnumerator resetDownBool(float seconds)
+    {
+        float ResumeTime = Time.realtimeSinceStartup + seconds;
+        while (Time.realtimeSinceStartup < ResumeTime)
+        {
+            yield return null;
+        }
+        down = false;
+    }
+
+    //DPad Input end
+
+
+
 }
