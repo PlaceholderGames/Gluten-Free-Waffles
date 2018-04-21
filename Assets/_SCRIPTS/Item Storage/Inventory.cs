@@ -16,6 +16,8 @@ public class Inventory : MonoBehaviour
     public List<Item> questList = new List<Item>();
     public List<Item> miscList = new List<Item>();
 
+    public bool canStore = true;
+
     //IDs start at 0. -1 indicated no item present.
     private int itemHolding = -1;      
 
@@ -62,7 +64,7 @@ public class Inventory : MonoBehaviour
         }
         
         //If the player is holding an item...
-        if (itemHolding != -1)
+        if (itemHolding != -1 && canStore)
         {
             //If the player wishes to store the item...
             if (StoreEum())
@@ -71,6 +73,7 @@ public class Inventory : MonoBehaviour
                 itemHolding = -1;
                 GameObject.Find("FPPCamera").GetComponent<PickupDrop>().holdingItem = false;
                 Destroy(GameObject.Find("FPPCamera").GetComponent<PickupDrop>().itemInHand.gameObject);
+                Debug.Log("Putting away object");
             }
 
             //If the player wishes to use the item...

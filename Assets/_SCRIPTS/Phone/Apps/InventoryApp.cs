@@ -211,6 +211,8 @@ public class InventoryApp : MonoBehaviour {
 
         if (StoreEum())
         {
+            StartCoroutine(resetInventoryTimer(0.1f)); //added to stop instant storing
+
             GameObject item = Instantiate(Resources.Load("ItemPrefabs/" + itemList[itemSelection].itemName)) as GameObject;
 
             Debug.Log("Spawned Item From Inventory");
@@ -227,6 +229,7 @@ public class InventoryApp : MonoBehaviour {
             inventory.setItemHolding(item.GetComponent<ItemID>().itemID);
             player.GetComponentInChildren<PickupDrop>().holdingItem = true;
 
+            
             player.GetComponentInChildren<PickupDrop>().itemInHand = item.GetComponent<Rigidbody>();
 
             //setting the objects rigid body and turning off collisions
@@ -241,6 +244,16 @@ public class InventoryApp : MonoBehaviour {
 
     }
 
+    IEnumerator resetInventoryTimer(float time)
+    {
+        inventory.canStore = false;
+        float ResumeTime = Time.realtimeSinceStartup + time;
+        while (Time.realtimeSinceStartup < ResumeTime)
+        {
+            yield return null;
+        }
+        inventory.canStore = true;
+    }
     void close()
     {
         //Resets phone to home screen to close the app
