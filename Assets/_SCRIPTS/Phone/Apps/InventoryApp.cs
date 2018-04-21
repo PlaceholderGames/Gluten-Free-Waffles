@@ -21,7 +21,7 @@ public class InventoryApp : MonoBehaviour {
     private bool right = false;
     private bool up = false;
     private bool down = false;
-
+    private bool storeInput = false;
 
     // Use this for initialization
     void Start () {
@@ -79,7 +79,25 @@ public class InventoryApp : MonoBehaviour {
         //Resets for colour change to function correctly
         oldCategorySelection = categorySelection;
     }
-
+    bool StoreEum()
+    {
+        if (Input.GetButtonDown("Store") && !storeInput)
+        {
+            StartCoroutine(resetBool(0.5f));
+            storeInput = true;
+            return true;
+        }
+        return false;
+    }
+    IEnumerator resetBool(float seconds)
+    {
+        float ResumeTime = Time.realtimeSinceStartup + seconds;
+        while (Time.realtimeSinceStartup < ResumeTime)
+        {
+            yield return null;
+        }
+        storeInput = false;
+    }
     void load (int categoryLoaded)
     {
         List<Item> itemList = new List<Item>();
@@ -191,7 +209,7 @@ public class InventoryApp : MonoBehaviour {
             inventory.GetComponent<Inventory>().useItem(itemList[itemSelection], false);
         }
 
-        if (Input.GetButtonDown("Store"))
+        if (StoreEum())
         {
             GameObject item = Instantiate(Resources.Load("ItemPrefabs/" + itemList[itemSelection].itemName)) as GameObject;
 

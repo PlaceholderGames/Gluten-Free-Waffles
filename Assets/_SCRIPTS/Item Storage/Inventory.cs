@@ -24,12 +24,33 @@ public class Inventory : MonoBehaviour
 
     public bool phoneOut;
 
+    private bool storeInput = false;
+
     private void Start()
     {
         database = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>();
 
         //gets a reference to the vitals class
         vitals = GameObject.Find("Character").GetComponent<Vitals>();
+    }
+    bool StoreEum()
+    {
+        if (Input.GetButtonDown("Store") && !storeInput)
+        {
+            StartCoroutine(resetBool(0.5f)); // change this float here to alter the time
+            storeInput = true;
+            return true;
+        }
+        return false;
+    }
+    IEnumerator resetBool(float seconds)
+    {
+        float ResumeTime = Time.realtimeSinceStartup + seconds;
+        while (Time.realtimeSinceStartup < ResumeTime)
+        {
+            yield return null;
+        }
+        storeInput = false;
     }
 
     private void Update()
@@ -44,7 +65,7 @@ public class Inventory : MonoBehaviour
         if (itemHolding != -1)
         {
             //If the player wishes to store the item...
-            if (Input.GetButtonDown("Store"))
+            if (StoreEum())
             {
                 updateItems(itemHolding, true);
                 itemHolding = -1;
