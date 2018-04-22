@@ -211,7 +211,7 @@ public class InventoryApp : MonoBehaviour {
 
         if (StoreEum())
         {
-            StartCoroutine(resetInventoryTimer(0.1f)); //added to stop instant storing
+            inventory.resetInventoryTimerInSeconds(0.1f);
 
             GameObject item = Instantiate(Resources.Load("ItemPrefabs/" + itemList[itemSelection].itemName)) as GameObject;
 
@@ -244,25 +244,16 @@ public class InventoryApp : MonoBehaviour {
 
     }
 
-    IEnumerator resetInventoryTimer(float time)
-    {
-        inventory.canStore = false;
-        float ResumeTime = Time.realtimeSinceStartup + time;
-        while (Time.realtimeSinceStartup < ResumeTime)
-        {
-            yield return null;
-        }
-        inventory.canStore = true;
-    }
     void close()
     {
         //Resets phone to home screen to close the app
+
         phone.transform.GetChild(0).GetComponent<MeshRenderer>().material = homescreen;
         phone.GetComponent<MobilePhone>().appClosed = true;
         backgroundUpdate = true;
         gameObject.SetActive(false);
     }
-
+    
     //DPadController start
     bool DpadUp()
     {
