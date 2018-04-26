@@ -39,10 +39,10 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>C:/Program Files/Unity_5.6.3/Editor/Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>C:/Program Files/Unity_5.6.3/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -130,10 +130,11 @@
      <Compile Include="Assets\_SCRIPTS\CamMouseLook.cs" />
      <Compile Include="Assets\_SCRIPTS\ControllerMouse.cs" />
      <Compile Include="Assets\_SCRIPTS\Custom_AI\AIHub.cs" />
+     <Compile Include="Assets\_SCRIPTS\Custom_AI\AnimatorControllerScript.cs" />
      <Compile Include="Assets\_SCRIPTS\Custom_AI\BasicAI.cs" />
      <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\DayNightCycle.cs" />
-     <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\MoonSystem.cs" />
      <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\StarSystem.cs" />
+     <Compile Include="Assets\_SCRIPTS\DayAndNightSystem\moonSystem.cs" />
      <Compile Include="Assets\_SCRIPTS\DialogueSystem.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\MainMenu.cs" />
      <Compile Include="Assets\_SCRIPTS\GUI\RotateCameraMainMenu.cs" />
@@ -295,40 +296,43 @@
      <None Include="Assets\water.shader.shader" />
      <None Include="Assets\_UTILITIES\PostProcessing\Editor Resources\Monitors\WaveformCompute.compute" />
  <Reference Include="UnityEngine.UI">
- <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>C:/Program Files/Unity_5.6.3/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
- <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ <HintPath>C:/Program Files/Unity_5.6.3/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.TestRunner">
- <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
+ <HintPath>C:/Program Files/Unity_5.6.3/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
- <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
+ <HintPath>C:/Program Files/Unity_5.6.3/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Analytics">
- <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ <HintPath>C:/Program Files/Unity_5.6.3/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
- <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ <HintPath>C:/Program Files/Unity_5.6.3/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
- <HintPath>C:/Program Files/Unity5.5.0/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ <HintPath>C:/Program Files/Unity_5.6.3/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="CursorControl">
- <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/CursorControl/Scripts/CursorControl.dll</HintPath>
+ <HintPath>G:/UniUnityWork/Gluten-Free-Waffles/Assets/CursorControl/Scripts/CursorControl.dll</HintPath>
  </Reference>
  <Reference Include="Mono.Data.Sqlite">
- <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/Plugins/Mono.Data.Sqlite.dll</HintPath>
+ <HintPath>G:/UniUnityWork/Gluten-Free-Waffles/Assets/Plugins/Mono.Data.Sqlite.dll</HintPath>
  </Reference>
  <Reference Include="System.Data">
- <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/Plugins/System.Data.dll</HintPath>
+ <HintPath>G:/UniUnityWork/Gluten-Free-Waffles/Assets/Plugins/System.Data.dll</HintPath>
  </Reference>
  <Reference Include="TextMeshPro-5.6-1.0.56-Editor">
- <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Editor.dll</HintPath>
+ <HintPath>G:/UniUnityWork/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Editor.dll</HintPath>
  </Reference>
  <Reference Include="TextMeshPro-5.6-1.0.56-Runtime">
- <HintPath>C:/Users/William Akins/Documents/GitHub/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Runtime.dll</HintPath>
+ <HintPath>G:/UniUnityWork/Gluten-Free-Waffles/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-1.0.56-Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="Mono.Cecil">
+ <HintPath>C:/Program Files/Unity_5.6.3/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
