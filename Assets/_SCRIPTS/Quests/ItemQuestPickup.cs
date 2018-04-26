@@ -26,6 +26,8 @@ public class ItemQuestPickup : BaseQuest
     {
         if (gameObject.activeSelf)
         {
+
+            if(!itemToPickup.activeSelf) itemToPickup.SetActive(true);
             if (!getActivateBool())
             {
                 activateBool();
