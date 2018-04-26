@@ -51,6 +51,13 @@ public class PickupDrop : MonoBehaviour
                 pickupItem();
             }
         }
+
+        if(playerCamera.transform.childCount == 0)
+        {
+            holdingItem = false;
+            itemInHand = null;
+            daInventoryMan.GetComponent<Inventory>().setItemHolding(-1);
+        }
     }
 
     private void OnGUI()
@@ -96,6 +103,7 @@ public class PickupDrop : MonoBehaviour
         itemInHand.useGravity = true;
         itemInHand.constraints = RigidbodyConstraints.None;
         itemInHand.transform.parent = null;
+        itemInHand = null;
         holdingItem = false;
         daInventoryMan.GetComponent<Inventory>().setItemHolding(-1);
     }
@@ -133,7 +141,6 @@ public class PickupDrop : MonoBehaviour
                 hit.transform.Rotate(Vector3.forward, 180);
                 daInventoryMan.GetComponent<Inventory>().setItemHolding(hit.transform.GetComponent<ItemID>().itemID);
                 holdingItem = true;
-
                 //setting the objects rigid body and turning off collisions
                 itemInHand = hit.transform.GetComponent<Rigidbody>();
                 itemInHand.isKinematic = true;

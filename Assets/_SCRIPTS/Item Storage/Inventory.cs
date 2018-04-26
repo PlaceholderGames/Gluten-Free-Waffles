@@ -16,6 +16,8 @@ public class Inventory : MonoBehaviour
     public List<Item> questList = new List<Item>();
     public List<Item> miscList = new List<Item>();
 
+    public bool canStore = true;
+
     //IDs start at 0. -1 indicated no item present.
     private int itemHolding = -1;      
 
@@ -24,12 +26,33 @@ public class Inventory : MonoBehaviour
 
     public bool phoneOut;
 
+    private bool storeInput = false;
+
     private void Start()
     {
         database = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>();
 
         //gets a reference to the vitals class
         vitals = GameObject.Find("Character").GetComponent<Vitals>();
+    }
+    bool StoreEum()
+    {
+        if (Input.GetButtonDown("Store") && !storeInput)
+        {
+            StartCoroutine(resetBool(0.5f)); // change this float here to alter the time
+            storeInput = true;
+            return true;
+        }
+        return false;
+    }
+    IEnumerator resetBool(float seconds)
+    {
+        float ResumeTime = Time.realtimeSinceStartup + seconds;
+        while (Time.realtimeSinceStartup < ResumeTime)
+        {
+            yield return null;
+        }
+        storeInput = false;
     }
 
     private void Update()
@@ -39,22 +62,24 @@ public class Inventory : MonoBehaviour
         {
             updatePhone();
         }
-        
         //If the player is holding an item...
-        if (itemHolding != -1)
+        if (itemHolding != -1 && canStore)
         {
             //If the player wishes to store the item...
-            if (Input.GetButtonDown("Store"))
+            if (StoreEum())
             {
+                Debug.Log("Storing Item");
                 updateItems(itemHolding, true);
                 itemHolding = -1;
                 GameObject.Find("FPPCamera").GetComponent<PickupDrop>().holdingItem = false;
                 Destroy(GameObject.Find("FPPCamera").GetComponent<PickupDrop>().itemInHand.gameObject);
+                Debug.Log("Putting away object");
             }
 
             //If the player wishes to use the item...
             if (Input.GetButtonDown("Use"))
             {
+                Debug.Log("Trying to use Item");
                 useItem(GameObject.Find("ItemDatabase").GetComponent<ItemDatabase>().items[itemHolding],true);
                 GameObject.Find("FPPCamera").GetComponent<PickupDrop>().holdingItem = false;
             }
@@ -245,6 +270,7 @@ public class Inventory : MonoBehaviour
 
     public void useItem(Item item, bool fromHand)
     {
+        Debug.Log("Using Item: " + item + " - " + fromHand);
         switch (item.itemID)
         {
             //Add cases for each item ID that has an effect when consumed.
@@ -285,5 +311,23 @@ public class Inventory : MonoBehaviour
                 updateItems(item.itemID, false);
             }
         }
+    }
+
+    public void resetInventoryTimerInSeconds(float time)
+    {
+        StartCoroutine(resetInventoryTimer(time));
+    }
+
+    IEnumerator resetInventoryTimer(float time)
+    {
+        Debug.Log("Resetting Bool");
+        canStore = false;
+        float ResumeTime = Time.realtimeSinceStartup + time;
+        while (Time.realtimeSinceStartup < ResumeTime)
+        {
+            yield return null;
+        }
+        canStore = true;
+        Debug.Log("Bool reset");
     }
 }

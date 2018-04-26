@@ -522,7 +522,6 @@ public class DialogueSystem : MonoBehaviour
                 if (!g.activeSelf)
                 {
                     //OutcomeType = 0
-                    print("starting a quest from an NPC!");
 
                     g.SetActive(true);
 

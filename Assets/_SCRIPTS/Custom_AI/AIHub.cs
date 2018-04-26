@@ -7,18 +7,16 @@ public class AIHub : MonoBehaviour {
     private GameObject[] pointsOfInterest;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         pointsOfInterest = GameObject.FindGameObjectsWithTag("AIMarker");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
 	}
 
     public Transform findClosestPoint(Transform AI,ref List<Vector3> target)
     {
-        if(target.Count > 1) Debug.Log(target[target.Count-2]);
         float closest = 300000f;
         Transform freshTarget = this.transform;
         foreach (GameObject go in pointsOfInterest)
@@ -30,6 +28,7 @@ public class AIHub : MonoBehaviour {
                     float tempDist = Vector3.Distance(AI.position, go.transform.position);
                     if (tempDist <= closest)
                     {
+                        Debug.Log("Found closest!");
                         closest = tempDist;
                         freshTarget = go.transform;
                     }

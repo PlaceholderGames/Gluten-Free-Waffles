@@ -42,7 +42,7 @@ public class HealthApp : MonoBehaviour {
             backgroundUpdate = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.Backspace))
+        if (Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
             close();
         }
