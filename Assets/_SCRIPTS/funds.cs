@@ -8,7 +8,7 @@ public class funds : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        money = 1000;	
+        money = 400;	
 	}
 	
 	// Update is called once per frame
