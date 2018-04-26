@@ -15,6 +15,10 @@ public class ItemDatabase : MonoBehaviour
         items.Add(new Item(name: "Mobile Phone", id: 3, desc: "Mobile Phone", type: Item.ItemType.Drink, destroy: false, quantity: 0, cost: 100));
         items.Add(new Item(name: "Red T-Shirt", id: 4, desc: "Classic\nRed T-Shirt", type: Item.ItemType.Clothes, destroy: false, quantity: 0, cost: 100));
         items.Add(new Item(name: "Money Stack", id: 5, desc: "Small Stack of Money", type: Item.ItemType.Money, destroy: false, quantity: 0, cost: 0));
+        items.Add(new Item(name: "Jeans", id: 6, desc: "Jeans", type: Item.ItemType.Clothes, destroy: false, quantity: 0, cost: 100));
+        items.Add(new Item(name: "Shoes", id: 7, desc: "Shoes", type: Item.ItemType.Clothes, destroy: false, quantity: 0, cost: 100));
+        items.Add(new Item(name: "Socks", id: 8, desc: "Socks", type: Item.ItemType.Clothes, destroy: false, quantity: 0, cost: 100));
+        items.Add(new Item(name: "Hat", id: 9, desc: "Hat", type: Item.ItemType.Clothes, destroy: false, quantity: 0, cost: 100));
     }
     //ITEM DESCRIPTIONS: Need to be implemented with \n to make new lines. No text wrap so must be done manually. Place a \n every 12 characters.
 }
