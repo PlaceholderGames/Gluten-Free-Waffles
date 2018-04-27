@@ -18,6 +18,8 @@ public class MobilePhone : MonoBehaviour
     private bool showTut = true;
     private bool tutShown = false;
 
+    private bool wasClosed;
+
     private Transform HourHand, MinuteHand, SecondHand;
     private float hourTime, minuteTime, secondsTime, day;
     private GameManager gm;
@@ -46,7 +48,7 @@ public class MobilePhone : MonoBehaviour
         secondsTime = dayNightCycle.getTime();
         day = dayNightCycle.getDay();
 
-        HourHand.transform.eulerAngles.Set(0, 0, 30 * hourTime);
+        //loadStartTime();
     }
 
     private void Update()
@@ -95,6 +97,13 @@ public class MobilePhone : MonoBehaviour
 
         }
 
+        /*
+        if(wasClosed)
+        {
+            wasClosed = false;
+            loadStartTime();
+        }
+        */
         UpdateClock();
     }
 
@@ -185,6 +194,26 @@ public class MobilePhone : MonoBehaviour
     }
 
     //DPad Input end
+
+        /*
+    void loadStartTime()
+    {
+        int currentHour, currentMinute, currentSecond;
+        float hourAngle, minuteAngle, secondAngle;
+
+        currentHour = (int)hourTime;
+        if (currentHour > 12)
+            currentHour = currentHour - 12;
+        hourAngle = currentHour * 30;
+        if (hourAngle >= 360)
+            hourAngle = 0;
+
+        print(currentHour);
+        print(hourAngle);
+
+        HourHand.transform.rotation = Quaternion.Euler(0f, 0f, hourAngle);
+    }
+    */
 
 
     void HomeScreenSelection()

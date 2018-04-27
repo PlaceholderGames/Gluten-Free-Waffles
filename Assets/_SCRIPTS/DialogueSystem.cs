@@ -104,6 +104,8 @@ public class DialogueSystem : MonoBehaviour
         namePopup.transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward, player.position - transform.position, 10.0f, 0.0f));
         namePopup.transform.rotation = Quaternion.Euler(0.0f, namePopup.transform.eulerAngles.y + 180, namePopup.transform.eulerAngles.z);
 
+        namePopup.transform.position = new Vector3(transform.position.x, transform.position.y + 2.0f, transform.position.z);
+
         if (Input.GetButtonDown("Interact") && !GUIShowing)
         {
             RaycastHit hit;
