@@ -94,9 +94,19 @@ public class playerGUI : MonoBehaviour
             dialogueSystem = npcFound.transform.GetComponent<DialogueSystem>();
 
             if (!dialogueSystem.guiIsShowing()) {
-                GUI.Label(new Rect(halfW, halfH + 30, 1, 20), "Press E to talk", style);
-                Rect keyPromt = new Rect(halfW - 20, halfH + 50, 40, 40);
-                GUI.DrawTexture(keyPromt, Resources.Load<Texture2D>("KeyPrompts/" + "E"));
+                if (gm.ControllerCheck())
+                {
+                    GUI.Label(new Rect(halfW, halfH + 30, 1, 20), "Press X to talk", style);
+                    Rect keyPromt = new Rect(halfW - 20, halfH + 50, 40, 40);
+                    GUI.DrawTexture(keyPromt, Resources.Load<Texture2D>("KeyPrompts/" + "X"));
+                }
+                else
+                {
+                    GUI.Label(new Rect(halfW, halfH + 30, 1, 20), "Press E to talk", style);
+                    Rect keyPromt = new Rect(halfW - 20, halfH + 50, 40, 40);
+                    GUI.DrawTexture(keyPromt, Resources.Load<Texture2D>("KeyPrompts/" + "E"));
+                }
+                    
             }
         }
     }

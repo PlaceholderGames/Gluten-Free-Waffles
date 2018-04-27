@@ -185,7 +185,7 @@ public class Vitals : MonoBehaviour
     //DEBUG COMMANDS BELOW | NOT FOR RELEASE
     private void debugSetSoberness() {
         if (Input.GetKey(KeyCode.LeftShift)) {
-            if (Input.GetKeyDown(KeyCode.E)) {
+            if (Input.GetKeyDown(KeyCode.F1)) {
                 setSoberness(-10.0f);
                 print("Player is now " + (100 - getSoberness()) + "% drunk.");
             }
@@ -196,7 +196,7 @@ public class Vitals : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.F2))
             {
                 setHealth(0);
                 print("HP is now " + getHealth() + ".");
@@ -208,7 +208,7 @@ public class Vitals : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            if (Input.GetKeyDown(KeyCode.T))
+            if (Input.GetKeyDown(KeyCode.F3))
             {
                 setEnergy(10.0f);
                 print("Player now has " + getEnergy() + " energy.");
@@ -220,7 +220,7 @@ public class Vitals : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            if (Input.GetKeyDown(KeyCode.Y))
+            if (Input.GetKeyDown(KeyCode.F4))
             {
                 setBladder(0.0f, true);
                 print("Player now has " + getBladder() + " bladder.");

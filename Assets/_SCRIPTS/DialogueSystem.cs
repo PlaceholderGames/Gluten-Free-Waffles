@@ -12,6 +12,7 @@ using UnityEditor;
 [CustomEditor(typeof(DialogueSystem))]
 public class DialogueSystemHandle : Editor
 {
+
     protected virtual void OnSceneGUI()
     {
         DialogueSystem npc = (DialogueSystem)target;
@@ -36,6 +37,9 @@ public class DialogueSystemHandle : Editor
 
 public class DialogueSystem : MonoBehaviour
 {
+
+    private bool up = false;
+    private bool down = false;
     //stores values to reference against the dialogue database
     public int npcID = 2;
 
@@ -152,7 +156,7 @@ public class DialogueSystem : MonoBehaviour
 
             //check if the player clicked on the mouse which means they confirmed their dialogue option
             //Configured to use the left mouse btn and the return key
-            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Joystick1Button5))
             {
                 updateDBPlayerSaid();
 
@@ -279,7 +283,7 @@ public class DialogueSystem : MonoBehaviour
 
         //Handles the scroll wheel with scrolling up and down
         var scrollValue = Input.GetAxis("Mouse ScrollWheel");
-        if (scrollValue > 0f)
+        if (scrollValue > 0f || DpadUp())
         {
             // scroll up
             clearPreviousOption(optionSelected);
@@ -288,7 +292,7 @@ public class DialogueSystem : MonoBehaviour
             else
                 optionSelected = maxOption;
         } 
-        else if (scrollValue < 0f)
+        else if (scrollValue < 0f || DpadDown())
         {
             // scroll down
             clearPreviousOption(optionSelected);
@@ -302,6 +306,44 @@ public class DialogueSystem : MonoBehaviour
         changeSelectedOption();
     }
 
+    bool DpadUp()
+    {
+        if (Input.GetAxisRaw("DPadVertical") == 1 && !up)
+        {
+            StartCoroutine(resetUpBool(0.5f));
+            up = true;
+            return true;
+        }
+        return false;
+    }
+    bool DpadDown()
+    {
+        if (Input.GetAxisRaw("DPadVertical") == -1 && !down)
+        {
+            StartCoroutine(resetDownBool(0.5f));
+            down = true;
+            return true;
+        }
+        return false;
+    }
+    IEnumerator resetUpBool(float seconds)
+    {
+        float ResumeTime = Time.realtimeSinceStartup + seconds;
+        while (Time.realtimeSinceStartup < ResumeTime)
+        {
+            yield return null;
+        }
+        up = false;
+    }
+    IEnumerator resetDownBool(float seconds)
+    {
+        float ResumeTime = Time.realtimeSinceStartup + seconds;
+        while (Time.realtimeSinceStartup < ResumeTime)
+        {
+            yield return null;
+        }
+        down = false;
+    }
     void clearPreviousOption(byte previousOption)  
     {
         //disables the highlighting for the previously selected option
