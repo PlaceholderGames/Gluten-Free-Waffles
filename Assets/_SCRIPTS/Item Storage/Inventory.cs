@@ -10,6 +10,8 @@ public class Inventory : MonoBehaviour
 
     public GameObject playerPhone;
 
+    public AudioClip burpSound;
+
     public List<Item> foodList = new List<Item>();
     public List<Item> drinkList = new List<Item>();
     public List<Item> clothesList = new List<Item>();
@@ -28,12 +30,16 @@ public class Inventory : MonoBehaviour
 
     private bool storeInput = false;
 
+    private AudioSource audioSource;
+
     private void Start()
     {
         database = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>();
 
         //gets a reference to the vitals class
         vitals = GameObject.Find("Character").GetComponent<Vitals>();
+
+        audioSource = GetComponent<AudioSource>();
     }
     bool StoreEum()
     {
@@ -280,6 +286,8 @@ public class Inventory : MonoBehaviour
                     //Add stat increases here
                     vitals.setEnergy(30); //increases energy levels by 30
 
+                    audioSource.PlayOneShot(burpSound, 1.0f);
+
                     break;
                 }
             case 1:
@@ -287,6 +295,8 @@ public class Inventory : MonoBehaviour
                     print("Drunk dat alc");
                     //Add stat increases here
                     vitals.setSoberness(-30); //lowers your soberness levels by 30
+
+                    audioSource.PlayOneShot(burpSound, 1.0f);
 
                     break;
                 }

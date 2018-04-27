@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class KnockedOut : MonoBehaviour
 {
+    public AudioClip bird;
+    public AudioClip thud;
+
     private Vitals vitals;
 
     private GameObject fadeTop;
@@ -13,8 +16,13 @@ public class KnockedOut : MonoBehaviour
     private CamMouseLook CamMouseLook;
     private PlayerController playerController;
 
+    private AudioSource audioSource;
+
     bool knockedOutFinished = false;
     bool alreadyResetting = false;
+
+    private float audioTimer = 0.0f;
+    private bool sfxHasPlayed = false;
 
     //stores the current mode that the knocked out script is in
     public enum Mode { Dead, Drunk, Exhausted }
@@ -61,6 +69,8 @@ public class KnockedOut : MonoBehaviour
         //Random force applied to the body provides a more natural fall.
         Vector3 forceLocation = Random.onUnitSphere * 20;
         player.GetComponent<Rigidbody>().AddForce(forceLocation, ForceMode.Impulse);
+
+        audioSource = GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
@@ -72,6 +82,14 @@ public class KnockedOut : MonoBehaviour
             CamMouseLook.enabled = false;
             Transform fadeTopPos = fadeTop.transform;
             Transform fadeBottomPos = fadeBottom.transform;
+
+            //play the audio once the timer has finished
+            audioTimer += 1.0f * Time.deltaTime;
+            if (audioTimer >= 1.8f && !sfxHasPlayed)
+            {
+                sfxHasPlayed = true;
+                audioSource.PlayOneShot(thud, 0.6f);
+            }
 
             //Moves the top black overlay down to the centre
             if (fadeTop.GetComponent<RectTransform>().localPosition.y > -120)
@@ -124,6 +142,8 @@ public class KnockedOut : MonoBehaviour
             alreadyResetting = true;
 
             Debug.Log("Knocked out sequence finished.");
+
+            audioSource.PlayOneShot(bird, 1.0f);
 
             //sets the player position to the nearest respawn point
             player.transform.position = findClosedPoint().transform.position;

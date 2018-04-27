@@ -9,11 +9,11 @@ public class PlayerController : MonoBehaviour {
     public float sprintSpeed; //sprint speed
     private float translation; // forwards and backwards
     private float strafe; //left and right
-    
-    
 
     public int forceConst = 100; //Force which is applied to the rigidbody when jumping
-    
+
+    public AudioClip[] walkSfx;
+
     private bool canJump; //will be true when the player can jump
     private bool onGround = true; //if the player is on the ground this will be true
     private bool canSprint; //variable changed when the player does to sprint
@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour {
     private float jumpTime = 1f;
 
     private Rigidbody selfRigidBody;
+
+    private AudioSource audioSource;
 
     public void modifyNormalSpeed(float newSpeed)
     {
@@ -51,7 +53,9 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
         Cursor.lockState = CursorLockMode.Locked;
         selfRigidBody = GetComponent<Rigidbody>();
-	}
+
+        audioSource = GetComponent<AudioSource>();
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
@@ -87,7 +91,12 @@ public class PlayerController : MonoBehaviour {
         {
             canSprint = false;
         }
-        transform.Translate(strafe, 0, translation);		
+        transform.Translate(strafe, 0, translation);	
+        
+        if ((translation != 0 || strafe != 0) && !audioSource.isPlaying && onGround)
+        {
+            audioSource.PlayOneShot(walkSfx[Random.Range(0,4)], 0.3f);
+        }	
 	}
     void OnCollisionStay(Collision coll)
     {

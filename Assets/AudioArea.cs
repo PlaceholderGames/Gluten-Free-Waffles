@@ -21,8 +21,8 @@ public class AudioArea : MonoBehaviour {
     bool lower;
     float timer = 0f;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		if(source == null)
         {
             source = GameObject.Find("Audio Source").GetComponent<AudioSource>();
@@ -33,7 +33,7 @@ public class AudioArea : MonoBehaviour {
             settingsMenu = GameObject.Find("Menu System/OptionsMenu").GetComponent<SettingsMenu>();
         }
         currentVolume = source.volume;
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
